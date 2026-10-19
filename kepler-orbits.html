@@ -2,151 +2,147 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>케플러의 타원 궤도</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
-html,body{margin:0}
-/* Layout: 프톨레마이오스·코페르니쿠스 페이지와 같은 골격. 강조색은 『우주의 신비』 페이지의 보라 */
+/* Layout: 패션 에디토리얼 문법. 거대한 라틴 워드마크 위에 원형 모형이 겹치고, 검은 띠에 조작부, 회색 면에 읽을거리 */
 :root{
-  --bg:#14121a; --panel:#1c1a24; --line:#312d3e; --fg:#ece9f2; --muted:#a19cb0;
-  --violet:#a58be0; --gold:#e8b54d; --sight:#7fb3e0; --retro:#e07a5f; --earth:#5fb7a0; --bronze:#c8955a;
-  --display:"Gowun Batang",ui-serif,Georgia,serif;
-  --body:"IBM Plex Sans KR",system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
-  color-scheme:dark;
+  --bg:#e8e6e2; --panel:#f3f2ef; --paper:#f7f6f4; --ink:#111111; --fg:#111111; --muted:#77736d; --line:#c8c5bf;
+  --band:#111111; --bandfg:#f3f2ef; --banddim:#8d8a85; --red:#c8261e;
+  --verdigris:#111111; --bronze:#8a857e; --retro:#c8261e; --sun:#111111; --gold:#111111; --sight:#555555;
+  --earth:#111111; --violet:#111111; --rose:#c8261e; --teal:#555555; --blue:#888888; --sand:#8a857e;
+  --display:"Archivo","Noto Sans KR",system-ui,sans-serif;
+  --ko:"Noto Sans KR",system-ui,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
-  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
-  --violet:#6a4fb8; --gold:#a67712; --sight:#2f6fa8; --retro:#c2502f; --earth:#2b8a73; --bronze:#9a6528; color-scheme:light}}
-:root[data-theme="light"]{
-  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
-  --violet:#6a4fb8; --gold:#a67712; --sight:#2f6fa8; --retro:#c2502f; --earth:#2b8a73; --bronze:#9a6528; color-scheme:light}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
-.wrap{max-width:980px;margin:0 auto;display:grid;gap:22px}
-header{display:grid;gap:6px}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0;text-wrap:balance}
-h2{font-family:var(--display);font-size:22px;margin:0 0 8px;text-wrap:balance}
-.lede{color:var(--muted);max-width:62ch;margin:0}
-a{color:var(--sight)}
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px;align-items:start}
-@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}}
-.machine{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0}
-canvas{display:block;width:100%;height:auto}
-#orrery{aspect-ratio:1/1;max-width:100%}
-.side{display:grid;gap:14px;min-width:0}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px}
-.label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ko);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin:0 auto}
+.lbl{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+/* top bar */
+.top{background:var(--band);color:var(--bandfg)}
+.top .in{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:34px;overflow-x:auto;white-space:nowrap}
+.top a{text-decoration:none;color:var(--banddim)} .top a[aria-current]{color:var(--bandfg);border-bottom:1px solid var(--bandfg)}
+.top nav{display:flex;gap:16px}
+/* nav */
+.nav .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:18px}
+.brand{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.08em;text-decoration:none}
+.nav .r{justify-self:end}
+.nav .r a{text-decoration:none;border-bottom:1px solid currentColor}
+/* hero */
+.hero{position:relative;overflow:hidden;padding-bottom:28px;--gs:min(17rem,calc(92vw / (var(--len) * .82)))}
+.hero .in{position:relative;display:flow-root}
+.giant{font-family:var(--display);font-weight:900;font-size:var(--gs);line-height:.82;letter-spacing:-.045em;text-align:center;white-space:nowrap;margin:clamp(24px,9vw,130px) 0 0;color:var(--ink)}
+.disc{position:relative;width:min(560px,86vw);aspect-ratio:1;border-radius:50%;background:var(--panel);margin:calc(var(--gs) * -.5) auto 0;box-shadow:0 40px 60px -40px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.04)}
+.disc canvas{display:block;width:100%;height:100%;border-radius:50%}
+.side-l,.side-r{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;line-height:2}
+.side-l::after,.side-r::after{content:"";display:block;width:34px;height:1px;background:var(--ink);margin-top:8px}
+.side-r::after{margin-left:auto}
+@media (min-width:900px){.side-l{position:absolute;left:0;top:0;z-index:2}.side-r{position:absolute;right:0;bottom:24px;text-align:right;z-index:2}.giant{margin-top:150px}.nodisc .side-r{position:static;margin-top:28px}}
+@media (max-width:899px){.sides{display:flex;justify-content:space-between;gap:16px;margin-top:18px}.side-r{text-align:right}}
+.hint{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);color:var(--muted)}
+/* title + time */
+.title .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;padding-block:36px 28px}
+@media (max-width:820px){.title .in{grid-template-columns:minmax(0,1fr)}}
+.title h1{font-family:var(--ko);font-weight:900;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-.03em;margin:8px 0 12px;text-wrap:balance}
+.title p{margin:0;color:#3d3b38;max-width:52ch}
+.ctl{display:grid;gap:14px;min-width:0}
+.daterow{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.date{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.cta{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--bandfg);border:0;padding:14px 26px;cursor:pointer;min-width:120px}
+.ul{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--ink);padding:4px 0;cursor:pointer;color:var(--ink)}
+select{font-family:var(--display);font-size:12px;letter-spacing:.08em;background:transparent;border:0;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--ink);margin-top:-6.5px;border:0}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+.band input[type=range]::-webkit-slider-runnable-track{background:var(--bandfg)}
+.band input[type=range]::-moz-range-track{background:var(--bandfg)}
+.band input[type=range]::-webkit-slider-thumb{background:var(--bandfg)}
+.band input[type=range]::-moz-range-thumb{background:var(--bandfg)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--display);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+/* band */
+.band{background:var(--band);color:var(--bandfg)}
+.band .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:34px}
+.band .col{padding:0 28px;border-left:1px solid #2a2a2a;display:grid;gap:12px;align-content:start;min-width:0}
+.band .col:first-child{border-left:0;padding-left:0}
+@media (max-width:820px){.band .in{grid-template-columns:minmax(0,1fr);gap:26px}.band .col{border-left:0;padding:0;border-top:1px solid #2a2a2a;padding-top:22px}.band .col:first-child{border-top:0;padding-top:0}}
+.band .n{color:var(--banddim)}
+.band h3{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em;margin:0;text-transform:uppercase}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips button,.ctl button,select{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
-.chips button[aria-pressed="true"]{background:var(--violet);border-color:var(--violet);color:var(--bg);font-weight:600}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.readout{font-family:var(--mono);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:0}
-.readout dt{color:var(--muted)} .readout dd{margin:0;text-align:right}
-.pill{display:inline-block;font-family:var(--mono);font-size:12px;padding:2px 10px;border-radius:999px;border:1px solid var(--earth);color:var(--earth)}
-.pill.retro{border-color:var(--retro);color:var(--retro)}
-.toggles{display:grid;gap:6px;font-size:14px}
-.toggles label{display:flex;gap:8px;align-items:center;cursor:pointer}
-.ecc{display:grid;gap:4px}
-.ecc .row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.timebar{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
-.timerow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.date{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:20px;color:var(--violet);min-width:9ch}
-.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
-.ctl button.play{background:var(--violet);border-color:var(--violet);color:var(--bg);font-weight:600;min-width:72px}
-input[type=range]{width:100%;accent-color:var(--violet)}
-.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.sky{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;min-width:0}
-.sky-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-#skystrip{aspect-ratio:6/1;max-width:100%}
-@media (max-width:520px){#skystrip{aspect-ratio:3.2/1}}
-.laws{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.laws section{min-width:0}
-.laws p{margin:0 0 10px;max-width:62ch}
-.law-no{font-family:var(--mono);font-size:12px;color:var(--violet);letter-spacing:.08em}
+.chips button{font-family:var(--ko);font-size:13px;color:var(--bandfg);background:transparent;border:1px solid #4a4a4a;padding:5px 12px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--bandfg);color:var(--ink);border-color:var(--bandfg);font-weight:700}
+.readout{font-family:var(--display);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px;margin:0}
+.readout dt{color:var(--banddim);font-family:var(--ko)} .readout dd{margin:0;text-align:right}
+.pill{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;padding:4px 10px;border:1px solid var(--bandfg)}
+.pill.retro{border-color:var(--red);color:#fff;background:var(--red)}
+.toggles{display:grid;gap:8px;font-size:14px}
+.toggles label{display:flex;gap:10px;align-items:center;cursor:pointer}
+.toggles input{accent-color:var(--bandfg);width:15px;height:15px}
+.key{border:1px solid var(--bandfg);padding:10px 12px}
+.key small{display:block;color:var(--banddim);font-size:12px;line-height:1.5;margin-top:4px}
+.band .ul{color:var(--bandfg);border-color:var(--bandfg);justify-self:start}
+/* sky strip */
+.sky .in{padding-block:34px 10px;display:grid;gap:10px}
+.sky .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+#skystrip{display:block;width:100%;aspect-ratio:6/1;background:var(--paper);max-width:100%}
+@media (max-width:560px){#skystrip{aspect-ratio:3/1}}
+/* editorial */
+.ed{background:#d9d7d3}
+.ed .in{padding-block:64px}
+.ed .kick{margin-bottom:10px}
+.notes,.laws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.notes,.laws{grid-template-columns:minmax(0,1fr)}}
+.notes section,.laws section{min-width:0;border-top:1px solid var(--ink);padding-top:18px}
+.notes h2,.laws h2{font-family:var(--ko);font-weight:900;font-size:24px;letter-spacing:-.02em;line-height:1.25;margin:0 0 12px}
+.notes p,.laws p{margin:0 0 12px;color:#2c2a27}
+.law-no{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .tablewrap{overflow-x:auto}
-table{border-collapse:collapse;font-size:14px;width:100%}
-th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 6px;border-bottom:1px solid #b9b6b0;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
-th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:500}
-.caveat{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+th{font-family:var(--display);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.bad{color:var(--red)} td.ok{font-weight:700}
+.caveat{font-size:13px;color:var(--muted);max-width:80ch;margin:36px 0 0}
+/* next */
+.next{background:var(--paper)}
+.next .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;padding-block:56px}
+.next a.big{font-family:var(--display);font-weight:900;font-size:clamp(40px,9vw,120px);line-height:.9;letter-spacing:-.04em;text-decoration:none;display:block}
+.next a.big:hover{color:var(--red)}
+.next .meta{text-align:right}
+.foot{background:var(--band);color:var(--banddim)}
+.foot .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><nav aria-label="모형"><a href="ptolemy.html">01 PTOLEMY</a> <a href="copernicus.html">02 COPERNICUS</a> <a href="kepler-solids.html">03 MYSTERIUM</a> <a href="kepler-orbits.html" aria-current="page">04 ELLIPSE</a> <a href="kepler-laws.html">05 HARMONY</a></nav></div></div>
+<header class="nav gut"><div class="in"><span class="lbl">Model 04 / 05</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Index</a></span></div></header><section class="hero gut" style="--len:7"><div class="in">
+<div class="side-l only-d">Eight<br>minutes<br>of arc.</div>
+<h2 class="giant" aria-hidden="true">ELLIPSE</h2>
+<div class="disc"><canvas id="orrery" aria-label="행성 운동 모형"></canvas></div>
 
-<div class="wrap">
-  <header>
-    <div class="eyebrow">『코스모스』 3장 · 1609년 『새로운 천문학』 · 1619년 『세계의 조화』</div>
-    <h1>케플러의 타원 궤도</h1>
-    <p class="lede">튀코의 화성 관측은 원 궤도로는 8분(1도의 8/60)이 어긋났습니다. 케플러는 그 작은 차이를 무시하지 않고 2천 년 묵은 원을 버렸습니다. 태양은 타원의 한 초점에 있고, 행성은 태양 가까이에서 빨라집니다. 이심률을 키워 보면 그 법칙이 눈에 보입니다.</p>
-  </header>
-
-  <div class="stage">
-    <div class="machine"><canvas id="orrery" aria-label="태양을 초점으로 하는 타원 궤도 모형"></canvas></div>
-    <div class="side">
-      <div class="box">
-        <div class="label">살펴볼 행성</div>
-        <div class="chips" id="planetBtns"></div>
-      </div>
-      <div class="box">
-        <div class="label">보는 범위</div>
-        <div class="chips" id="zoomBtns">
-          <button type="button" data-z="1.8" aria-pressed="true">화성까지</button>
-          <button type="button" data-z="10.4" aria-pressed="false">토성까지</button>
-        </div>
-      </div>
-      <div class="box ecc">
-        <div class="label" id="eccLabel">화성 이심률 · 실제 0.093</div>
-        <input type="range" id="ecc" min="0" max="0.8" step="0.01" value="0.093" aria-label="선택한 행성의 이심률 과장">
-        <div class="row"><span>원</span><span>길쭉한 타원</span></div>
-        <button type="button" id="eccReset">실제 값으로</button>
-      </div>
-      <div class="box">
-        <div class="label">지금 이 행성은</div>
-        <dl class="readout" id="readout"></dl>
-        <div id="motion"></div>
-      </div>
-      <div class="box toggles">
-        <div class="label">보이기</div>
-        <label><input type="checkbox" id="optArea" checked> 같은 시간에 쓸고 간 넓이</label>
-        <label><input type="checkbox" id="optFoci" checked> 두 초점과 원 궤도 비교</label>
-        <label><input type="checkbox" id="optSight" checked> 지구에서 본 시선</label>
-        <label><input type="checkbox" id="optZodiac" checked> 황도 12궁 눈금</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="timebar">
-    <div class="timerow">
-      <div><div class="label">날짜</div><div class="date" id="dateOut">2026-01-01</div></div>
-      <div class="ctl">
-        <button class="play" id="playBtn" type="button">재생</button>
-        <label class="label" for="speed">속도</label>
-        <select id="speed">
-          <option value="1">하루 / 틱</option>
-          <option value="4" selected>4일 / 틱</option>
-          <option value="15">보름 / 틱</option>
-          <option value="60">두 달 / 틱</option>
-        </select>
-        <button type="button" id="resetBtn">오늘로</button>
-      </div>
-    </div>
-    <input type="range" id="time" min="0" max="10957" step="1" value="0" aria-label="시간 막대">
-    <div class="ticks"><span>2020</span><span>2025</span><span>2030</span><span>2035</span><span>2040</span><span>2045</span><span>2050</span></div>
-  </div>
-
-  <div class="sky">
-    <div class="sky-head">
-      <div class="label">지구에서 본 하늘 · 황경의 변화</div>
-      <div class="label" id="skyLegend">최근 1년</div>
-    </div>
-    <canvas id="skystrip" aria-label="선택한 행성의 황경 변화"></canvas>
-  </div>
-
-  <div class="laws">
+<div class="side-r only-d">Model 04<br>AD 1609</div>
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>케플러의<br>타원 궤도</h1><p>튀코의 화성 관측은 원 궤도로는 8분각이 어긋났습니다. 케플러는 그 작은 차이를 무시하지 않고 2천 년 묵은 원을 버렸습니다. 이심률을 키워 법칙이 드러나는 순간을 보세요.</p></div><div class="ctl">
+<div class="daterow"><div><div class="lbl" style="color:var(--muted)">Date</div><div class="date" id="dateOut">2026-01-01</div></div>
+<div class="btns"><button class="cta" id="playBtn" type="button">재생</button><button class="ul" type="button" id="resetBtn">오늘로</button>
+<label class="lbl" for="speed" style="color:var(--muted)">Speed</label><select id="speed"><option value="1">하루/틱</option><option value="4" selected>4일/틱</option><option value="15">보름/틱</option><option value="60">두 달/틱</option></select></div></div>
+<input type="range" id="time" min="0" max="10957" step="1" value="0" aria-label="시간 막대">
+<div class="ticks"><span>2020</span><span>2025</span><span>2030</span><span>2035</span><span>2040</span><span>2045</span><span>2050</span></div>
+</div></div></section><section class="band gut"><div class="in"><div class="col"><span class="lbl n">01 — Select</span><h3>행성</h3><div class="chips" id="planetBtns"></div>
+<span class="lbl n" style="margin-top:6px">Range</span><div class="chips" id="zoomBtns"><button type="button" data-z="1.8" aria-pressed="true">화성까지</button><button type="button" data-z="10.4" aria-pressed="false">토성까지</button></div></div>
+<div class="col"><span class="lbl n">02 — Eccentricity</span><h3>이심률</h3><div class="lbl" id="eccLabel" style="letter-spacing:.08em;text-transform:none">화성 이심률 · 실제 0.093</div>
+<input type="range" id="ecc" min="0" max="0.8" step="0.01" value="0.093" aria-label="선택한 행성의 이심률 과장"><div class="ticks" style="color:var(--banddim)"><span>원</span><span>길쭉한 타원</span></div>
+<button type="button" class="ul" id="eccReset">실제 값으로</button>
+<div class="toggles"><label><input type="checkbox" id="optArea" checked> 같은 시간에 쓸고 간 넓이</label><label><input type="checkbox" id="optFoci" checked> 두 초점과 원 궤도 비교</label><label><input type="checkbox" id="optSight" checked> 지구에서 본 시선</label><label><input type="checkbox" id="optZodiac" checked> 황도 12궁 눈금</label></div></div>
+<div class="col"><span class="lbl n">03 — Reading</span><h3>지금 이 행성은</h3><dl class="readout" id="readout"></dl><div id="motion"></div></div></div></section><section class="sky gut"><div class="in"><div class="head"><span class="lbl">The sky from Earth · 지구에서 본 하늘</span><span class="lbl" id="skyLegend" style="color:var(--muted)">최근 1년</span></div>
+<canvas id="skystrip" aria-label="선택한 행성의 황경 변화"></canvas></div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="laws">
     <section>
       <div class="law-no">제1법칙 · 타원 궤도</div>
       <h2>원을 버리다</h2>
@@ -165,10 +161,8 @@ th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted
         <table id="law3"><thead><tr><th>행성</th><th>a (AU)</th><th>T (년)</th><th>T² ÷ a³</th></tr></thead><tbody></tbody></table>
       </div>
     </section>
-  </div>
-  <p class="caveat">궤도면의 기울기와 행성끼리 당기는 효과는 뺐습니다. 그래도 하늘 띠의 위치는 원 궤도 페이지들보다 실제 하늘에 훨씬 가깝습니다. 이심률 막대는 선택한 행성의 그림만 바꾸며, '지구에서 본 위치' 계산에는 언제나 실제 이심률을 씁니다. 함께 보기: <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a></p>
-</div>
-
+  </div><p class="caveat">궤도면의 기울기와 행성끼리 당기는 효과는 뺐습니다. 그래도 하늘 띠의 위치는 원 궤도 페이지들보다 실제 하늘에 훨씬 가깝습니다. 이심률 막대는 선택한 행성의 그림만 바꾸며, '지구에서 본 위치' 계산에는 언제나 실제 이심률을 씁니다. 함께 보기: <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a></p></div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next model</div><a class="big" href="kepler-laws.html">HARMONY →</a></div><div class="meta lbl">05 · 세 법칙</div></div></section>
+<footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos · Ch. 3</span></div></footer>
 <script>
 (function(){
 const D2R=Math.PI/180, TAU=Math.PI*2;
@@ -218,7 +212,7 @@ function drawOrrery(){
   g.clearRect(0,0,w,h);
   if($('optZodiac').checked){
     g.strokeStyle=C['--line'];g.lineWidth=1;g.beginPath();g.arc(cx,cy,S,0,7);g.stroke();
-    g.font='11px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';g.textBaseline='middle';
+    g.font='11px "Noto Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';g.textBaseline='middle';
     for(let i=0;i<12;i++){const a=-(i*30)*D2R;g.beginPath();g.moveTo(cx+Math.cos(a)*S*0.97,cy+Math.sin(a)*S*0.97);g.lineTo(cx+Math.cos(a)*S,cy+Math.sin(a)*S);g.stroke();
       const b=-(i*30+15)*D2R;g.fillText(ZOD[i],cx+Math.cos(b)*S*1.045,cy+Math.sin(b)*S*1.045);}
   }
@@ -247,7 +241,7 @@ function drawOrrery(){
     const f2={x:-2*c*Math.cos(w0),y:-2*c*Math.sin(w0)};
     g.strokeStyle=C['--fg'];g.lineWidth=1.4;g.beginPath();g.arc(X(f2),Y(f2),4,0,7);g.stroke();
     const peri={x:sp.a*(1-es)*Math.cos(w0),y:sp.a*(1-es)*Math.sin(w0)}, aph={x:-sp.a*(1+es)*Math.cos(w0),y:-sp.a*(1+es)*Math.sin(w0)};
-    g.font='11px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';
+    g.font='11px "Noto Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';
     g.fillText('근일점',X(peri),Y(peri)-10);g.fillText('원일점',X(aph),Y(aph)-10);g.fillText('빈 초점',X(f2),Y(f2)+16);
   }
   // 시선
@@ -267,7 +261,7 @@ function drawOrrery(){
     const focus=p.id===sel;
     if(focus){g.strokeStyle=C['--violet'];g.lineWidth=1.6;g.beginPath();g.moveTo(cx,cy);g.lineTo(px,py);g.stroke();}
     g.fillStyle=C[p.col];g.beginPath();g.arc(px,py,focus||p.id==='earth'?6:4,0,7);g.fill();
-    if(focus||p.id==='earth'){g.font='600 12px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='left';g.fillText(p.name,px+9,py-9);}
+    if(focus||p.id==='earth'){g.font='600 12px "Noto Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='left';g.fillText(p.name,px+9,py-9);}
   }
 }
 
@@ -280,12 +274,12 @@ function drawSky(){
   let mn=Math.min(...pts),mx=Math.max(...pts);if(mx-mn<20){const m=(mx+mn)/2;mn=m-10;mx=m+10;}
   const y=v=>bot-(v-mn)/(mx-mn)*(bot-top), x=i=>pad+(w-pad*2)*i/N;
   g.strokeStyle=C['--line'];g.lineWidth=1;
-  for(let v=Math.ceil(mn/30)*30;v<=mx;v+=30){g.beginPath();g.moveTo(pad,y(v));g.lineTo(w-pad,y(v));g.stroke();g.fillStyle=C['--muted'];g.font='10px "IBM Plex Sans KR",sans-serif';g.textAlign='left';g.fillText(ZOD[Math.floor(norm(v)/30)%12],w-pad+3,y(v)-6);}
+  for(let v=Math.ceil(mn/30)*30;v<=mx;v+=30){g.beginPath();g.moveTo(pad,y(v));g.lineTo(w-pad,y(v));g.stroke();g.fillStyle=C['--muted'];g.font='10px "Noto Sans KR",sans-serif';g.textAlign='left';g.fillText(ZOD[Math.floor(norm(v)/30)%12],w-pad+3,y(v)-6);}
   g.lineWidth=2.2;
   for(let i=1;i<=N;i++){g.strokeStyle=pts[i]<pts[i-1]?C['--retro']:C['--earth'];g.beginPath();g.moveTo(x(i-1),y(pts[i-1]));g.lineTo(x(i),y(pts[i]));g.stroke();}
   g.fillStyle=C[p.col];g.beginPath();g.arc(x(N),y(pts[N]),5,0,7);g.fill();
-  g.fillStyle=C['--muted'];g.font='10px "IBM Plex Mono",monospace';g.textAlign='left';g.fillText(dateStr(day-span),pad,h-4);g.textAlign='right';g.fillText(dateStr(day),w-pad,h-4);
-  $('skyLegend').textContent=(p.id==='earth'?'지구에서 본 태양 · ':'')+'최근 1년 · 초록 순행 · 주황 역행';
+  g.fillStyle=C['--muted'];g.font='10px "Archivo",sans-serif';g.textAlign='left';g.fillText(dateStr(day-span),pad,h-4);g.textAlign='right';g.fillText(dateStr(day),w-pad,h-4);
+  $('skyLegend').textContent=(p.id==='earth'?'지구에서 본 태양 · ':'')+'최근 1년 · 검정 순행 · 빨강 역행';
 }
 
 function readout(){
@@ -320,6 +314,5 @@ window.addEventListener('resize',draw);
 setEcc(0.0934);day=today();draw();
 })();
 </script>
-
 </body>
 </html>

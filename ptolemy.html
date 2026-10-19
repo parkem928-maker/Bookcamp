@@ -2,134 +2,145 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>프톨레마이오스의 하늘 기계</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
-html,body{margin:0}
-/* Layout: 청동 기계 판(캔버스) 하나가 주인공, 아래로 하늘 띠와 조작부, 설명은 좁은 단 */
+/* Layout: 패션 에디토리얼 문법. 거대한 라틴 워드마크 위에 원형 모형이 겹치고, 검은 띠에 조작부, 회색 면에 읽을거리 */
 :root{
-  --bg:#0f1517; --panel:#161f22; --line:#2a383b; --fg:#e4e9e6; --muted:#93a39f;
-  --bronze:#c8955a; --verdigris:#5fb7a0; --retro:#e07a5f; --sun:#f0c25e;
-  --display:"Gowun Batang",ui-serif,Georgia,serif;
-  --body:"IBM Plex Sans KR",system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
-  color-scheme:dark;
+  --bg:#e8e6e2; --panel:#f3f2ef; --paper:#f7f6f4; --ink:#111111; --fg:#111111; --muted:#77736d; --line:#c8c5bf;
+  --band:#111111; --bandfg:#f3f2ef; --banddim:#8d8a85; --red:#c8261e;
+  --verdigris:#111111; --bronze:#8a857e; --retro:#c8261e; --sun:#111111; --gold:#111111; --sight:#555555;
+  --earth:#111111; --violet:#111111; --rose:#c8261e; --teal:#555555; --blue:#888888; --sand:#8a857e;
+  --display:"Archivo","Noto Sans KR",system-ui,sans-serif;
+  --ko:"Noto Sans KR",system-ui,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
-  --bg:#eef1ef; --panel:#ffffff; --line:#d3dbd8; --fg:#1b2624; --muted:#5d6d69;
-  --bronze:#9a6528; --verdigris:#2b8a73; --retro:#c2502f; --sun:#c48a12; color-scheme:light}}
-:root[data-theme="light"]{
-  --bg:#eef1ef; --panel:#ffffff; --line:#d3dbd8; --fg:#1b2624; --muted:#5d6d69;
-  --bronze:#9a6528; --verdigris:#2b8a73; --retro:#c2502f; --sun:#c48a12; color-scheme:light}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
-.wrap{max-width:980px;margin:0 auto;display:grid;gap:22px}
-header{display:grid;gap:6px}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--verdigris)}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0;text-wrap:balance}
-h2{font-family:var(--display);font-size:22px;margin:0 0 8px;text-wrap:balance}
-.lede{color:var(--muted);max-width:62ch;margin:0}
-.stage{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
-@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}}
-.machine{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0}
-canvas{display:block;width:100%;height:auto}
-#orrery{aspect-ratio:1/1;max-width:100%}
-.side{display:grid;gap:14px;min-width:0}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px}
-.label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.planets{display:flex;flex-wrap:wrap;gap:6px}
-.planets button,.ctl button,select{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
-.planets button[aria-pressed="true"]{background:var(--verdigris);border-color:var(--verdigris);color:var(--bg);font-weight:600}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
-.readout{font-family:var(--mono);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
-.readout dt{color:var(--muted)} .readout dd{margin:0;text-align:right}
-.pill{display:inline-block;font-family:var(--mono);font-size:12px;padding:2px 10px;border-radius:999px;border:1px solid var(--verdigris);color:var(--verdigris)}
-.pill.retro{border-color:var(--retro);color:var(--retro)}
-.toggles{display:grid;gap:6px;font-size:14px}
-.toggles label{display:flex;gap:8px;align-items:center;cursor:pointer}
-.timebar{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
-.timerow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.date{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:20px;color:var(--bronze);min-width:9ch}
-.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
-.ctl button.play{background:var(--bronze);border-color:var(--bronze);color:var(--bg);font-weight:600;min-width:72px}
-input[type=range]{width:100%;accent-color:var(--bronze)}
-.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.sky{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;min-width:0}
-.sky-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-#skystrip{aspect-ratio:6/1;max-width:100%}
-@media (max-width:520px){#skystrip{aspect-ratio:3.2/1}}
-.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.notes section{min-width:0}
-.notes p{margin:0 0 10px;max-width:62ch}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ko);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin:0 auto}
+.lbl{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+/* top bar */
+.top{background:var(--band);color:var(--bandfg)}
+.top .in{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:34px;overflow-x:auto;white-space:nowrap}
+.top a{text-decoration:none;color:var(--banddim)} .top a[aria-current]{color:var(--bandfg);border-bottom:1px solid var(--bandfg)}
+.top nav{display:flex;gap:16px}
+/* nav */
+.nav .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:18px}
+.brand{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.08em;text-decoration:none}
+.nav .r{justify-self:end}
+.nav .r a{text-decoration:none;border-bottom:1px solid currentColor}
+/* hero */
+.hero{position:relative;overflow:hidden;padding-bottom:28px;--gs:min(17rem,calc(92vw / (var(--len) * .82)))}
+.hero .in{position:relative;display:flow-root}
+.giant{font-family:var(--display);font-weight:900;font-size:var(--gs);line-height:.82;letter-spacing:-.045em;text-align:center;white-space:nowrap;margin:clamp(24px,9vw,130px) 0 0;color:var(--ink)}
+.disc{position:relative;width:min(560px,86vw);aspect-ratio:1;border-radius:50%;background:var(--panel);margin:calc(var(--gs) * -.5) auto 0;box-shadow:0 40px 60px -40px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.04)}
+.disc canvas{display:block;width:100%;height:100%;border-radius:50%}
+.side-l,.side-r{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;line-height:2}
+.side-l::after,.side-r::after{content:"";display:block;width:34px;height:1px;background:var(--ink);margin-top:8px}
+.side-r::after{margin-left:auto}
+@media (min-width:900px){.side-l{position:absolute;left:0;top:0;z-index:2}.side-r{position:absolute;right:0;bottom:24px;text-align:right;z-index:2}.giant{margin-top:150px}.nodisc .side-r{position:static;margin-top:28px}}
+@media (max-width:899px){.sides{display:flex;justify-content:space-between;gap:16px;margin-top:18px}.side-r{text-align:right}}
+.hint{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);color:var(--muted)}
+/* title + time */
+.title .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;padding-block:36px 28px}
+@media (max-width:820px){.title .in{grid-template-columns:minmax(0,1fr)}}
+.title h1{font-family:var(--ko);font-weight:900;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-.03em;margin:8px 0 12px;text-wrap:balance}
+.title p{margin:0;color:#3d3b38;max-width:52ch}
+.ctl{display:grid;gap:14px;min-width:0}
+.daterow{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.date{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.cta{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--bandfg);border:0;padding:14px 26px;cursor:pointer;min-width:120px}
+.ul{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--ink);padding:4px 0;cursor:pointer;color:var(--ink)}
+select{font-family:var(--display);font-size:12px;letter-spacing:.08em;background:transparent;border:0;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--ink);margin-top:-6.5px;border:0}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+.band input[type=range]::-webkit-slider-runnable-track{background:var(--bandfg)}
+.band input[type=range]::-moz-range-track{background:var(--bandfg)}
+.band input[type=range]::-webkit-slider-thumb{background:var(--bandfg)}
+.band input[type=range]::-moz-range-thumb{background:var(--bandfg)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--display);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+/* band */
+.band{background:var(--band);color:var(--bandfg)}
+.band .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:34px}
+.band .col{padding:0 28px;border-left:1px solid #2a2a2a;display:grid;gap:12px;align-content:start;min-width:0}
+.band .col:first-child{border-left:0;padding-left:0}
+@media (max-width:820px){.band .in{grid-template-columns:minmax(0,1fr);gap:26px}.band .col{border-left:0;padding:0;border-top:1px solid #2a2a2a;padding-top:22px}.band .col:first-child{border-top:0;padding-top:0}}
+.band .n{color:var(--banddim)}
+.band h3{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em;margin:0;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-family:var(--ko);font-size:13px;color:var(--bandfg);background:transparent;border:1px solid #4a4a4a;padding:5px 12px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--bandfg);color:var(--ink);border-color:var(--bandfg);font-weight:700}
+.readout{font-family:var(--display);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px;margin:0}
+.readout dt{color:var(--banddim);font-family:var(--ko)} .readout dd{margin:0;text-align:right}
+.pill{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;padding:4px 10px;border:1px solid var(--bandfg)}
+.pill.retro{border-color:var(--red);color:#fff;background:var(--red)}
+.toggles{display:grid;gap:8px;font-size:14px}
+.toggles label{display:flex;gap:10px;align-items:center;cursor:pointer}
+.toggles input{accent-color:var(--bandfg);width:15px;height:15px}
+.key{border:1px solid var(--bandfg);padding:10px 12px}
+.key small{display:block;color:var(--banddim);font-size:12px;line-height:1.5;margin-top:4px}
+.band .ul{color:var(--bandfg);border-color:var(--bandfg);justify-self:start}
+/* sky strip */
+.sky .in{padding-block:34px 10px;display:grid;gap:10px}
+.sky .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+#skystrip{display:block;width:100%;aspect-ratio:6/1;background:var(--paper);max-width:100%}
+@media (max-width:560px){#skystrip{aspect-ratio:3/1}}
+/* editorial */
+.ed{background:#d9d7d3}
+.ed .in{padding-block:64px}
+.ed .kick{margin-bottom:10px}
+.notes,.laws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.notes,.laws{grid-template-columns:minmax(0,1fr)}}
+.notes section,.laws section{min-width:0;border-top:1px solid var(--ink);padding-top:18px}
+.notes h2,.laws h2{font-family:var(--ko);font-weight:900;font-size:24px;letter-spacing:-.02em;line-height:1.25;margin:0 0 12px}
+.notes p,.laws p{margin:0 0 12px;color:#2c2a27}
+.law-no{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .tablewrap{overflow-x:auto}
-table{border-collapse:collapse;font-size:14px;width:100%}
-th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 6px;border-bottom:1px solid #b9b6b0;text-align:right;white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
-th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:500}
-.caveat{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+th{font-family:var(--display);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.bad{color:var(--red)} td.ok{font-weight:700}
+.caveat{font-size:13px;color:var(--muted);max-width:80ch;margin:36px 0 0}
+/* next */
+.next{background:var(--paper)}
+.next .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;padding-block:56px}
+.next a.big{font-family:var(--display);font-weight:900;font-size:clamp(40px,9vw,120px);line-height:.9;letter-spacing:-.04em;text-decoration:none;display:block}
+.next a.big:hover{color:var(--red)}
+.next .meta{text-align:right}
+.foot{background:var(--band);color:var(--banddim)}
+.foot .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><nav aria-label="모형"><a href="ptolemy.html" aria-current="page">01 PTOLEMY</a> <a href="copernicus.html">02 COPERNICUS</a> <a href="kepler-solids.html">03 MYSTERIUM</a> <a href="kepler-orbits.html">04 ELLIPSE</a> <a href="kepler-laws.html">05 HARMONY</a></nav></div></div>
+<header class="nav gut"><div class="in"><span class="lbl">Model 01 / 05</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Index</a></span></div></header><section class="hero gut" style="--len:7"><div class="in">
+<div class="side-l only-d">The Earth<br>stands<br>still.</div>
+<h2 class="giant" aria-hidden="true">PTOLEMY</h2>
+<div class="disc"><canvas id="orrery" aria-label="행성 운동 모형"></canvas></div>
 
-<div class="wrap">
-  <header>
-    <div class="eyebrow">『코스모스』 3장 · 지구 중심 우주</div>
-    <h1>프톨레마이오스의 하늘 기계</h1>
-    <p class="lede">지구를 가운데 두고, 행성은 큰 원(대원, deferent) 위를 도는 작은 원(주전원, epicycle)을 따라 움직입니다. 시간 막대를 움직여 행성이 어떻게 고리를 그리며 거꾸로 가는 것처럼 보이는지 확인해 보세요. 같은 하늘을 태양 중심으로 그린 <a href="copernicus.html" style="color:var(--verdigris)">코페르니쿠스의 태양계</a>와 비교해 보세요.</p>
-  </header>
-
-  <div class="stage">
-    <div class="machine"><canvas id="orrery" aria-label="지구 중심 행성 운동 모형"></canvas></div>
-    <div class="side">
-      <div class="box">
-        <div class="label">살펴볼 행성</div>
-        <div class="planets" id="planetBtns"></div>
-      </div>
-      <div class="box">
-        <div class="label">지구에서 본 위치</div>
-        <dl class="readout" id="readout"></dl>
-        <div id="motion"></div>
-      </div>
-      <div class="box toggles">
-        <div class="label">보이기</div>
-        <label><input type="checkbox" id="optAll" checked> 다른 행성도 함께</label>
-        <label><input type="checkbox" id="optTrail" checked> 지나온 궤적</label>
-        <label><input type="checkbox" id="optArms" checked> 대원·주전원 팔</label>
-        <label><input type="checkbox" id="optZodiac" checked> 황도 12궁 눈금</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="timebar">
-    <div class="timerow">
-      <div><div class="label">날짜</div><div class="date" id="dateOut">2026-01-01</div></div>
-      <div class="ctl">
-        <button class="play" id="playBtn" type="button">재생</button>
-        <label class="label" for="speed">속도</label>
-        <select id="speed">
-          <option value="1">하루 / 틱</option>
-          <option value="4" selected>4일 / 틱</option>
-          <option value="15">보름 / 틱</option>
-          <option value="60">두 달 / 틱</option>
-        </select>
-        <button type="button" id="resetBtn">오늘로</button>
-      </div>
-    </div>
-    <input type="range" id="time" min="0" max="10957" step="1" value="0" aria-label="시간 막대">
-    <div class="ticks"><span>2020</span><span>2025</span><span>2030</span><span>2035</span><span>2040</span><span>2045</span><span>2050</span></div>
-  </div>
-
-  <div class="sky">
-    <div class="sky-head">
-      <div class="label">지구에서 본 하늘 · 황경의 변화</div>
-      <div class="label" id="skyLegend">최근 1년</div>
-    </div>
-    <canvas id="skystrip" aria-label="선택한 행성의 황경 변화"></canvas>
-  </div>
-
-  <div class="notes">
+<div class="side-r only-d">Model 01<br>c. AD 150</div>
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>프톨레마이오스의<br>하늘 기계</h1><p>지구를 가운데 두고, 행성은 큰 원(대원) 위를 도는 작은 원(주전원)을 따라 움직입니다. 재생을 눌러 행성이 고리를 그리며 거꾸로 가는 것처럼 보이는 순간을 찾아보세요.</p></div><div class="ctl">
+<div class="daterow"><div><div class="lbl" style="color:var(--muted)">Date</div><div class="date" id="dateOut">2026-01-01</div></div>
+<div class="btns"><button class="cta" id="playBtn" type="button">재생</button><button class="ul" type="button" id="resetBtn">오늘로</button>
+<label class="lbl" for="speed" style="color:var(--muted)">Speed</label><select id="speed"><option value="1">하루/틱</option><option value="4" selected>4일/틱</option><option value="15">보름/틱</option><option value="60">두 달/틱</option></select></div></div>
+<input type="range" id="time" min="0" max="10957" step="1" value="0" aria-label="시간 막대">
+<div class="ticks"><span>2020</span><span>2025</span><span>2030</span><span>2035</span><span>2040</span><span>2045</span><span>2050</span></div>
+</div></div></section><section class="band gut"><div class="in"><div class="col"><span class="lbl n">01 — Select</span><h3>행성</h3><div class="chips" id="planetBtns"></div></div>
+<div class="col"><span class="lbl n">02 — Reading</span><h3>지구에서 본 위치</h3><dl class="readout" id="readout"></dl><div id="motion"></div></div>
+<div class="col"><span class="lbl n">03 — Layers</span><h3>보이기</h3><div class="toggles">
+<label><input type="checkbox" id="optAll" checked> 다른 행성도 함께</label><label><input type="checkbox" id="optTrail" checked> 지나온 궤적</label>
+<label><input type="checkbox" id="optArms" checked> 대원·주전원 팔</label><label><input type="checkbox" id="optZodiac" checked> 황도 12궁 눈금</label></div></div></div></section><section class="sky gut"><div class="in"><div class="head"><span class="lbl">The sky from Earth · 지구에서 본 하늘</span><span class="lbl" id="skyLegend" style="color:var(--muted)">최근 1년</span></div>
+<canvas id="skystrip" aria-label="선택한 행성의 황경 변화"></canvas></div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="notes">
     <section>
       <h2>장치가 하는 일</h2>
       <p>프톨레마이오스(서기 2세기)는 『알마게스트』에서 행성마다 두 개의 원을 겹쳤습니다. 주전원의 중심은 대원을 따라 천천히 돌고, 행성은 주전원 위를 빠르게 돕니다. 둘이 합쳐지면 행성은 지구에서 볼 때 앞으로 가다가 잠시 멈추고, 거꾸로 갔다가 다시 앞으로 갑니다. 이것이 <b>역행</b>입니다.</p>
@@ -156,10 +167,8 @@ th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted
       <p>1901년 그리스 안티키테라섬 앞바다의 난파선에서 청동 톱니바퀴 장치가 건져졌습니다. 기원전 2~1세기에 만든 것으로 보이며, 30개가 넘는 톱니바퀴로 해와 달의 위치, 달의 위상, 일식 주기를 계산했습니다. 달이 빨라졌다 느려지는 움직임은 핀과 홈으로 된 톱니 한 쌍이 재현하는데, 원리상 주전원과 같은 효과를 냅니다.</p>
       <p>이 장치는 프톨레마이오스보다 200년쯤 앞서 만들어졌고, 그보다 이전의 히파르코스 계열 이론에 기대고 있습니다. 행성을 보여 주던 톱니는 대부분 사라졌고, 앞판 글귀를 근거로 복원이 시도되고 있습니다.</p>
     </section>
-  </div>
-  <p class="caveat">이 모형은 대원과 주전원만 씁니다. 프톨레마이오스는 여기에 이심원과 이퀀트(대원의 회전 속도가 균일하게 보이는 지구 밖의 점)를 더해 정확도를 높였지만, 여기서는 구조를 보이기 위해 뺐습니다. 그래서 실제 하늘과 며칠에서 몇 주 정도 어긋날 수 있습니다. 대원의 크기는 보기 좋게 정했고, 주전원의 비율만 실제 값을 따랐습니다.</p>
-</div>
-
+  </div><p class="caveat">이 모형은 대원과 주전원만 씁니다. 프톨레마이오스는 여기에 이심원과 이퀀트(대원의 회전 속도가 균일하게 보이는 지구 밖의 점)를 더해 정확도를 높였지만, 여기서는 구조를 보이기 위해 뺐습니다. 그래서 실제 하늘과 며칠에서 몇 주 정도 어긋날 수 있습니다. 대원의 크기는 보기 좋게 정했고, 주전원의 비율만 실제 값을 따랐습니다.</p></div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next model</div><a class="big" href="copernicus.html">COPERNICUS →</a></div><div class="meta lbl">02 · 코페르니쿠스</div></div></section>
+<footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos · Ch. 3</span></div></footer>
 <script>
 (function(){
 const D2R=Math.PI/180;
@@ -217,7 +226,7 @@ function drawOrrery(){
   // 황도 눈금
   if($('optZodiac').checked){
     g.strokeStyle=C['--line'];g.lineWidth=1;g.beginPath();g.arc(cx,cy,S,0,7);g.stroke();
-    g.font='11px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';g.textBaseline='middle';
+    g.font='11px "Noto Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';g.textBaseline='middle';
     for(let i=0;i<12;i++){const a=-(i*30)*D2R;g.beginPath();g.moveTo(cx+Math.cos(a)*S*0.97,cy+Math.sin(a)*S*0.97);g.lineTo(cx+Math.cos(a)*S,cy+Math.sin(a)*S);g.stroke();
       const b=-(i*30+15)*D2R;g.fillText(ZOD[i],cx+Math.cos(b)*S*1.04,cy+Math.sin(b)*S*1.04);}
   }
@@ -241,12 +250,12 @@ function drawOrrery(){
     }else{g.strokeStyle=C['--line'];g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();}
     if(focus){g.strokeStyle=C['--fg'];g.globalAlpha=.25;g.lineWidth=1;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+(px-cx)*3,cy+(py-cy)*3);g.stroke();g.globalAlpha=1;}
     g.fillStyle=C[p.col];g.beginPath();g.arc(px,py,p.kind==='sun'?8:(focus?6:4),0,7);g.fill();
-    if(focus||p.kind==='sun'){g.font='600 12px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='left';g.fillText(p.name,px+9,py-9);}
+    if(focus||p.kind==='sun'){g.font='600 12px "Noto Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='left';g.fillText(p.name,px+9,py-9);}
   }
   // 지구
   g.fillStyle=C['--verdigris'];g.beginPath();g.arc(cx,cy,7,0,7);g.fill();
   g.strokeStyle=C['--bg'];g.lineWidth=2;g.stroke();
-  g.font='600 12px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='center';g.fillText('지구',cx,cy+20);
+  g.font='600 12px "Noto Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='center';g.fillText('지구',cx,cy+20);
 }
 
 function drawSky(){
@@ -259,12 +268,12 @@ function drawSky(){
   let mn=Math.min(...pts),mx=Math.max(...pts);if(mx-mn<20){const m=(mx+mn)/2;mn=m-10;mx=m+10;}
   const y=v=>bot-(v-mn)/(mx-mn)*(bot-top), x=i=>pad+(w-pad*2)*i/N;
   g.strokeStyle=C['--line'];g.lineWidth=1;
-  for(let v=Math.ceil(mn/30)*30;v<=mx;v+=30){g.beginPath();g.moveTo(pad,y(v));g.lineTo(w-pad,y(v));g.stroke();g.fillStyle=C['--muted'];g.font='10px "IBM Plex Sans KR",sans-serif';g.textAlign='left';g.fillText(ZOD[Math.floor(norm(v)/30)%12],w-pad+3,y(v)-6);}
+  for(let v=Math.ceil(mn/30)*30;v<=mx;v+=30){g.beginPath();g.moveTo(pad,y(v));g.lineTo(w-pad,y(v));g.stroke();g.fillStyle=C['--muted'];g.font='10px "Noto Sans KR",sans-serif';g.textAlign='left';g.fillText(ZOD[Math.floor(norm(v)/30)%12],w-pad+3,y(v)-6);}
   g.lineWidth=2.2;
   for(let i=1;i<=N;i++){g.strokeStyle=pts[i]<pts[i-1]?C['--retro']:C['--verdigris'];g.beginPath();g.moveTo(x(i-1),y(pts[i-1]));g.lineTo(x(i),y(pts[i]));g.stroke();}
   g.fillStyle=C[p.col];g.beginPath();g.arc(x(N),y(pts[N]),5,0,7);g.fill();
-  g.fillStyle=C['--muted'];g.font='10px "IBM Plex Mono",monospace';g.textAlign='left';g.fillText(dateStr(day-span),pad,h-4);g.textAlign='right';g.fillText(dateStr(day),w-pad,h-4);
-  $('skyLegend').textContent=(p.kind==='moon'?'최근 60일':'최근 1년')+' · 초록 순행 · 주황 역행';
+  g.fillStyle=C['--muted'];g.font='10px "Archivo",sans-serif';g.textAlign='left';g.fillText(dateStr(day-span),pad,h-4);g.textAlign='right';g.fillText(dateStr(day),w-pad,h-4);
+  $('skyLegend').textContent=(p.kind==='moon'?'최근 60일':'최근 1년')+' · 검정 순행 · 빨강 역행';
 }
 
 function readout(){
@@ -294,6 +303,5 @@ day=today();
 draw();
 })();
 </script>
-
 </body>
 </html>
