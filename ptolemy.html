@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프톨레마이오스의 하늘 기계</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html,body{margin:0}
+/* Layout: 청동 기계 판(캔버스) 하나가 주인공, 아래로 하늘 띠와 조작부, 설명은 좁은 단 */
+:root{
+  --bg:#0f1517; --panel:#161f22; --line:#2a383b; --fg:#e4e9e6; --muted:#93a39f;
+  --bronze:#c8955a; --verdigris:#5fb7a0; --retro:#e07a5f; --sun:#f0c25e;
+  --display:"Gowun Batang",ui-serif,Georgia,serif;
+  --body:"IBM Plex Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#eef1ef; --panel:#ffffff; --line:#d3dbd8; --fg:#1b2624; --muted:#5d6d69;
+  --bronze:#9a6528; --verdigris:#2b8a73; --retro:#c2502f; --sun:#c48a12; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#eef1ef; --panel:#ffffff; --line:#d3dbd8; --fg:#1b2624; --muted:#5d6d69;
+  --bronze:#9a6528; --verdigris:#2b8a73; --retro:#c2502f; --sun:#c48a12; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:22px}
+header{display:grid;gap:6px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--verdigris)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:22px;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
+@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}}
+.machine{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0}
+canvas{display:block;width:100%;height:auto}
+#orrery{aspect-ratio:1/1;max-width:100%}
+.side{display:grid;gap:14px;min-width:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.planets{display:flex;flex-wrap:wrap;gap:6px}
+.planets button,.ctl button,select{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+.planets button[aria-pressed="true"]{background:var(--verdigris);border-color:var(--verdigris);color:var(--bg);font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.readout{font-family:var(--mono);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+.readout dt{color:var(--muted)} .readout dd{margin:0;text-align:right}
+.pill{display:inline-block;font-family:var(--mono);font-size:12px;padding:2px 10px;border-radius:999px;border:1px solid var(--verdigris);color:var(--verdigris)}
+.pill.retro{border-color:var(--retro);color:var(--retro)}
+.toggles{display:grid;gap:6px;font-size:14px}
+.toggles label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.timebar{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+.timerow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.date{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:20px;color:var(--bronze);min-width:9ch}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
+.ctl button.play{background:var(--bronze);border-color:var(--bronze);color:var(--bg);font-weight:600;min-width:72px}
+input[type=range]{width:100%;accent-color:var(--bronze)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sky{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;min-width:0}
+.sky-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+#skystrip{aspect-ratio:6/1;max-width:100%}
+@media (max-width:520px){#skystrip{aspect-ratio:3.2/1}}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.notes section{min-width:0}
+.notes p{margin:0 0 10px;max-width:62ch}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:14px;width:100%}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+.caveat{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">『코스모스』 3장 · 지구 중심 우주</div>
+    <h1>프톨레마이오스의 하늘 기계</h1>
+    <p class="lede">지구를 가운데 두고, 행성은 큰 원(대원, deferent) 위를 도는 작은 원(주전원, epicycle)을 따라 움직입니다. 시간 막대를 움직여 행성이 어떻게 고리를 그리며 거꾸로 가는 것처럼 보이는지 확인해 보세요. 같은 하늘을 태양 중심으로 그린 <a href="copernicus.html" style="color:var(--verdigris)">코페르니쿠스의 태양계</a>와 비교해 보세요.</p>
+  </header>
+
+  <div class="stage">
+    <div class="machine"><canvas id="orrery" aria-label="지구 중심 행성 운동 모형"></canvas></div>
+    <div class="side">
+      <div class="box">
+        <div class="label">살펴볼 행성</div>
+        <div class="planets" id="planetBtns"></div>
+      </div>
+      <div class="box">
+        <div class="label">지구에서 본 위치</div>
+        <dl class="readout" id="readout"></dl>
+        <div id="motion"></div>
+      </div>
+      <div class="box toggles">
+        <div class="label">보이기</div>
+        <label><input type="checkbox" id="optAll" checked> 다른 행성도 함께</label>
+        <label><input type="checkbox" id="optTrail" checked> 지나온 궤적</label>
+        <label><input type="checkbox" id="optArms" checked> 대원·주전원 팔</label>
+        <label><input type="checkbox" id="optZodiac" checked> 황도 12궁 눈금</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="timebar">
+    <div class="timerow">
+      <div><div class="label">날짜</div><div class="date" id="dateOut">2026-01-01</div></div>
+      <div class="ctl">
+        <button class="play" id="playBtn" type="button">재생</button>
+        <label class="label" for="speed">속도</label>
+        <select id="speed">
+          <option value="1">하루 / 틱</option>
+          <option value="4" selected>4일 / 틱</option>
+          <option value="15">보름 / 틱</option>
+          <option value="60">두 달 / 틱</option>
+        </select>
+        <button type="button" id="resetBtn">오늘로</button>
+      </div>
+    </div>
+    <input type="range" id="time" min="0" max="10957" step="1" value="0" aria-label="시간 막대">
+    <div class="ticks"><span>2020</span><span>2025</span><span>2030</span><span>2035</span><span>2040</span><span>2045</span><span>2050</span></div>
+  </div>
+
+  <div class="sky">
+    <div class="sky-head">
+      <div class="label">지구에서 본 하늘 · 황경의 변화</div>
+      <div class="label" id="skyLegend">최근 1년</div>
+    </div>
+    <canvas id="skystrip" aria-label="선택한 행성의 황경 변화"></canvas>
+  </div>
+
+  <div class="notes">
+    <section>
+      <h2>장치가 하는 일</h2>
+      <p>프톨레마이오스(서기 2세기)는 『알마게스트』에서 행성마다 두 개의 원을 겹쳤습니다. 주전원의 중심은 대원을 따라 천천히 돌고, 행성은 주전원 위를 빠르게 돕니다. 둘이 합쳐지면 행성은 지구에서 볼 때 앞으로 가다가 잠시 멈추고, 거꾸로 갔다가 다시 앞으로 갑니다. 이것이 <b>역행</b>입니다.</p>
+      <p>바깥 행성(화성·목성·토성)은 주전원의 팔이 언제나 태양 쪽 방향과 나란합니다. 안쪽 행성(수성·금성)은 주전원의 중심이 언제나 태양과 같은 방향에 있습니다. 프톨레마이오스는 이 규칙을 관측에서 얻었지만 이유는 설명하지 못했습니다. 이유는 1,400년 뒤 코페르니쿠스가 내놓습니다.</p>
+    </section>
+    <section>
+      <h2>주전원 크기의 비밀</h2>
+      <p>각 행성의 <b>주전원 반지름 ÷ 대원 반지름</b>을 보면 프톨레마이오스의 값과 오늘날 태양 중심 모형에서 나오는 값이 거의 같습니다. 그의 기하학은 사실 지구와 행성의 궤도 비율을 그대로 담고 있었던 셈입니다.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>행성</th><th>프톨레마이오스</th><th>현대 궤도로 계산</th></tr></thead>
+          <tbody>
+            <tr><td>수성</td><td>0.375</td><td>0.387</td></tr>
+            <tr><td>금성</td><td>0.719</td><td>0.723</td></tr>
+            <tr><td>화성</td><td>0.658</td><td>0.656</td></tr>
+            <tr><td>목성</td><td>0.192</td><td>0.192</td></tr>
+            <tr><td>토성</td><td>0.108</td><td>0.105</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <h2>실제로 있었던 기계</h2>
+      <p>1901년 그리스 안티키테라섬 앞바다의 난파선에서 청동 톱니바퀴 장치가 건져졌습니다. 기원전 2~1세기에 만든 것으로 보이며, 30개가 넘는 톱니바퀴로 해와 달의 위치, 달의 위상, 일식 주기를 계산했습니다. 달이 빨라졌다 느려지는 움직임은 핀과 홈으로 된 톱니 한 쌍이 재현하는데, 원리상 주전원과 같은 효과를 냅니다.</p>
+      <p>이 장치는 프톨레마이오스보다 200년쯤 앞서 만들어졌고, 그보다 이전의 히파르코스 계열 이론에 기대고 있습니다. 행성을 보여 주던 톱니는 대부분 사라졌고, 앞판 글귀를 근거로 복원이 시도되고 있습니다.</p>
+    </section>
+  </div>
+  <p class="caveat">이 모형은 대원과 주전원만 씁니다. 프톨레마이오스는 여기에 이심원과 이퀀트(대원의 회전 속도가 균일하게 보이는 지구 밖의 점)를 더해 정확도를 높였지만, 여기서는 구조를 보이기 위해 뺐습니다. 그래서 실제 하늘과 며칠에서 몇 주 정도 어긋날 수 있습니다. 대원의 크기는 보기 좋게 정했고, 주전원의 비율만 실제 값을 따랐습니다.</p>
+</div>
+
+<script>
+(function(){
+const D2R=Math.PI/180;
+// J2000(2000-01-01 12:00) 기준 평균 황경과 공전 주기(일)
+const SUN_L0=280.46, YEAR=365.256;
+const P=[
+ {id:'moon',name:'달',L0:218.32,T:27.3216,kind:'moon',k:0.0875,anomL0:134.96,anomT:27.5546,R:0.13,col:'--fg'},
+ {id:'mercury',name:'수성',L0:252.25,T:87.969,kind:'inner',k:0.387,R:0.24,col:'--muted'},
+ {id:'venus',name:'금성',L0:181.98,T:224.701,kind:'inner',k:0.723,R:0.34,col:'--bronze'},
+ {id:'sun',name:'태양',kind:'sun',R:0.50,col:'--sun'},
+ {id:'mars',name:'화성',L0:355.45,T:686.98,kind:'outer',k:0.656,R:0.60,col:'--retro'},
+ {id:'jupiter',name:'목성',L0:34.40,T:4332.59,kind:'outer',k:0.192,R:0.76,col:'--bronze'},
+ {id:'saturn',name:'토성',L0:49.94,T:10759.22,kind:'outer',k:0.105,R:0.90,col:'--verdigris'}
+];
+const ZOD=['양','황소','쌍둥이','게','사자','처녀','천칭','전갈','궁수','염소','물병','물고기'];
+const START_JD=2458849.5; // 2020-01-01
+const J2000=2451545.0;
+let sel='mars', playing=false, day=0;
+const $=id=>document.getElementById(id);
+const orr=$('orrery'), sky=$('skystrip'), slider=$('time');
+let C={};
+function readColors(){const s=getComputedStyle(document.documentElement);['--bg','--panel','--line','--fg','--muted','--bronze','--verdigris','--retro','--sun'].forEach(v=>C[v]=s.getPropertyValue(v).trim());}
+readColors();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{readColors();draw();});
+new MutationObserver(()=>{readColors();draw();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+const norm=a=>((a%360)+360)%360;
+function jd(d){return START_JD+d;}
+function dateStr(d){
+  let J=jd(d)+0.5, Z=Math.floor(J), A=Z;
+  if(Z>=2299161){const al=Math.floor((Z-1867216.25)/36524.25);A=Z+1+al-Math.floor(al/4);}
+  const B=A+1524,Cc=Math.floor((B-122.1)/365.25),Dd=Math.floor(365.25*Cc),E=Math.floor((B-Dd)/30.6001);
+  const day=B-Dd-Math.floor(30.6001*E), m=E<14?E-1:E-13, y=m>2?Cc-4716:Cc-4715;
+  return y+'-'+String(m).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+}
+// 행성의 (대원 중심 각도, 주전원 각도, 비율) → 지구 중심 좌표 (대원 반지름 1 기준)
+function pos(p,d){
+  const t=jd(d)-J2000, Ls=norm(SUN_L0+360*t/YEAR);
+  if(p.kind==='sun') return {cx:0,cy:0,ca:Ls,ea:0,k:0,x:Math.cos(Ls*D2R),y:Math.sin(Ls*D2R)};
+  let ca,ea;
+  if(p.kind==='moon'){ca=norm(p.L0+360*t/p.T); ea=ca+norm(p.anomL0+360*t/p.anomT);}
+  else{const Lp=norm(p.L0+360*t/p.T); if(p.kind==='outer'){ca=Lp;ea=Ls;}else{ca=Ls;ea=Lp;}}
+  const cx=Math.cos(ca*D2R), cy=Math.sin(ca*D2R);
+  return {cx,cy,ca,ea,k:p.k,x:cx+p.k*Math.cos(ea*D2R),y:cy+p.k*Math.sin(ea*D2R)};
+}
+function lon(p,d){const q=pos(p,d);return norm(Math.atan2(q.y,q.x)/D2R);}
+// 표시 반지름: 대원 R, 주전원 R*k 를 화면 안에 들어오도록 조정
+function scaleFor(p){return p.R/(1+(p.k||0)*0.6);}
+
+function fit(cv){const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);return {g,w:r.width,h:r.height};}
+
+function drawOrrery(){
+  const {g,w,h}=fit(orr), cx=w/2, cy=h/2, S=Math.min(w,h)/2*0.92;
+  g.clearRect(0,0,w,h);
+  // 황도 눈금
+  if($('optZodiac').checked){
+    g.strokeStyle=C['--line'];g.lineWidth=1;g.beginPath();g.arc(cx,cy,S,0,7);g.stroke();
+    g.font='11px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--muted'];g.textAlign='center';g.textBaseline='middle';
+    for(let i=0;i<12;i++){const a=-(i*30)*D2R;g.beginPath();g.moveTo(cx+Math.cos(a)*S*0.97,cy+Math.sin(a)*S*0.97);g.lineTo(cx+Math.cos(a)*S,cy+Math.sin(a)*S);g.stroke();
+      const b=-(i*30+15)*D2R;g.fillText(ZOD[i],cx+Math.cos(b)*S*1.04,cy+Math.sin(b)*S*1.04);}
+  }
+  const list=$('optAll').checked?P:P.filter(p=>p.id===sel||p.id==='sun');
+  // 궤적
+  const sp=P.find(p=>p.id===sel);
+  if($('optTrail').checked&&sp.kind!=='sun'){
+    const span=sp.kind==='moon'?60:Math.min(Math.max(sp.T||400,780),3*365);
+    const r=scaleFor(sp)*S;g.strokeStyle=C[sp.col];g.globalAlpha=.55;g.lineWidth=1.2;g.beginPath();
+    for(let i=0;i<=500;i++){const d=day-span+span*i/500;const q=pos(sp,d);const X=cx+q.x*r,Y=cy-q.y*r;i?g.lineTo(X,Y):g.moveTo(X,Y);}g.stroke();g.globalAlpha=1;
+  }
+  for(const p of list){
+    const q=pos(p,day), r=scaleFor(p)*S, focus=p.id===sel;
+    const ex=cx+q.cx*r, ey=cy-q.cy*r, px=cx+q.x*r, py=cy-q.y*r;
+    if(p.kind!=='sun'){
+      g.strokeStyle=C['--line'];g.lineWidth=focus?1.4:1;g.setLineDash(focus?[]:[3,4]);
+      g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();g.setLineDash([]);
+      if(focus||$('optAll').checked){g.strokeStyle=focus?C['--verdigris']:C['--line'];g.beginPath();g.arc(ex,ey,r*p.k,0,7);g.stroke();}
+      if($('optArms').checked&&focus){g.strokeStyle=C['--bronze'];g.lineWidth=2;g.beginPath();g.moveTo(cx,cy);g.lineTo(ex,ey);g.lineTo(px,py);g.stroke();
+        g.fillStyle=C['--bronze'];g.beginPath();g.arc(ex,ey,3,0,7);g.fill();}
+    }else{g.strokeStyle=C['--line'];g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();}
+    if(focus){g.strokeStyle=C['--fg'];g.globalAlpha=.25;g.lineWidth=1;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+(px-cx)*3,cy+(py-cy)*3);g.stroke();g.globalAlpha=1;}
+    g.fillStyle=C[p.col];g.beginPath();g.arc(px,py,p.kind==='sun'?8:(focus?6:4),0,7);g.fill();
+    if(focus||p.kind==='sun'){g.font='600 12px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='left';g.fillText(p.name,px+9,py-9);}
+  }
+  // 지구
+  g.fillStyle=C['--verdigris'];g.beginPath();g.arc(cx,cy,7,0,7);g.fill();
+  g.strokeStyle=C['--bg'];g.lineWidth=2;g.stroke();
+  g.font='600 12px "IBM Plex Sans KR",sans-serif';g.fillStyle=C['--fg'];g.textAlign='center';g.fillText('지구',cx,cy+20);
+}
+
+function drawSky(){
+  const {g,w,h}=fit(sky), p=P.find(x=>x.id===sel);
+  const span=p.kind==='moon'?60:365, pad=24, top=8, bot=h-18;
+  g.clearRect(0,0,w,h);
+  // 연속된 황경 (풀어서)
+  const N=300, pts=[];let prev=null,acc=0;
+  for(let i=0;i<=N;i++){const d=day-span+span*i/N;let L=lon(p,d);if(prev!==null){let dl=L-prev;if(dl>180)dl-=360;if(dl<-180)dl+=360;acc+=dl;}else acc=L;prev=L;pts.push(acc);}
+  let mn=Math.min(...pts),mx=Math.max(...pts);if(mx-mn<20){const m=(mx+mn)/2;mn=m-10;mx=m+10;}
+  const y=v=>bot-(v-mn)/(mx-mn)*(bot-top), x=i=>pad+(w-pad*2)*i/N;
+  g.strokeStyle=C['--line'];g.lineWidth=1;
+  for(let v=Math.ceil(mn/30)*30;v<=mx;v+=30){g.beginPath();g.moveTo(pad,y(v));g.lineTo(w-pad,y(v));g.stroke();g.fillStyle=C['--muted'];g.font='10px "IBM Plex Sans KR",sans-serif';g.textAlign='left';g.fillText(ZOD[Math.floor(norm(v)/30)%12],w-pad+3,y(v)-6);}
+  g.lineWidth=2.2;
+  for(let i=1;i<=N;i++){g.strokeStyle=pts[i]<pts[i-1]?C['--retro']:C['--verdigris'];g.beginPath();g.moveTo(x(i-1),y(pts[i-1]));g.lineTo(x(i),y(pts[i]));g.stroke();}
+  g.fillStyle=C[p.col];g.beginPath();g.arc(x(N),y(pts[N]),5,0,7);g.fill();
+  g.fillStyle=C['--muted'];g.font='10px "IBM Plex Mono",monospace';g.textAlign='left';g.fillText(dateStr(day-span),pad,h-4);g.textAlign='right';g.fillText(dateStr(day),w-pad,h-4);
+  $('skyLegend').textContent=(p.kind==='moon'?'최근 60일':'최근 1년')+' · 초록 순행 · 주황 역행';
+}
+
+function readout(){
+  const p=P.find(x=>x.id===sel), L=lon(p,day), L2=lon(p,day+1);
+  let dl=L2-L;if(dl>180)dl-=360;if(dl<-180)dl+=360;
+  const sun=lon(P[3],day);let el=Math.abs(L-sun);if(el>180)el=360-el;
+  const sign=ZOD[Math.floor(L/30)]+'자리';
+  $('readout').innerHTML=`<dt>황경</dt><dd>${L.toFixed(1)}°</dd><dt>별자리</dt><dd>${sign}</dd><dt>하루 이동</dt><dd>${dl>=0?'+':''}${dl.toFixed(3)}°</dd>`+(p.kind==='sun'?'':`<dt>태양과의 각</dt><dd>${el.toFixed(1)}°</dd>`);
+  $('motion').innerHTML=p.kind==='sun'||p.kind==='moon'?'<span class="pill">늘 순행</span>':(dl<0?'<span class="pill retro">역행 중</span>':'<span class="pill">순행 중</span>');
+}
+
+function draw(){slider.value=Math.round(day);$('dateOut').textContent=dateStr(day);drawOrrery();drawSky();readout();}
+
+// 행성 버튼
+const btns=$('planetBtns');
+P.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.name;b.id='pl-'+p.id;b.setAttribute('aria-pressed',p.id===sel);b.onclick=()=>{sel=p.id;[...btns.children].forEach(c=>c.setAttribute('aria-pressed',c===b));draw();};btns.appendChild(b);});
+slider.addEventListener('input',()=>{day=+slider.value;draw();});
+['optAll','optTrail','optArms','optZodiac'].forEach(id=>$(id).addEventListener('change',draw));
+const today=()=>{const now=Date.now()/86400000+2440587.5;return Math.max(0,Math.min(10957,Math.floor(now-START_JD)));};
+$('resetBtn').onclick=()=>{day=today();draw();};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let last=0;
+function loop(ts){if(!playing)return;if(ts-last>(reduce?200:40)){last=ts;day+= +$('speed').value;if(day>10957)day=0;draw();}requestAnimationFrame(loop);}
+$('playBtn').onclick=()=>{playing=!playing;$('playBtn').textContent=playing?'멈춤':'재생';if(playing)requestAnimationFrame(loop);};
+window.addEventListener('resize',draw);
+day=today();
+draw();
+})();
+</script>
+
+</body>
+</html>

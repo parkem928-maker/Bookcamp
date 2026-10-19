@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>케플러의 우주 신비</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html,body{margin:0}
+/* Layout: 1596년 『우주의 신비』 판화를 손으로 돌려 보는 3D 판 하나, 오른쪽에 층 목록 */
+:root{
+  --bg:#14121a; --panel:#1c1a24; --line:#312d3e; --fg:#ece9f2; --muted:#a19cb0;
+  --gold:#d9a94e; --violet:#a58be0; --teal:#5fb7a0; --rose:#e07a8a; --blue:#7fb3e0; --sand:#c8a87a;
+  --display:"Gowun Batang",ui-serif,Georgia,serif;
+  --body:"IBM Plex Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
+  --gold:#a67712; --violet:#6a4fb8; --teal:#2b8a73; --rose:#b8435a; --blue:#2f6fa8; --sand:#8a6630; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
+  --gold:#a67712; --violet:#6a4fb8; --teal:#2b8a73; --rose:#b8435a; --blue:#2f6fa8; --sand:#8a6630; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:22px}
+header{display:grid;gap:6px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:22px;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+a{color:var(--blue)}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+@media (max-width:820px){.stage{grid-template-columns:minmax(0,1fr)}}
+.machine{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0;position:relative}
+#view{display:block;width:100%;aspect-ratio:1/1;max-width:100%;cursor:grab;touch-action:none;border-radius:8px}
+#view:active{cursor:grabbing}
+.hint{position:absolute;left:20px;bottom:16px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.side{display:grid;gap:14px;min-width:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+ol.layers{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+ol.layers li{display:flex;align-items:center;gap:10px;padding:4px 6px;border-radius:6px;font-size:14px}
+ol.layers li.off{opacity:.35}
+ol.layers li.solid{padding-left:22px;color:var(--muted);font-size:13px}
+.sw{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid currentColor}
+li.solid .sw{border-radius:2px;background:currentColor}
+input[type=range]{width:100%;accent-color:var(--violet)}
+.row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.toggles label{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:14px}
+button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.notes section{min-width:0}
+.notes p{margin:0 0 10px;max-width:62ch}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:14px;width:100%}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+td.bad{color:var(--rose)} td.ok{color:var(--teal)}
+.caveat{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.fallback{padding:40px 16px;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">『코스모스』 3장 · 1596년 『우주의 신비』</div>
+    <h1>케플러의 우주 신비</h1>
+    <p class="lede">왜 행성은 여섯 개뿐일까? 스물다섯 살의 케플러는 그 답을 정다면체에서 찾았습니다. 완전한 입체는 정확히 다섯 개뿐이고, 그 다섯이 여섯 행성의 구 사이에 하나씩 끼워져 있다는 것입니다. 드래그해 돌려 보고, 막대로 바깥 층부터 벗겨 보세요.</p>
+  </header>
+
+  <div class="stage">
+    <div class="machine">
+      <canvas id="view" aria-label="정다면체 사이에 끼워진 여섯 행성의 구"></canvas>
+      <div class="hint">드래그해서 돌리기</div>
+    </div>
+    <div class="side">
+      <div class="box">
+        <div class="label">층 벗기기</div>
+        <input type="range" id="peel" min="0" max="5" step="1" value="0" aria-label="바깥 층부터 벗기기">
+        <div class="row"><span>토성부터 전부</span><span>수성만</span></div>
+      </div>
+      <div class="box">
+        <div class="label">바깥에서 안쪽으로</div>
+        <ol class="layers" id="layers"></ol>
+      </div>
+      <div class="box toggles">
+        <label><input type="checkbox" id="optSpin" checked> 천천히 회전</label>
+        <label><input type="checkbox" id="optFaces" checked> 입체의 면 채우기</label>
+        <button type="button" id="resetBtn">처음 모습으로</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <section>
+      <h2>설계의 논리</h2>
+      <p>각 정다면체는 바깥 구에 꼭짓점이 닿고(외접), 안쪽 구에 면이 닿습니다(내접). 그러니 두 구의 크기 비는 입체의 모양만으로 정해집니다. 정육면체와 정팔면체는 1 : 0.577, 정사면체는 1 : 0.333, 정십이면체와 정이십면체는 1 : 0.795입니다.</p>
+      <p>케플러는 이것을 신이 우주를 설계한 기하학적 청사진이라고 믿었습니다. 피타고라스의 수 신비주의와 플라톤의 『티마이오스』가 그대로 살아 있는 생각입니다.</p>
+    </section>
+    <section>
+      <h2>얼마나 맞았나</h2>
+      <p>이웃한 두 행성의 궤도 크기 비를 비교해 보면, 놀랄 만큼 가깝지만 맞지는 않습니다.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>이웃한 궤도</th><th>사이의 입체</th><th>입체가 정한 비</th><th>코페르니쿠스 값</th></tr></thead>
+          <tbody>
+            <tr><td>토성 / 목성</td><td>정육면체</td><td>1.73</td><td class="ok">1.76</td></tr>
+            <tr><td>목성 / 화성</td><td>정사면체</td><td>3.00</td><td class="bad">3.43</td></tr>
+            <tr><td>화성 / 지구</td><td>정십이면체</td><td>1.26</td><td class="bad">1.52</td></tr>
+            <tr><td>지구 / 금성</td><td>정이십면체</td><td>1.26</td><td class="bad">1.39</td></tr>
+            <tr><td>금성 / 수성</td><td>정팔면체</td><td>1.41</td><td class="bad">1.91</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <h2>어긋남이 튀코에게로 이끌다</h2>
+      <p>케플러는 구를 두께 있는 껍질로 바꾸어 행성이 가까워졌다 멀어지는 폭을 담았고, 그러자 차이가 상당히 줄었습니다. 그래도 남는 어긋남은 코페르니쿠스의 관측값이 부정확한 탓이라고 보았습니다.</p>
+      <p>더 정확한 관측이 필요했고, 당시 그런 자료를 가진 사람은 튀코 브라헤뿐이었습니다. 케플러가 1600년 프라하로 튀코를 찾아간 데에는 자기 이론을 증명하려는 목적이 있었습니다. 그런데 튀코의 자료는 끝내 그 이론을 무너뜨렸고, 그 자리에 <a href="kepler-orbits.html">타원 궤도</a>가 들어섰습니다.</p>
+    </section>
+  </div>
+  <p class="caveat">구의 크기는 토성을 1로 놓고 입체의 기하학만으로 계산한 얇은 구 모형입니다. 케플러는 수성 자리에서 정팔면체 안쪽 구 대신 가운데 정사각형 단면에 내접하는 원을 썼는데, 여기서도 그 방식을 따랐습니다. 입체의 방향은 보기 좋게 정했습니다. 함께 보기: <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const cv=document.getElementById('view');
+if(!window.THREE){cv.outerHTML='<div class="fallback">3D 라이브러리를 불러오지 못했습니다. 페이지를 새로 고쳐 주세요.</div>';return;}
+const $=id=>document.getElementById(id);
+const tok=()=>{const s=getComputedStyle(document.documentElement);const g=v=>s.getPropertyValue(v).trim();return {bg:g('--bg'),panel:g('--panel'),fg:g('--fg'),muted:g('--muted'),gold:g('--gold'),violet:g('--violet'),teal:g('--teal'),rose:g('--rose'),blue:g('--blue'),sand:g('--sand')};};
+// 바깥 → 안쪽
+const r3=Math.sqrt(3), ratioDodIco=0.794654;
+const R={saturn:1}; R.jupiter=R.saturn/r3; R.mars=R.jupiter/3; R.earth=R.mars*ratioDodIco; R.venus=R.earth*ratioDodIco; R.mercury=R.venus/Math.SQRT2;
+const L=[
+ {k:'planet',id:'saturn',name:'토성의 구',r:R.saturn,c:'sand'},
+ {k:'solid',id:'cube',name:'정육면체',r:R.saturn,c:'gold'},
+ {k:'planet',id:'jupiter',name:'목성의 구',r:R.jupiter,c:'sand'},
+ {k:'solid',id:'tetra',name:'정사면체',r:R.jupiter,c:'rose'},
+ {k:'planet',id:'mars',name:'화성의 구',r:R.mars,c:'rose'},
+ {k:'solid',id:'dodeca',name:'정십이면체',r:R.mars,c:'violet'},
+ {k:'planet',id:'earth',name:'지구의 구',r:R.earth,c:'teal'},
+ {k:'solid',id:'icosa',name:'정이십면체',r:R.earth,c:'blue'},
+ {k:'planet',id:'venus',name:'금성의 구',r:R.venus,c:'gold'},
+ {k:'solid',id:'octa',name:'정팔면체',r:R.venus,c:'teal'},
+ {k:'planet',id:'mercury',name:'수성의 구',r:R.mercury,c:'fg'}
+];
+const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(32,1,0.001,50);
+const root=new THREE.Group();scene.add(root);
+function geomFor(id,r){
+  if(id==='cube'){const s=2*r/r3;return new THREE.BoxGeometry(s,s,s);}
+  if(id==='tetra')return new THREE.TetrahedronGeometry(r);
+  if(id==='dodeca')return new THREE.DodecahedronGeometry(r);
+  if(id==='icosa')return new THREE.IcosahedronGeometry(r);
+  if(id==='octa')return new THREE.OctahedronGeometry(r);
+}
+const objs=[];
+function build(){
+  while(root.children.length)root.remove(root.children[0]);objs.length=0;
+  const T=tok();scene.background=new THREE.Color(T.panel);
+  L.forEach((l,i)=>{
+    const g=new THREE.Group(), col=new THREE.Color(T[l.c]);
+    if(l.k==='planet'){
+      const sp=new THREE.Mesh(new THREE.SphereGeometry(l.r,48,32),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.07,depthWrite:false}));
+      g.add(sp);
+      for(const rot of [[0,0,0],[Math.PI/2,0,0]]){
+        const pts=[];for(let a=0;a<=128;a++){const t=a/128*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(t)*l.r,0,Math.sin(t)*l.r));}
+        const ring=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:rot[0]?.35:.9}));
+        ring.rotation.set(...rot);g.add(ring);
+      }
+    }else{
+      const geo=geomFor(l.id,l.r);
+      g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:col})));
+      const face=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.09,side:THREE.DoubleSide,depthWrite:false}));
+      face.userData.face=true;g.add(face);
+      if(l.id==='tetra')g.rotation.set(0.3,0.5,0); if(l.id==='dodeca')g.rotation.set(0.2,0,0.1);
+    }
+    root.add(g);objs.push(g);
+  });
+  // 태양
+  root.add(new THREE.Mesh(new THREE.SphereGeometry(R.mercury*0.12,16,12),new THREE.MeshBasicMaterial({color:new THREE.Color(T.gold)})));
+  applyState();
+}
+const ol=$('layers');
+function list(){const T=tok();ol.innerHTML='';L.forEach(l=>{const li=document.createElement('li');li.className=l.k;li.innerHTML=`<span class="sw" style="color:${T[l.c]}"></span><span>${l.name}</span>`;ol.appendChild(li);});}
+let peel=0, targetDist=3.6, dist=3.6;
+function applyState(){
+  const first=peel*2;
+  objs.forEach((g,i)=>{g.visible=i>=first;g.children.forEach(c=>{if(c.userData.face)c.visible=$('optFaces').checked;});});
+  [...ol.children].forEach((li,i)=>li.classList.toggle('off',i<first));
+  targetDist=L[first].r*3.6;
+}
+function size(){const w=cv.clientWidth;renderer.setSize(w,w,false);camera.aspect=1;camera.updateProjectionMatrix();}
+let rx=-0.45, ry=0.6, drag=null;
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,rx,ry};cv.setPointerCapture(e.pointerId);});
+cv.addEventListener('pointermove',e=>{if(!drag)return;ry=drag.ry+(e.clientX-drag.x)*0.008;rx=Math.max(-1.5,Math.min(1.5,drag.rx+(e.clientY-drag.y)*0.008));});
+cv.addEventListener('pointerup',()=>drag=null);cv.addEventListener('pointercancel',()=>drag=null);
+$('peel').addEventListener('input',e=>{peel=+e.target.value;applyState();});
+$('optFaces').addEventListener('change',applyState);
+$('resetBtn').onclick=()=>{peel=0;$('peel').value=0;rx=-0.45;ry=0.6;applyState();};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce)$('optSpin').checked=false;
+function frame(){
+  if($('optSpin').checked&&!drag)ry+=0.003;
+  dist+=(targetDist-dist)*0.08;
+  root.rotation.set(rx,ry,0);camera.position.set(0,0,dist);camera.lookAt(0,0,0);
+  renderer.render(scene,camera);requestAnimationFrame(frame);
+}
+const rebuild=()=>{list();build();};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rebuild);
+new MutationObserver(rebuild).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+window.addEventListener('resize',size);
+list();size();build();frame();
+})();
+</script>
+
+</body>
+</html>

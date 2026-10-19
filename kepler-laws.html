@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>케플러의 세 법칙</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html,body{margin:0}
+/* Layout: 법칙 하나에 판 하나. 왼쪽 그림, 오른쪽 조작과 읽을거리. 케플러 페이지들의 보라 강조색 */
+:root{
+  --bg:#14121a; --panel:#1c1a24; --line:#312d3e; --fg:#ece9f2; --muted:#a19cb0;
+  --violet:#a58be0; --gold:#e8b54d; --sight:#7fb3e0; --rose:#e07a5f; --teal:#5fb7a0; --bronze:#c8955a;
+  --display:"Gowun Batang",ui-serif,Georgia,serif;
+  --body:"IBM Plex Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
+  --violet:#6a4fb8; --gold:#a67712; --sight:#2f6fa8; --rose:#c2502f; --teal:#2b8a73; --bronze:#9a6528; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f2f0f5; --panel:#ffffff; --line:#dad6e2; --fg:#1d1a26; --muted:#615b72;
+  --violet:#6a4fb8; --gold:#a67712; --sight:#2f6fa8; --rose:#c2502f; --teal:#2b8a73; --bronze:#9a6528; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:28px}
+header{display:grid;gap:6px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.2;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:24px;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+a{color:var(--sight)}
+.law{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start;border-top:1px solid var(--line);padding-top:22px}
+@media (max-width:780px){.law{grid-template-columns:minmax(0,1fr)}}
+.board{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0}
+canvas{display:block;width:100%;height:auto;max-width:100%}
+.c1,.c2{aspect-ratio:4/3}
+.c3{aspect-ratio:4/3}
+.text{display:grid;gap:12px;min-width:0}
+.no{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--violet)}
+.text p{margin:0;max-width:62ch}
+.formula{font-family:var(--display);font-size:20px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-align:center}
+.ctl{display:grid;gap:4px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--violet)}
+input:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.readout{font-family:var(--mono);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.readout dt{color:var(--muted)} .readout dd{margin:0;text-align:right}
+button{font:inherit;font-size:14px;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;justify-self:start}
+.caveat{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">『코스모스』 3장 · 1609년과 1619년</div>
+    <h1>케플러의 세 법칙</h1>
+    <p class="lede">튀코의 관측 20년과 케플러의 계산 10여 년이 남긴 세 문장입니다. 각 법칙마다 막대를 움직여, 무엇이 변하고 무엇이 변하지 않는지 확인해 보세요. 법칙은 언제나 변하지 않는 쪽에 있습니다.</p>
+  </header>
+
+  <section class="law" aria-labelledby="h1law">
+    <div class="board"><canvas id="cv1" class="c1" aria-label="두 초점과 실로 그리는 타원"></canvas></div>
+    <div class="text">
+      <div class="no">제1법칙 · 1609년 『새로운 천문학』</div>
+      <h2 id="h1law">행성은 태양을 한 초점으로 하는 타원을 돈다</h2>
+      <p>압정 두 개에 실 고리를 걸고 연필로 당기며 돌리면 타원이 됩니다. 연필이 어디에 있든 두 초점까지의 거리를 더한 값(r₁ + r₂)은 늘 같습니다. 태양은 그중 한 초점에 있고, 다른 초점은 비어 있습니다.</p>
+      <div class="formula">r₁ + r₂ = 2a (늘 일정)</div>
+      <div class="ctl">
+        <label class="label" for="e1">이심률 e</label>
+        <input type="range" id="e1" min="0" max="0.9" step="0.01" value="0.5">
+      </div>
+      <dl class="readout" id="ro1"></dl>
+      <p>이심률을 0으로 내리면 두 초점이 한 점에 겹쳐 원이 됩니다. 원은 타원의 특별한 경우일 뿐이었습니다. 2천 년 동안 믿어 온 완전한 원이 사실은 예외였던 셈입니다.</p>
+    </div>
+  </section>
+
+  <section class="law" aria-labelledby="h2law">
+    <div class="board"><canvas id="cv2" class="c2" aria-label="같은 시간에 같은 넓이를 쓸고 가는 행성"></canvas></div>
+    <div class="text">
+      <div class="no">제2법칙 · 1609년 『새로운 천문학』</div>
+      <h2 id="h2law">같은 시간 동안 같은 넓이를 쓸고 간다</h2>
+      <p>태양과 행성을 잇는 선이 한 해의 8분의 1 동안 쓸고 간 부채꼴을 번갈아 칠했습니다. 태양 가까이의 부채꼴은 짧고 넓고, 멀리 있는 부채꼴은 길고 좁지만 넓이는 모두 같습니다. 그래서 행성은 태양에 가까울수록 빨라집니다.</p>
+      <div class="formula">넓이 ÷ 시간 = 일정</div>
+      <div class="ctl">
+        <label class="label" for="e2">이심률 e</label>
+        <input type="range" id="e2" min="0" max="0.8" step="0.01" value="0.5">
+      </div>
+      <dl class="readout" id="ro2"></dl>
+      <p>지구도 그렇습니다. 지구는 1월 초에 태양에 가장 가까워 가장 빨리 돌고, 7월 초에 가장 멀어 가장 느리게 돕니다. 그래서 북반구의 겨울 반년이 여름 반년보다 며칠 짧습니다.</p>
+    </div>
+  </section>
+
+  <section class="law" aria-labelledby="h3law">
+    <div class="board"><canvas id="cv3" class="c3" aria-label="공전 주기와 궤도 크기의 관계"></canvas></div>
+    <div class="text">
+      <div class="no">제3법칙 · 1619년 『세계의 조화』</div>
+      <h2 id="h3law">주기의 제곱은 거리의 세제곱에 비례한다</h2>
+      <p>여섯 행성을 '거리'와 '주기'의 로그 눈금 위에 놓으면 한 직선 위에 정확히 늘어섭니다. 기울기는 3/2입니다. 거리가 4배가 되면 주기는 8배가 됩니다. 멀리 있는 행성은 갈 길도 길고 걸음도 느립니다.</p>
+      <div class="formula">T² = a³ (T는 년, a는 AU)</div>
+      <div class="ctl">
+        <label class="label" for="a3">가상의 행성 거리 a</label>
+        <input type="range" id="a3" min="-0.6" max="1.6" step="0.01" value="0.477">
+      </div>
+      <dl class="readout" id="ro3"></dl>
+      <button type="button" id="race">행성 경주 보기</button>
+      <p>정다면체 모형은 틀렸지만, 행성들 사이의 수학적 조화를 찾으려던 집념은 이 법칙에 닿았습니다. 70년 뒤 뉴턴은 이 세 법칙에서 만유인력을 이끌어 냅니다.</p>
+    </div>
+  </section>
+
+  <p class="caveat">그림은 법칙을 보이기 위해 이심률을 과장했습니다. 실제 행성의 이심률은 대부분 0.1보다 작아 원에 가깝습니다. 함께 보기: <a href="kepler-orbits.html">케플러의 타원 궤도</a> · <a href="kepler-solids.html">케플러의 우주 신비</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a> · <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+let C={};
+function readColors(){const s=getComputedStyle(document.documentElement);['--bg','--panel','--line','--fg','--muted','--violet','--gold','--sight','--rose','--teal','--bronze'].forEach(v=>C[v]=s.getPropertyValue(v).trim());}
+readColors();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readColors);
+new MutationObserver(readColors).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+function fit(cv){const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);return {g,w:r.width,h:r.height};}
+const kep=(M,e)=>{let E=M+e*Math.sin(M);for(let i=0;i<10;i++)E-=(E-e*Math.sin(E)-M)/(1-e*Math.cos(E));return E;};
+const font=(s,w)=>`${w||400} ${s}px "IBM Plex Sans KR",sans-serif`;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let t0=performance.now();
+
+// ---------- 제1법칙 ----------
+function law1(t){
+  const {g,w,h}=fit($('cv1')), e=+$('e1').value;
+  const a=Math.min(w*0.42,h*0.42/Math.sqrt(1-Math.min(e,0.6)**2)*0.9), b=a*Math.sqrt(1-e*e), c=a*e, cx=w/2, cy=h/2;
+  g.clearRect(0,0,w,h);
+  // 원 비교
+  g.setLineDash([4,5]);g.strokeStyle=C['--line'];g.lineWidth=1;g.beginPath();g.ellipse(cx,cy,a,a,0,0,7);g.stroke();g.setLineDash([]);
+  // 연필이 그려 온 자취
+  const th=reduce?2.2:(t/1600)%(Math.PI*2);
+  g.strokeStyle=C['--violet'];g.lineWidth=2.2;g.beginPath();g.ellipse(cx,cy,a,b,0,0,th);g.stroke();
+  g.strokeStyle=C['--violet'];g.globalAlpha=.25;g.beginPath();g.ellipse(cx,cy,a,b,0,th,Math.PI*2);g.stroke();g.globalAlpha=1;
+  const px=cx+a*Math.cos(th), py=cy+b*Math.sin(th), f1={x:cx+c,y:cy}, f2={x:cx-c,y:cy};
+  // 실
+  g.strokeStyle=C['--gold'];g.lineWidth=1.6;g.beginPath();g.moveTo(f1.x,f1.y);g.lineTo(px,py);g.stroke();
+  g.strokeStyle=C['--sight'];g.beginPath();g.moveTo(f2.x,f2.y);g.lineTo(px,py);g.stroke();
+  g.strokeStyle=C['--muted'];g.lineWidth=1;g.beginPath();g.moveTo(f1.x,f1.y);g.lineTo(f2.x,f2.y);g.stroke();
+  // 초점과 태양
+  g.fillStyle=C['--gold'];g.beginPath();g.arc(f1.x,f1.y,9,0,7);g.fill();
+  g.strokeStyle=C['--fg'];g.lineWidth=1.5;g.beginPath();g.arc(f2.x,f2.y,5,0,7);g.stroke();
+  g.fillStyle=C['--fg'];g.beginPath();g.arc(px,py,6,0,7);g.fill();
+  g.font=font(12,600);g.textAlign='center';g.fillStyle=C['--fg'];
+  g.fillText('태양 (초점)',f1.x,f1.y+26);g.fillText('빈 초점',f2.x,f2.y+22);
+  const r1=Math.hypot(px-f1.x,py-f1.y)/a, r2=Math.hypot(px-f2.x,py-f2.y)/a;
+  g.font=font(13,600);g.fillStyle=C['--gold'];g.fillText('r₁',(f1.x+px)/2+10,(f1.y+py)/2);
+  g.fillStyle=C['--sight'];g.fillText('r₂',(f2.x+px)/2-10,(f2.y+py)/2);
+  $('ro1').innerHTML=`<dt>r₁ (태양까지)</dt><dd>${r1.toFixed(3)} a</dd><dt>r₂ (빈 초점까지)</dt><dd>${r2.toFixed(3)} a</dd><dt>r₁ + r₂</dt><dd><b>${(r1+r2).toFixed(3)} a</b></dd><dt>가장 가까울 때 / 멀 때</dt><dd>${(1-e).toFixed(2)} a / ${(1+e).toFixed(2)} a</dd>`;
+}
+
+// ---------- 제2법칙 ----------
+function law2(t){
+  const {g,w,h}=fit($('cv2')), e=+$('e2').value;
+  const a=Math.min(w*0.40,h*0.44/Math.sqrt(1-e*e)), b=a*Math.sqrt(1-e*e), cx=w/2+a*e*0.5, cy=h/2, sx=cx+a*e;
+  const P=(M)=>{const E=kep(M,e);return {x:cx+a*Math.cos(E),y:cy+b*Math.sin(E)};};
+  g.clearRect(0,0,w,h);
+  const n=8, areas=[];
+  for(let i=0;i<n;i++){
+    g.beginPath();g.moveTo(sx,cy);let A=0,prev={x:sx,y:cy};const pts=[];
+    for(let j=0;j<=40;j++){const q=P(2*Math.PI*(i+j/40)/n);g.lineTo(q.x,q.y);pts.push(q);}
+    g.closePath();g.fillStyle=i%2?C['--sight']:C['--violet'];g.globalAlpha=i%2?.16:.28;g.fill();g.globalAlpha=1;
+    for(let j=1;j<pts.length;j++)A+=Math.abs((pts[j-1].x-sx)*(pts[j].y-cy)-(pts[j].x-sx)*(pts[j-1].y-cy))/2;
+    areas.push(A/(Math.PI*a*b));
+  }
+  g.strokeStyle=C['--violet'];g.lineWidth=2;g.beginPath();g.ellipse(cx,cy,a,b,0,0,7);g.stroke();
+  // 움직이는 행성: 평균 근점 이각은 시간에 비례
+  const M=reduce?1:((t/5000)%1)*2*Math.PI, E=kep(M,e), q=P(M);
+  g.strokeStyle=C['--fg'];g.lineWidth=1.4;g.beginPath();g.moveTo(sx,cy);g.lineTo(q.x,q.y);g.stroke();
+  g.fillStyle=C['--gold'];g.beginPath();g.arc(sx,cy,9,0,7);g.fill();
+  g.fillStyle=C['--fg'];g.beginPath();g.arc(q.x,q.y,6,0,7);g.fill();
+  const r=1-e*Math.cos(E), v=Math.sqrt(2/r-1), vmax=Math.sqrt((1+e)/(1-e));
+  // 속도 막대
+  const bw=Math.min(160,w*0.35), bx=14, by=h-22;
+  g.fillStyle=C['--line'];g.fillRect(bx,by,bw,8);g.fillStyle=C['--rose'];g.fillRect(bx,by,bw*v/vmax,8);
+  g.font=font(11);g.fillStyle=C['--muted'];g.textAlign='left';g.fillText('지금 속도',bx,by-6);
+  g.textAlign='center';g.font=font(11);g.fillText('근일점',cx+a+4>w-30?cx+a-20:cx+a+4,cy-10);g.fillText('원일점',cx-a+20,cy-10);
+  const mn=Math.min(...areas), mx=Math.max(...areas);
+  $('ro2').innerHTML=`<dt>부채꼴 하나의 넓이</dt><dd>${(mn*100).toFixed(1)}% ~ ${(mx*100).toFixed(1)}%</dd><dt>태양까지 거리</dt><dd>${r.toFixed(2)} a</dd><dt>지금 속도 (평균 대비)</dt><dd>${v.toFixed(2)} 배</dd><dt>가장 빠를 때 ÷ 느릴 때</dt><dd>${((1+e)/(1-e)).toFixed(2)} 배</dd>`;
+}
+
+// ---------- 제3법칙 ----------
+const PL=[['수성',0.387],['금성',0.723],['지구',1],['화성',1.524],['목성',5.203],['토성',9.537]];
+let raceMode=false;
+function law3(t){
+  const {g,w,h}=fit($('cv3')), la=+$('a3').value, A=Math.pow(10,la), T=Math.pow(A,1.5);
+  g.clearRect(0,0,w,h);
+  if(raceMode){
+    const cx=w/2, cy=h/2, R=Math.min(w,h)*0.46, rs=a=>R*Math.sqrt(a/10.2);
+    const yrs=reduce?3:(t/1000)*0.25; // 1초에 0.25년
+    g.fillStyle=C['--gold'];g.beginPath();g.arc(cx,cy,6,0,7);g.fill();
+    [...PL,['가상',A]].forEach(([n,a],i)=>{const r=rs(a), th=-2*Math.PI*yrs/Math.pow(a,1.5), virt=n==='가상';
+      g.strokeStyle=virt?C['--rose']:C['--line'];g.setLineDash(virt?[4,4]:[]);g.lineWidth=1;g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();g.setLineDash([]);
+      const x=cx+r*Math.cos(th),y=cy+r*Math.sin(th);g.fillStyle=virt?C['--rose']:C['--violet'];g.beginPath();g.arc(x,y,virt?5:4,0,7);g.fill();
+      if(r>18){g.font=font(11);g.fillStyle=C['--muted'];g.textAlign='left';g.fillText(n,x+7,y-6);}});
+    g.font=font(11);g.fillStyle=C['--muted'];g.textAlign='left';g.fillText(`흐른 시간 ${yrs.toFixed(1)}년 · 거리는 제곱근 눈금`,10,h-10);
+  }else{
+    const L=50,Rr=w-16,Tp=14,B=h-36, xa=v=>L+(Math.log10(v)+0.6)/2.2*(Rr-L), yt=v=>B-(Math.log10(v)+0.9)/3.4*(B-Tp);
+    g.strokeStyle=C['--line'];g.lineWidth=1;g.font=font(10);g.fillStyle=C['--muted'];
+    [0.3,1,3,10].forEach(v=>{g.beginPath();g.moveTo(xa(v),Tp);g.lineTo(xa(v),B);g.stroke();g.textAlign='center';g.fillText(v+' AU',xa(v),B+14);});
+    [0.2,1,10,100].forEach(v=>{g.beginPath();g.moveTo(L,yt(v));g.lineTo(Rr,yt(v));g.stroke();g.textAlign='right';g.fillText(v+'년',L-6,yt(v)+3);});
+    g.textAlign='center';g.fillText('궤도 긴반지름 (로그 눈금)',(L+Rr)/2,h-4);
+    g.strokeStyle=C['--violet'];g.lineWidth=1.6;g.beginPath();g.moveTo(xa(0.25),yt(0.125));g.lineTo(xa(39.8),yt(251));g.save();g.rect(L,Tp,Rr-L,B-Tp);g.clip();g.stroke();g.restore();
+    PL.forEach(([n,a])=>{const x=xa(a),y=yt(Math.pow(a,1.5));g.fillStyle=C['--violet'];g.beginPath();g.arc(x,y,5,0,7);g.fill();g.fillStyle=C['--fg'];g.font=font(12,600);g.textAlign='right';g.fillText(n,x-8,y-6);});
+    const x=xa(A),y=yt(T);g.strokeStyle=C['--rose'];g.lineWidth=1.4;g.beginPath();g.arc(x,y,7,0,7);g.stroke();
+    g.setLineDash([3,4]);g.beginPath();g.moveTo(x,B);g.lineTo(x,y);g.lineTo(L,y);g.stroke();g.setLineDash([]);
+  }
+  $('ro3').innerHTML=`<dt>거리 a</dt><dd>${A.toFixed(2)} AU</dd><dt>주기 T = a<sup>3/2</sup></dt><dd>${T<2?(T*365.25).toFixed(0)+'일':T.toFixed(1)+'년'}</dd><dt>T² ÷ a³</dt><dd>1.000</dd>`;
+}
+$('race').onclick=()=>{raceMode=!raceMode;$('race').textContent=raceMode?'직선 그래프 보기':'행성 경주 보기';};
+
+function frame(now){const t=now-t0;law1(t);law2(t);law3(t);if(!reduce)requestAnimationFrame(frame);}
+if(reduce){['e1','e2','a3'].forEach(id=>$(id).addEventListener('input',()=>frame(performance.now())));$('race').addEventListener('click',()=>frame(performance.now()));window.addEventListener('resize',()=>frame(performance.now()));}
+requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
