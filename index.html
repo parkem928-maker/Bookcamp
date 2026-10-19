@@ -170,10 +170,53 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .rooms4 .tile{min-height:300px;padding:32px 28px}
 .rooms4 .tile .w{font-size:clamp(46px,7vw,92px)}
 .list .in{padding-block:10px 64px}
+
+.gpanel{background:var(--band);color:var(--bandfg);padding:12px;display:grid;gap:10px;min-width:0}
+.gpanel canvas{display:block;width:100%;background:#050505}
+#galaxy{aspect-ratio:1/1} #galaxy.inside{aspect-ratio:2/1}
+#rot{aspect-ratio:3/1}
+@media (max-width:560px){#rot{aspect-ratio:2.2/1}}
+.stage2 .gpanel p.cap{color:var(--bandfg);font-size:14px;line-height:1.65;margin:0;max-width:none}
+.gcomp{display:grid;gap:9px;margin-top:8px}
+.gcomp label{display:grid;grid-template-columns:18px minmax(0,1fr);gap:2px 10px;align-items:start;font-size:14px;font-weight:700;cursor:pointer}
+.gcomp label small{grid-column:2;color:var(--muted);font-size:12.5px;line-height:1.55;font-weight:400}
+.gcomp input{accent-color:var(--ink);margin:3px 0 0;width:15px;height:15px}
+.band.four h3{word-break:keep-all;font-family:var(--ko);text-transform:none;letter-spacing:-.01em;font-weight:900}
+
+
+/* map */
+.route{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:8px}
+.route:before{content:"";position:absolute;left:0;right:0;top:27px;height:4px;background:var(--ink)}
+.stop{position:relative;padding:0 18px 0 0;display:grid;gap:10px;align-content:start;text-decoration:none;color:inherit}
+.stop .dot{width:58px;height:58px;border-radius:50%;background:var(--bg);border:4px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px;position:relative}
+.stop:hover .dot{background:var(--ink);color:var(--bandfg)}
+.stop .vb{font-family:var(--ko);font-weight:900;font-size:clamp(30px,3.6vw,46px);letter-spacing:-.04em;line-height:1}
+.stop .rn{font-weight:700}
+.stop .q{margin:0;font-size:14px;color:#3d3b38;line-height:1.6}
+.stop dl{margin:6px 0 0;display:grid;gap:8px;font-size:13px;line-height:1.55}
+.stop dt{font-family:var(--display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.stop dd{margin:0}
+.route .end{position:absolute;right:0;top:15px;width:28px;height:28px;background:var(--red);border-radius:50%}
+@media (max-width:860px){.route{grid-template-columns:minmax(0,1fr);gap:34px}.route:before{left:27px;right:auto;top:0;bottom:0;width:4px;height:auto}.stop{grid-template-columns:58px minmax(0,1fr);gap:6px 18px;padding:0}.stop>*:not(.dot){grid-column:2}.stop .dot{grid-row:1/span 5}.route .end{display:none}}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink);counter-reset:f}
+@media (max-width:700px){.flow{grid-template-columns:minmax(0,1fr)}}
+.flow div{background:var(--paper);padding:20px 18px;display:grid;gap:6px;align-content:start}
+.flow b{font-family:var(--ko);font-size:19px;font-weight:900;letter-spacing:-.02em}
+.flow p{margin:0;font-size:14px;color:#3d3b38}
+.flow .lbl{color:var(--muted)}
+.tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 40px;margin:0;padding:0;list-style:none}
+@media (max-width:700px){.tips{grid-template-columns:minmax(0,1fr)}}
+.tips li{border-top:1px solid var(--ink);padding-top:10px;font-size:14.5px}
+.tips b{display:block;margin-bottom:2px}
+@media print{.top,.nav .r,.foot,.noprint{display:none!important}body{background:#fff}.hero .giant{font-size:90px!important;margin:10px 0!important}.stop .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow div,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}}
+
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
 .wall-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;margin-bottom:30px}
+.wright{display:grid;gap:2px;min-width:0}
+.wprompt{margin:0;border-bottom:1px solid #3a3a3a}
+.wprompt ol{font-size:15px;line-height:1.6}
 @media (max-width:860px){.wall-head{grid-template-columns:minmax(0,1fr)}}
 .wall-head h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,9vw,120px);letter-spacing:-.045em;line-height:.86;margin:10px 0 14px}
 .wall-head p{margin:0;color:#3d3b38;max-width:52ch}
@@ -204,7 +247,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 </style>
 </head>
 <body>
-<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="look.html">01 SHADOWS</a> <a href="kosmos.html">02 KOSMOS</a> <a href="stardust.html">03 STARDUST</a> <a href="orbits.html">04 ORBITS</a></nav></div></div>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="map.html">안내도</a> <a href="look.html">01 유심히 봄</a> <a href="kosmos.html">02 코스모스를 품다</a> <a href="stardust.html">03 별의 품</a> <a href="orbits.html">04 물음의 궤도</a></nav></div></div>
 <header class="nav gut"><div class="in"><span class="lbl">Reading camp · 2026</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Home</a></span></div></header><section class="hero gut nodisc" style="--len:6.6"><div class="in">
 <div class="side-l">Carl Sagan<br>Cosmos<br>reading camp</div>
 <div class="giant" aria-hidden="true">유심한 봄</div>
@@ -213,6 +256,6 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 </div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 1</div><h1>코스모스를 알고자,<br>더불어 변화시키고자</h1>
 <p>칼 세이건은 인간을 이렇게 불렀습니다. 이곳은 그 두 동사, 알다와 변화시키다를 따라 걷는 네 개의 방입니다. 방마다 움직여 볼 수 있는 모형이 있고, 맨 아래에는 각자의 생각을 붙이는 담벼락이 있습니다.</p></div>
 <div class="ctl"><div class="lbl" style="color:var(--muted)">How to join · 참여하는 법</div>
-<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>방에 들어가 모형을 움직이고 읽을거리를 읽는다.</li><li>맨 아래 담벼락에 이름(별명도 좋다), 내 생각, 내 글이나 작품 링크를 붙인다. 구글 문서·캔바·유튜브·이미지 링크는 담벼락에 그대로 펼쳐진다.</li><li>친구의 카드를 읽고, 칭찬보다 질문을 건넨다.</li></ol></div></div></section><section class="list gut"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">Four rooms · 네 개의 방</div><div class="grid rooms4"><a class="tile" href="look.html"><span class="lbl n">Room 01</span><span class="w">SHADOWS</span><span class="k">유심히 봄</span><p>평범한 것을 다시 보는 눈. 막대기 하나로 지구를 재고, 그 눈을 모두가 갖지 못했을 때 생기는 일을 묻는다.</p><span class="lbl go">Enter →</span></a><a class="tile" href="kosmos.html"><span class="lbl n">Room 02</span><span class="w">KOSMOS</span><span class="k">코스모스를 품다</span><p>무질서와 질서. 질서는 바깥에서 부과되는가, 안에서 자라나는가. 그리고 그것을 바꿀 수 있는 나.</p><span class="lbl go">Enter →</span></a><a class="tile" href="stardust.html"><span class="lbl n">Room 03</span><span class="w">STARDUST</span><span class="k">별의 품</span><p>내 몸의 원자는 별에서 왔다. 별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p><span class="lbl go">Enter →</span></a><a class="tile" href="orbits.html"><span class="lbl n">Room 04</span><span class="w">ORBITS</span><span class="k">물음의 궤도</span><p>점성술에서 천문학으로, 프톨레마이오스에서 케플러로. 끝없이 묻는 태도.</p><span class="lbl go">Enter →</span></a></div></div></section><footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
+<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>방에 들어가 모형을 움직이고 읽을거리를 읽는다.</li><li>맨 아래 담벼락에 이름(별명도 좋다), 내 생각, 내 글이나 작품 링크를 붙인다. 구글 문서·캔바·유튜브·이미지 링크는 담벼락에 그대로 펼쳐진다.</li><li>친구의 카드를 읽고, 내 카드에 그 친구에게 묻고 싶은 것을 한 줄 남긴다.</li></ol><a class="cta" href="map.html" style="justify-self:start;margin-top:10px;text-decoration:none">처음이라면, 안내도 보기 →</a></div></div></section><section class="list gut"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">Four rooms · 네 개의 방</div><div class="grid rooms4"><a class="tile" href="look.html"><span class="lbl n">Room 01</span><span class="w">SHADOWS</span><span class="k">유심히 봄</span><p>평범한 것을 다시 보는 눈. 막대기 하나로 지구를 재고, 그 눈을 모두가 갖지 못했을 때 생기는 일을 묻는다.</p><span class="lbl go">Enter →</span></a><a class="tile" href="kosmos.html"><span class="lbl n">Room 02</span><span class="w">KOSMOS</span><span class="k">코스모스를 품다</span><p>무질서와 질서. 질서는 바깥에서 부과되는가, 안에서 자라나는가. 그리고 그것을 바꿀 수 있는 나.</p><span class="lbl go">Enter →</span></a><a class="tile" href="stardust.html"><span class="lbl n">Room 03</span><span class="w">STARDUST</span><span class="k">별의 품</span><p>내 몸의 원자는 별에서 왔다. 별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p><span class="lbl go">Enter →</span></a><a class="tile" href="orbits.html"><span class="lbl n">Room 04</span><span class="w">ORBITS</span><span class="k">물음의 궤도</span><p>점성술에서 천문학으로, 프톨레마이오스에서 케플러로. 끝없이 묻는 태도.</p><span class="lbl go">Enter →</span></a></div></div></section><footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
 </body>
 </html>

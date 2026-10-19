@@ -170,10 +170,53 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .rooms4 .tile{min-height:300px;padding:32px 28px}
 .rooms4 .tile .w{font-size:clamp(46px,7vw,92px)}
 .list .in{padding-block:10px 64px}
+
+.gpanel{background:var(--band);color:var(--bandfg);padding:12px;display:grid;gap:10px;min-width:0}
+.gpanel canvas{display:block;width:100%;background:#050505}
+#galaxy{aspect-ratio:1/1} #galaxy.inside{aspect-ratio:2/1}
+#rot{aspect-ratio:3/1}
+@media (max-width:560px){#rot{aspect-ratio:2.2/1}}
+.stage2 .gpanel p.cap{color:var(--bandfg);font-size:14px;line-height:1.65;margin:0;max-width:none}
+.gcomp{display:grid;gap:9px;margin-top:8px}
+.gcomp label{display:grid;grid-template-columns:18px minmax(0,1fr);gap:2px 10px;align-items:start;font-size:14px;font-weight:700;cursor:pointer}
+.gcomp label small{grid-column:2;color:var(--muted);font-size:12.5px;line-height:1.55;font-weight:400}
+.gcomp input{accent-color:var(--ink);margin:3px 0 0;width:15px;height:15px}
+.band.four h3{word-break:keep-all;font-family:var(--ko);text-transform:none;letter-spacing:-.01em;font-weight:900}
+
+
+/* map */
+.route{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:8px}
+.route:before{content:"";position:absolute;left:0;right:0;top:27px;height:4px;background:var(--ink)}
+.stop{position:relative;padding:0 18px 0 0;display:grid;gap:10px;align-content:start;text-decoration:none;color:inherit}
+.stop .dot{width:58px;height:58px;border-radius:50%;background:var(--bg);border:4px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:20px;position:relative}
+.stop:hover .dot{background:var(--ink);color:var(--bandfg)}
+.stop .vb{font-family:var(--ko);font-weight:900;font-size:clamp(30px,3.6vw,46px);letter-spacing:-.04em;line-height:1}
+.stop .rn{font-weight:700}
+.stop .q{margin:0;font-size:14px;color:#3d3b38;line-height:1.6}
+.stop dl{margin:6px 0 0;display:grid;gap:8px;font-size:13px;line-height:1.55}
+.stop dt{font-family:var(--display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.stop dd{margin:0}
+.route .end{position:absolute;right:0;top:15px;width:28px;height:28px;background:var(--red);border-radius:50%}
+@media (max-width:860px){.route{grid-template-columns:minmax(0,1fr);gap:34px}.route:before{left:27px;right:auto;top:0;bottom:0;width:4px;height:auto}.stop{grid-template-columns:58px minmax(0,1fr);gap:6px 18px;padding:0}.stop>*:not(.dot){grid-column:2}.stop .dot{grid-row:1/span 5}.route .end{display:none}}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink);counter-reset:f}
+@media (max-width:700px){.flow{grid-template-columns:minmax(0,1fr)}}
+.flow div{background:var(--paper);padding:20px 18px;display:grid;gap:6px;align-content:start}
+.flow b{font-family:var(--ko);font-size:19px;font-weight:900;letter-spacing:-.02em}
+.flow p{margin:0;font-size:14px;color:#3d3b38}
+.flow .lbl{color:var(--muted)}
+.tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 40px;margin:0;padding:0;list-style:none}
+@media (max-width:700px){.tips{grid-template-columns:minmax(0,1fr)}}
+.tips li{border-top:1px solid var(--ink);padding-top:10px;font-size:14.5px}
+.tips b{display:block;margin-bottom:2px}
+@media print{.top,.nav .r,.foot,.noprint{display:none!important}body{background:#fff}.hero .giant{font-size:90px!important;margin:10px 0!important}.stop .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow div,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}}
+
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
 .wall-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;margin-bottom:30px}
+.wright{display:grid;gap:2px;min-width:0}
+.wprompt{margin:0;border-bottom:1px solid #3a3a3a}
+.wprompt ol{font-size:15px;line-height:1.6}
 @media (max-width:860px){.wall-head{grid-template-columns:minmax(0,1fr)}}
 .wall-head h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,9vw,120px);letter-spacing:-.045em;line-height:.86;margin:10px 0 14px}
 .wall-head p{margin:0;color:#3d3b38;max-width:52ch}
@@ -204,7 +247,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 </style>
 </head>
 <body>
-<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="look.html" aria-current="page">01 SHADOWS</a> <a href="kosmos.html">02 KOSMOS</a> <a href="stardust.html">03 STARDUST</a> <a href="orbits.html">04 ORBITS</a></nav></div></div>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="map.html">안내도</a> <a href="look.html" aria-current="page">01 유심히 봄</a> <a href="kosmos.html">02 코스모스를 품다</a> <a href="stardust.html">03 별의 품</a> <a href="orbits.html">04 물음의 궤도</a></nav></div></div>
 <header class="nav gut"><div class="in"><span class="lbl">Room 01 / 04</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Home</a></span></div></header><section class="hero gut" style="--len:7"><div class="in">
 <div class="side-l">Two sticks,<br>one well,<br>a whole world.</div>
 <div class="giant" aria-hidden="true">SHADOWS</div>
@@ -214,23 +257,25 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 <div class="col"><span class="lbl n">01 — World</span><h3>어떤 세계인가</h3><div class="chips" id="models"><button type="button" data-m="round" aria-pressed="true">둥근 지구 · 먼 태양</button><button type="button" data-m="flat" aria-pressed="false">평평한 땅 · 가까운 태양</button></div><p>두 세계는 시에네와 알렉산드리아의 그림자를 똑같이 설명합니다. 관측은 전제와 함께만 의미를 갖습니다.</p></div>
 <div class="col"><span class="lbl n">02 — Result</span><h3>계산해 보면</h3><dl class="readout" id="ro"></dl></div>
 <div class="col"><span class="lbl n">03 — Third stick</span><h3>세 번째 막대기</h3><label class="key toggles" style="border-color:var(--bandfg)"><span style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="third"> <b>세 번째 막대기 세우기</b></span><small>두 모형이 세 번째 도시의 그림자를 다르게 예측합니다. 관측이 둘 중 하나를 고릅니다.</small></label><dl class="readout" id="ro3"></dl></div>
-</div></section><section class="stage2 gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Ch. 12 · 드레이크 방정식</div><h2>문명의 수명 L은<br>사회가 정한다</h2>
+</div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="notes"><section><h2>시에네의 우물</h2><p>그가 유심히 본 것은 막대기가 아니라 책 속의 문장이었습니다. 다른 독자들이 지나친 평범한 기록 두 개를 나란히 놓자 이상함이 되었습니다. 평범함 두 개가 부딪칠 때 질문이 생깁니다.</p><p>그 이상함을 느낄 수 있었던 건, 그가 이미 지구는 둥글고 햇빛은 평행하다는 전제를 갖고 있었기 때문입니다. 무엇을 유심히 볼지는 내 안의 전제가 정합니다.</p></section><section><h2>손을 놓아 버린 지식 (7장)</h2><p>이오니아의 과학은 손으로 만지고 실험하는 전통에서 자랐습니다. 그러나 손으로 하는 일을 노예의 일로 여긴 사회에서 지식인들은 실험 대신 순수한 사유와 신비주의로 돌아섰습니다.</p><p>지식의 모양은 사회의 구조를 닮습니다. 오늘 우리 사회에서 손의 지식과 머리의 지식은 같은 대접을 받고 있을까요?</p></section><section><h2>도서관이 불탈 때 (1·13장)</h2><p>세이건은 알렉산드리아 도서관의 지식이 소수의 학자에게만 머물렀고, 대다수는 그것이 왜 중요한지 몰랐기에 무너질 때 지키는 사람이 없었다고 말합니다.</p><p>역사학자들은 도서관이 한 번에 불탄 것이 아니라 오랜 시간에 걸쳐 쇠퇴했고, 히파티아의 죽음에는 당시의 정치적 다툼이 얽혀 있었다고 봅니다. 과학자가 쓴 역사도 유심히 볼 것. 그래도 질문은 남습니다. 오늘 소수만 이해하는 지식은 무엇이고, 그것을 지키는 일은 누구의 몫일까요?</p></section></div></div></section><section class="stage2 gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Ch. 12 · 드레이크 방정식</div><h2>문명의 수명 L은<br>사회가 정한다</h2>
+<p>앞의 세 이야기는 한곳으로 모입니다. 유심히 보는 눈을 소수만 가질 때, 사회는 무엇을 잃을까요? 세이건은 그 답을 한 방정식의 마지막 항에 담았습니다.</p>
 <p>우리 은하에서 지금 신호를 주고받을 수 있는 문명은 몇일까? 앞의 여섯 항은 천문학과 생물학의 값입니다. 마지막 항 L, 곧 기술 문명이 스스로를 파괴하지 않고 살아남는 기간만은 사회의 값입니다.</p>
-<p>지식을 소수만 가질 때, 그 사회는 위험을 알아보고 막을 힘도 잃습니다. L을 움직여 보며 생각해 보세요. 우리의 L을 늘리는 것은 무엇이고, 줄이는 것은 무엇일까?</p>
+<p>도서관의 지식이 소수에게만 머물렀을 때처럼, 지식을 소수만 가진 사회는 위험을 알아보고 막을 힘도 잃습니다. L을 움직여 보며 생각해 보세요. 우리의 L을 늘리는 것은 무엇이고, 줄이는 것은 무엇일까?</p>
 <div class="sliders" id="drake"></div></div>
 <div><div class="panel" style="padding:26px"><div class="lbl" style="color:var(--muted)">N · 교신 가능한 문명</div><div class="big" id="N">0</div><p id="Nnote" style="margin:10px 0 18px"></p>
 <div class="sl"><label for="L"><b>문명의 수명 L</b></label><span class="v" id="Lv"></span><input type="range" id="L" min="1" max="9" step="0.01" value="4"></div>
-<canvas id="Lbar" style="display:block;width:100%;height:96px;margin-top:8px" aria-label="문명의 수명과 인류사의 눈금"></canvas></div></div></div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="notes"><section><h2>시에네의 우물</h2><p>그가 유심히 본 것은 막대기가 아니라 책 속의 문장이었습니다. 다른 독자들이 지나친 평범한 기록 두 개를 나란히 놓자 이상함이 되었습니다. 평범함 두 개가 부딪칠 때 질문이 생깁니다.</p><p>그 이상함을 느낄 수 있었던 건, 그가 이미 지구는 둥글고 햇빛은 평행하다는 전제를 갖고 있었기 때문입니다. 무엇을 유심히 볼지는 내 안의 전제가 정합니다.</p></section><section><h2>손을 놓아 버린 지식 (7장)</h2><p>이오니아의 과학은 손으로 만지고 실험하는 전통에서 자랐습니다. 그러나 손으로 하는 일을 노예의 일로 여긴 사회에서 지식인들은 실험 대신 순수한 사유와 신비주의로 돌아섰습니다.</p><p>지식의 모양은 사회의 구조를 닮습니다. 오늘 우리 사회에서 손의 지식과 머리의 지식은 같은 대접을 받고 있을까요?</p></section><section><h2>도서관이 불탈 때 (1·13장)</h2><p>세이건은 알렉산드리아 도서관의 지식이 소수의 학자에게만 머물렀고, 대다수는 그것이 왜 중요한지 몰랐기에 무너질 때 지키는 사람이 없었다고 말합니다.</p><p>역사학자들은 도서관이 한 번에 불탄 것이 아니라 오랜 시간에 걸쳐 쇠퇴했고, 히파티아의 죽음에는 당시의 정치적 다툼이 얽혀 있었다고 봅니다. 과학자가 쓴 역사도 유심히 볼 것. 그래도 질문은 남습니다. 오늘 소수만 이해하는 지식은 무엇이고, 그것을 지키는 일은 누구의 몫일까요?</p></section></div></div></section><section class="wall gut" id="wall" data-wall="look"><div class="in">
-<div class="wall-head"><div><div class="lbl" style="color:var(--muted)">Our wall · 우리의 담벼락</div><h2>LOOK<br>AGAIN.</h2><p>평범해서 모두가 지나친 것 하나를 골라 붙여 주세요. 친구의 카드에는 칭찬보다 질문을 남겨 주세요.</p></div>
+<canvas id="Lbar" style="display:block;width:100%;height:96px;margin-top:8px" aria-label="문명의 수명과 인류사의 눈금"></canvas></div></div></div></section><section class="wall gut" id="wall" data-wall="look"><div class="in">
+<div class="wall-head"><div><div class="lbl" style="color:var(--muted)">Our wall · 우리의 담벼락</div><h2>LOOK<br>AGAIN.</h2><p>평범해서 모두가 지나친 것 하나를 골라 붙여 주세요. 친구의 카드를 읽고, 내 카드 끝에 그 친구에게 묻고 싶은 것을 한 줄 남겨 주세요.</p></div>
+<div class="wright"><div class="card prompt wprompt"><span class="lbl" style="color:var(--banddim)">Leave here · 남길 것 — 이 순서대로 써 보세요</span><ol><li>내가 유심히 본 것 (문장, 장면, 사진, 내가 잰 값)</li><li>그것을 이상하다고 느끼게 한 내 전제</li><li>이 앎을 누구와, 어떻게 나눌까 — 도서관을 불태우지 않으려면</li></ol></div>
 <form class="wform" autocomplete="off">
 <input name="name" maxlength="30" placeholder="이름 (별명도 괜찮아요)" aria-label="이름" id="w-name-look">
 <textarea name="text" maxlength="1200" placeholder="내 생각" aria-label="내 생각" id="w-text-look"></textarea>
 <input name="link" maxlength="600" placeholder="내 글·작품 링크 (구글 문서, 캔바, 유튜브, 이미지 주소…)" aria-label="링크" id="w-link-look" inputmode="url">
 <div class="row"><span class="wstatus" role="status"></span><button class="cta" type="submit">담벼락에 붙이기</button></div>
-</form></div>
+</form></div></div>
 
 <div class="wbar lbl"><span>Posted · 올라온 생각</span><span class="wcount"></span></div>
-<div class="cards"><article class="card prompt"><span class="lbl" style="color:var(--banddim)">Leave here · 남길 것</span><ol><li>내가 유심히 본 것 (문장, 장면, 사진, 내가 잰 값)</li><li>그것을 이상하다고 느끼게 한 내 전제</li><li>이 앎을 누구와, 어떻게 나눌까 — 도서관을 불태우지 않으려면</li></ol></article></div>
+<div class="cards"></div>
 </div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next room</div><a class="big" href="kosmos.html" style="text-decoration:none">KOSMOS →</a></div><div class="meta lbl">코스모스를 품다</div></div></section>
 <footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
 <script src="wall.js"></script>
