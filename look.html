@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>막대기 하나로 지구를 재다</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: 패션 에디토리얼 문법. 거대한 라틴 워드마크 위에 원형 모형이 겹치고, 검은 띠에 조작부, 회색 면에 읽을거리 */
+:root{
+  --bg:#e8e6e2; --panel:#f3f2ef; --paper:#f7f6f4; --ink:#111111; --fg:#111111; --muted:#77736d; --line:#c8c5bf;
+  --band:#111111; --bandfg:#f3f2ef; --banddim:#8d8a85; --red:#c8261e;
+  --verdigris:#111111; --bronze:#8a857e; --retro:#c8261e; --sun:#111111; --gold:#111111; --sight:#555555;
+  --earth:#111111; --violet:#111111; --rose:#c8261e; --teal:#555555; --blue:#888888; --sand:#8a857e;
+  --display:"Archivo","Noto Sans KR",system-ui,sans-serif;
+  --ko:"Noto Sans KR",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ko);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin:0 auto}
+.lbl{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+/* top bar */
+.top{background:var(--band);color:var(--bandfg)}
+.top .in{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:34px;overflow-x:auto;white-space:nowrap}
+.top a{text-decoration:none;color:var(--banddim)} .top a[aria-current]{color:var(--bandfg);border-bottom:1px solid var(--bandfg)}
+.top nav{display:flex;gap:16px}
+/* nav */
+.nav .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:18px}
+.brand{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.08em;text-decoration:none}
+.nav .r{justify-self:end}
+.nav .r a{text-decoration:none;border-bottom:1px solid currentColor}
+/* hero */
+.hero{position:relative;overflow:hidden;padding-bottom:28px;--gs:min(17rem,calc(92vw / (var(--len) * .82)))}
+.hero .in{position:relative;display:flow-root}
+.giant{font-family:var(--display);font-weight:900;font-size:var(--gs);line-height:.82;letter-spacing:-.045em;text-align:center;white-space:nowrap;margin:clamp(24px,9vw,130px) 0 0;color:var(--ink)}
+.disc{position:relative;width:min(560px,86vw);aspect-ratio:1;border-radius:50%;background:var(--panel);margin:calc(var(--gs) * -.5) auto 0;box-shadow:0 40px 60px -40px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.04)}
+.disc canvas{display:block;width:100%;height:100%;border-radius:50%}
+.side-l,.side-r{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;line-height:2}
+.side-l::after,.side-r::after{content:"";display:block;width:34px;height:1px;background:var(--ink);margin-top:8px}
+.side-r::after{margin-left:auto}
+@media (min-width:900px){.side-l{position:absolute;left:0;top:0;z-index:2}.side-r{position:absolute;right:0;bottom:24px;text-align:right;z-index:2}.giant{margin-top:150px}.nodisc .side-r{position:static;margin-top:28px}}
+@media (max-width:899px){.sides{display:flex;justify-content:space-between;gap:16px;margin-top:18px}.side-r{text-align:right}}
+.hint{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);color:var(--muted)}
+/* title + time */
+.title .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;padding-block:36px 28px}
+@media (max-width:820px){.title .in{grid-template-columns:minmax(0,1fr)}}
+.title h1{font-family:var(--ko);font-weight:900;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-.03em;margin:8px 0 12px;text-wrap:balance}
+.title p{margin:0;color:#3d3b38;max-width:52ch}
+.ctl{display:grid;gap:14px;min-width:0}
+.daterow{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.date{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.cta{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--bandfg);border:0;padding:14px 26px;cursor:pointer;min-width:120px}
+.ul{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--ink);padding:4px 0;cursor:pointer;color:var(--ink)}
+select{font-family:var(--display);font-size:12px;letter-spacing:.08em;background:transparent;border:0;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--ink);margin-top:-6.5px;border:0}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+.band input[type=range]::-webkit-slider-runnable-track{background:var(--bandfg)}
+.band input[type=range]::-moz-range-track{background:var(--bandfg)}
+.band input[type=range]::-webkit-slider-thumb{background:var(--bandfg)}
+.band input[type=range]::-moz-range-thumb{background:var(--bandfg)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--display);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+/* band */
+.band{background:var(--band);color:var(--bandfg)}
+.band .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:34px}
+.band .col{padding:0 28px;border-left:1px solid #2a2a2a;display:grid;gap:12px;align-content:start;min-width:0}
+.band .col:first-child{border-left:0;padding-left:0}
+@media (max-width:820px){.band .in{grid-template-columns:minmax(0,1fr);gap:26px}.band .col{border-left:0;padding:0;border-top:1px solid #2a2a2a;padding-top:22px}.band .col:first-child{border-top:0;padding-top:0}}
+.band .n{color:var(--banddim)}
+.band h3{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em;margin:0;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-family:var(--ko);font-size:13px;color:var(--bandfg);background:transparent;border:1px solid #4a4a4a;padding:5px 12px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--bandfg);color:var(--ink);border-color:var(--bandfg);font-weight:700}
+.readout{font-family:var(--display);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px;margin:0}
+.readout dt{color:var(--banddim);font-family:var(--ko)} .readout dd{margin:0;text-align:right}
+.pill{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;padding:4px 10px;border:1px solid var(--bandfg)}
+.pill.retro{border-color:var(--red);color:#fff;background:var(--red)}
+.toggles{display:grid;gap:8px;font-size:14px}
+.toggles label{display:flex;gap:10px;align-items:center;cursor:pointer}
+.toggles input{accent-color:var(--bandfg);width:15px;height:15px}
+.key{border:1px solid var(--bandfg);padding:10px 12px}
+.key small{display:block;color:var(--banddim);font-size:12px;line-height:1.5;margin-top:4px}
+.band .ul{color:var(--bandfg);border-color:var(--bandfg);justify-self:start}
+/* sky strip */
+.sky .in{padding-block:34px 10px;display:grid;gap:10px}
+.sky .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+#skystrip{display:block;width:100%;aspect-ratio:6/1;background:var(--paper);max-width:100%}
+@media (max-width:560px){#skystrip{aspect-ratio:3/1}}
+/* editorial */
+.ed{background:#d9d7d3}
+.ed .in{padding-block:64px}
+.ed .kick{margin-bottom:10px}
+.notes,.laws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.notes,.laws{grid-template-columns:minmax(0,1fr)}}
+.notes section,.laws section{min-width:0;border-top:1px solid var(--ink);padding-top:18px}
+.notes h2,.laws h2{font-family:var(--ko);font-weight:900;font-size:24px;letter-spacing:-.02em;line-height:1.25;margin:0 0 12px}
+.notes p,.laws p{margin:0 0 12px;color:#2c2a27}
+.law-no{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 6px;border-bottom:1px solid #b9b6b0;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--display);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.bad{color:var(--red)} td.ok{font-weight:700}
+.caveat{font-size:13px;color:var(--muted);max-width:80ch;margin:36px 0 0}
+/* next */
+.next{background:var(--paper)}
+.next .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;padding-block:56px}
+.next a.big{font-family:var(--display);font-weight:900;font-size:clamp(40px,9vw,120px);line-height:.9;letter-spacing:-.04em;text-decoration:none;display:block}
+.next a.big:hover{color:var(--red)}
+.next .meta{text-align:right}
+.foot{background:var(--band);color:var(--banddim)}
+.foot .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.top nav a{white-space:nowrap}
+.hero.nodisc .giant{margin-bottom:10px}
+.band.four .in{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.band.four .in{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 0}.band.four .col:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:560px){.band.four .in{grid-template-columns:minmax(0,1fr)}.band.four .col{border-left:0;padding-left:0}}
+.band p{margin:0;color:var(--banddim);font-size:14px}
+.band .ctl2{display:grid;gap:6px}
+.band .val{font-family:var(--display);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-weight:900;font-size:clamp(46px,8vw,110px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.stage2 .in{padding-block:64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:start}
+@media (max-width:860px){.stage2 .in{grid-template-columns:minmax(0,1fr)}}
+.stage2 h2{font-family:var(--ko);font-weight:900;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;line-height:1.2;margin:8px 0 14px;text-wrap:balance}
+.stage2 p{margin:0 0 12px;color:#2c2a27;max-width:58ch}
+.panel{background:var(--panel);padding:10px;box-shadow:0 30px 50px -40px rgba(0,0,0,.5);min-width:0}
+.panel canvas{display:block;width:100%;height:auto}
+.sliders{display:grid;gap:12px;margin-top:16px}
+.sl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:end}
+.sl label{font-size:13px}.sl .v{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.sl input{grid-column:1/-1}
+.chipsL{display:flex;flex-wrap:wrap;gap:6px}
+.chipsL button{font-family:var(--ko);font-size:13px;color:var(--ink);background:transparent;border:1px solid var(--ink);padding:5px 12px;cursor:pointer}
+.chipsL button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg);font-weight:700}
+.quote{font-family:var(--ko);font-weight:900;font-size:clamp(26px,4.4vw,52px);letter-spacing:-.03em;line-height:1.25;max-width:22ch;margin:0;text-wrap:balance}
+/* element table */
+.ptable{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.ptable button{background:var(--paper);border:0;padding:10px 8px 8px;text-align:left;cursor:pointer;display:grid;gap:2px;color:var(--ink);min-height:84px}
+.ptable button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg)}
+.ptable .sym{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.02em;line-height:1}
+.ptable .nm{font-size:11px}.ptable .pc{font-family:var(--display);font-size:10px;letter-spacing:.1em;opacity:.7}
+.ptable .ob{display:flex;height:4px;margin-top:4px}
+.detail{background:var(--band);color:var(--bandfg);padding:22px;display:grid;gap:12px}
+.stage2 .detail p{color:var(--bandfg)} .stage2 .detail #dorig{color:var(--banddim)}
+.dark p{color:var(--banddim)!important}
+.detail .sym{font-family:var(--display);font-weight:900;font-size:64px;line-height:.9;letter-spacing:-.04em}
+.stack{display:flex;gap:2px;height:16px;padding:2px;background:var(--bandfg)}
+.legend{display:grid;gap:8px;font-size:13px}
+.legend div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:center}
+.legend i{width:14px;height:14px;display:block;border:1px solid var(--banddim)}
+.legend b{font-family:var(--display);font-variant-numeric:tabular-nums}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.tile{background:var(--paper);padding:26px 22px;display:grid;gap:10px;text-decoration:none;min-height:220px;align-content:space-between}
+.tile:nth-child(odd){background:var(--band);color:var(--bandfg)} .tile .n{color:var(--muted)}
+.tile .w{font-family:var(--display);font-weight:900;font-size:clamp(34px,4vw,46px);letter-spacing:-.04em;line-height:.95;overflow-wrap:anywhere}
+.tile .k{font-weight:700} .tile p{margin:0;font-size:14px;opacity:.8} .tile:hover .go{color:var(--red)}
+.rooms4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:700px){.rooms4{grid-template-columns:minmax(0,1fr)}}
+.rooms4 .tile{min-height:300px;padding:32px 28px}
+.rooms4 .tile .w{font-size:clamp(46px,7vw,92px)}
+.list .in{padding-block:10px 64px}
+/* wall */
+.wall{background:var(--paper)}
+.wall .in{padding-block:70px}
+.wall-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;margin-bottom:30px}
+@media (max-width:860px){.wall-head{grid-template-columns:minmax(0,1fr)}}
+.wall-head h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,9vw,120px);letter-spacing:-.045em;line-height:.86;margin:10px 0 14px}
+.wall-head p{margin:0;color:#3d3b38;max-width:52ch}
+.wform{display:grid;gap:12px;background:var(--band);color:var(--bandfg);padding:22px}
+.wform input,.wform textarea{font:inherit;font-size:15px;color:var(--bandfg);background:transparent;border:0;border-bottom:1px solid #4a4a4a;padding:8px 2px;width:100%;border-radius:0}
+.wform textarea{min-height:96px;resize:vertical}
+.wform ::placeholder{color:var(--banddim)}
+.wform .row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.wform .cta{background:var(--bandfg);color:var(--ink)}
+.wform .cta:disabled{opacity:.4;cursor:not-allowed}
+.wstatus{font-size:13px;color:var(--banddim);min-height:1.4em}
+.wbar{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--ink);padding-top:12px;margin-bottom:18px}
+.cards{columns:3 280px;column-gap:18px}
+.card{break-inside:avoid;margin:0 0 18px;background:var(--bg);padding:18px;display:grid;gap:10px}
+.card.prompt{background:var(--band);color:var(--bandfg)}
+.card.prompt ol{margin:0;padding-left:18px;display:grid;gap:4px}
+.ctop{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.card .who{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.01em}
+.card .when{color:var(--muted)}
+.card .txt{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.card iframe{width:100%;aspect-ratio:16/10;border:0;background:#d6d3ce;display:block}
+.card img{width:100%;display:block}
+.card .lnk{display:flex;justify-content:space-between;gap:10px;border-top:1px solid currentColor;padding-top:8px;text-decoration:none}
+.card .lnk span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .lnk:hover{color:var(--red)}
+.consbox{background:var(--band);margin-bottom:22px}
+.consbox canvas{display:block;width:100%;height:clamp(240px,34vw,380px)}
+</style>
+</head>
+<body>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="look.html" aria-current="page">01 SHADOWS</a> <a href="kosmos.html">02 KOSMOS</a> <a href="stardust.html">03 STARDUST</a> <a href="orbits.html">04 ORBITS</a></nav></div></div>
+<header class="nav gut"><div class="in"><span class="lbl">Room 01 / 04</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Home</a></span></div></header><section class="hero gut" style="--len:7"><div class="in">
+<div class="side-l">Two sticks,<br>one well,<br>a whole world.</div>
+<div class="giant" aria-hidden="true">SHADOWS</div>
+<div class="disc"><canvas id="orrery" aria-label="에라토스테네스의 그림자 실험"></canvas></div>
+<div class="side-r">Room 01<br>Cosmos · Ch. 1·7·12·13</div>
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 01 · 유심히 봄</div><h1>막대기 하나로<br>지구를 재다</h1><p>에라토스테네스는 도서관의 책에서 한 줄을 유심히 읽었습니다. 하짓날 정오, 시에네의 막대기에는 그림자가 없다. 그런데 알렉산드리아에는 그림자가 생긴다. 막대를 움직여 그가 지구 둘레를 어떻게 계산했는지, 그리고 왜 두 막대기로는 부족했는지 확인해 보세요.</p></div><div class="ctl"><div class="sl"><label for="th">알렉산드리아의 그림자 각도</label><span class="v" id="thv"></span><input type="range" id="th" min="1" max="20" step="0.1" value="7.2"></div><div class="sl"><label for="dk">두 도시 사이 거리</label><span class="v" id="dv"></span><input type="range" id="dk" min="200" max="2000" step="10" value="800"></div><div class="ticks"><span>실제 기록: 약 7.2° · 5,000스타디온(약 800 km)</span></div></div></div></section><section class="band gut"><div class="in">
+<div class="col"><span class="lbl n">01 — World</span><h3>어떤 세계인가</h3><div class="chips" id="models"><button type="button" data-m="round" aria-pressed="true">둥근 지구 · 먼 태양</button><button type="button" data-m="flat" aria-pressed="false">평평한 땅 · 가까운 태양</button></div><p>두 세계는 시에네와 알렉산드리아의 그림자를 똑같이 설명합니다. 관측은 전제와 함께만 의미를 갖습니다.</p></div>
+<div class="col"><span class="lbl n">02 — Result</span><h3>계산해 보면</h3><dl class="readout" id="ro"></dl></div>
+<div class="col"><span class="lbl n">03 — Third stick</span><h3>세 번째 막대기</h3><label class="key toggles" style="border-color:var(--bandfg)"><span style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="third"> <b>세 번째 막대기 세우기</b></span><small>두 모형이 세 번째 도시의 그림자를 다르게 예측합니다. 관측이 둘 중 하나를 고릅니다.</small></label><dl class="readout" id="ro3"></dl></div>
+</div></section><section class="stage2 gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Ch. 12 · 드레이크 방정식</div><h2>문명의 수명 L은<br>사회가 정한다</h2>
+<p>우리 은하에서 지금 신호를 주고받을 수 있는 문명은 몇일까? 앞의 여섯 항은 천문학과 생물학의 값입니다. 마지막 항 L, 곧 기술 문명이 스스로를 파괴하지 않고 살아남는 기간만은 사회의 값입니다.</p>
+<p>지식을 소수만 가질 때, 그 사회는 위험을 알아보고 막을 힘도 잃습니다. L을 움직여 보며 생각해 보세요. 우리의 L을 늘리는 것은 무엇이고, 줄이는 것은 무엇일까?</p>
+<div class="sliders" id="drake"></div></div>
+<div><div class="panel" style="padding:26px"><div class="lbl" style="color:var(--muted)">N · 교신 가능한 문명</div><div class="big" id="N">0</div><p id="Nnote" style="margin:10px 0 18px"></p>
+<div class="sl"><label for="L"><b>문명의 수명 L</b></label><span class="v" id="Lv"></span><input type="range" id="L" min="1" max="9" step="0.01" value="4"></div>
+<canvas id="Lbar" style="display:block;width:100%;height:96px;margin-top:8px" aria-label="문명의 수명과 인류사의 눈금"></canvas></div></div></div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="notes"><section><h2>시에네의 우물</h2><p>그가 유심히 본 것은 막대기가 아니라 책 속의 문장이었습니다. 다른 독자들이 지나친 평범한 기록 두 개를 나란히 놓자 이상함이 되었습니다. 평범함 두 개가 부딪칠 때 질문이 생깁니다.</p><p>그 이상함을 느낄 수 있었던 건, 그가 이미 지구는 둥글고 햇빛은 평행하다는 전제를 갖고 있었기 때문입니다. 무엇을 유심히 볼지는 내 안의 전제가 정합니다.</p></section><section><h2>손을 놓아 버린 지식 (7장)</h2><p>이오니아의 과학은 손으로 만지고 실험하는 전통에서 자랐습니다. 그러나 손으로 하는 일을 노예의 일로 여긴 사회에서 지식인들은 실험 대신 순수한 사유와 신비주의로 돌아섰습니다.</p><p>지식의 모양은 사회의 구조를 닮습니다. 오늘 우리 사회에서 손의 지식과 머리의 지식은 같은 대접을 받고 있을까요?</p></section><section><h2>도서관이 불탈 때 (1·13장)</h2><p>세이건은 알렉산드리아 도서관의 지식이 소수의 학자에게만 머물렀고, 대다수는 그것이 왜 중요한지 몰랐기에 무너질 때 지키는 사람이 없었다고 말합니다.</p><p>역사학자들은 도서관이 한 번에 불탄 것이 아니라 오랜 시간에 걸쳐 쇠퇴했고, 히파티아의 죽음에는 당시의 정치적 다툼이 얽혀 있었다고 봅니다. 과학자가 쓴 역사도 유심히 볼 것. 그래도 질문은 남습니다. 오늘 소수만 이해하는 지식은 무엇이고, 그것을 지키는 일은 누구의 몫일까요?</p></section></div></div></section><section class="wall gut" id="wall" data-wall="look"><div class="in">
+<div class="wall-head"><div><div class="lbl" style="color:var(--muted)">Our wall · 우리의 담벼락</div><h2>LOOK<br>AGAIN.</h2><p>평범해서 모두가 지나친 것 하나를 골라 붙여 주세요. 친구의 카드에는 칭찬보다 질문을 남겨 주세요.</p></div>
+<form class="wform" autocomplete="off">
+<input name="name" maxlength="30" placeholder="이름 (별명도 괜찮아요)" aria-label="이름" id="w-name-look">
+<textarea name="text" maxlength="1200" placeholder="내 생각" aria-label="내 생각" id="w-text-look"></textarea>
+<input name="link" maxlength="600" placeholder="내 글·작품 링크 (구글 문서, 캔바, 유튜브, 이미지 주소…)" aria-label="링크" id="w-link-look" inputmode="url">
+<div class="row"><span class="wstatus" role="status"></span><button class="cta" type="submit">담벼락에 붙이기</button></div>
+</form></div>
+
+<div class="wbar lbl"><span>Posted · 올라온 생각</span><span class="wcount"></span></div>
+<div class="cards"><article class="card prompt"><span class="lbl" style="color:var(--banddim)">Leave here · 남길 것</span><ol><li>내가 유심히 본 것 (문장, 장면, 사진, 내가 잰 값)</li><li>그것을 이상하다고 느끼게 한 내 전제</li><li>이 앎을 누구와, 어떻게 나눌까 — 도서관을 불태우지 않으려면</li></ol></article></div>
+</div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next room</div><a class="big" href="kosmos.html" style="text-decoration:none">KOSMOS →</a></div><div class="meta lbl">코스모스를 품다</div></div></section>
+<footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
+<script src="wall.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const tok=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function fit(cv){const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);return {g,w:r.width,h:r.height};}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const F=(s,w)=>`${w||400} ${s}px "Noto Sans KR",sans-serif`, FA=(s,w)=>`${w||600} ${s}px "Archivo",sans-serif`;
+function press(group,btn){[...group.children].forEach(c=>c.setAttribute('aria-pressed',c===btn));}
+
+let th=7.2, dk=800, model='round', third=false;
+function upd(){ $('thv').textContent=th.toFixed(1)+'°'; $('dv').textContent=dk.toLocaleString()+' km';
+  const C=360/th*dk, h=dk/Math.tan(th*Math.PI/180), p3r=2*th, p3f=Math.atan(2*Math.tan(th*Math.PI/180))*180/Math.PI;
+  $('ro').innerHTML=`<dt>지구 둘레</dt><dd>${Math.round(C).toLocaleString()} km</dd><dt>지구 반지름</dt><dd>${Math.round(C/2/Math.PI).toLocaleString()} km</dd><dt>(평평하다면) 태양 높이</dt><dd>${Math.round(h).toLocaleString()} km</dd><dt>오늘날 측정값</dt><dd>40,075 km</dd>`;
+  $('ro3').innerHTML=`<dt>둥근 지구의 예측</dt><dd>${p3r.toFixed(1)}°</dd><dt>평평한 지구의 예측</dt><dd>${p3f.toFixed(1)}°</dd><dt>차이</dt><dd>${(p3r-p3f).toFixed(2)}°</dd>`;
+  draw(); }
+function draw(){ const {g,w,h}=fit($('orrery')); const cx=w/2, cy=h/2, R=w/2; g.clearRect(0,0,w,h);
+  g.save(); g.beginPath(); g.arc(cx,cy,R,0,7); g.clip();
+  const ink=tok('--ink'), mut=tok('--muted'), red=tok('--red'), line=tok('--line');
+  const ang=Math.min(th,40)*Math.PI/180;
+  if(model==='round'){ const ang=Math.min(th*3,62)*Math.PI/180;
+    const er=w*0.27, ecx=cx, ecy=cy+w*0.12;
+    g.strokeStyle=line; g.lineWidth=1;
+    for(let x=-R; x<=R; x+=w*0.045){ g.beginPath(); g.moveTo(cx+x,0); g.lineTo(cx+x,h); g.stroke(); }
+    g.fillStyle=tok('--panel'); g.beginPath(); g.arc(ecx,ecy,er,0,7); g.fill();
+    g.strokeStyle=ink; g.lineWidth=1.6; g.beginPath(); g.arc(ecx,ecy,er,0,7); g.stroke();
+    const cities=[{a:0,n:'시에네'},{a:-ang,n:'알렉산드리아'}]; if(third) cities.push({a:-2*ang,n:'세 번째 도시'});
+    cities.forEach((c,i)=>{ const a=-Math.PI/2+c.a, sx=ecx+er*Math.cos(a), sy=ecy+er*Math.sin(a), L=w*0.075;
+      g.setLineDash([3,4]); g.strokeStyle=mut; g.lineWidth=1; g.beginPath(); g.moveTo(ecx,ecy); g.lineTo(sx,sy); g.stroke(); g.setLineDash([]);
+      const tx=sx+L*Math.cos(a)*1.4, ty=sy+L*Math.sin(a)*1.4;
+      g.strokeStyle=i===2?red:ink; g.lineWidth=2.4; g.beginPath(); g.moveTo(sx,sy); g.lineTo(tx,ty); g.stroke();
+      if(c.a!==0){ const shl=L*Math.tan(-c.a); const ta=a+Math.PI/2; g.strokeStyle=i===2?red:ink; g.globalAlpha=.55; g.lineWidth=5; g.beginPath(); g.moveTo(sx,sy); g.lineTo(sx+shl*Math.cos(ta+Math.PI),sy+shl*Math.sin(ta+Math.PI)); g.stroke(); g.globalAlpha=1;
+        g.strokeStyle=red; g.lineWidth=1; g.beginPath(); g.moveTo(tx,ty-0); g.lineTo(tx, ty+L*1.1); g.stroke(); }
+      g.font=F(12,700); g.fillStyle=i===2?red:ink; g.textAlign=c.a===0?'left':'right'; g.fillText(c.n, tx+(c.a===0?8:-8), ty-4); });
+    g.strokeStyle=red; g.lineWidth=1.5; g.beginPath(); g.arc(ecx,ecy,er*0.28,-Math.PI/2-ang,-Math.PI/2); g.stroke();
+    g.font=FA(13,800); g.fillStyle=red; g.textAlign='center'; g.fillText(th.toFixed(1)+'°', ecx-er*0.12, ecy-er*0.38);
+    g.font=FA(10,600); g.fillStyle=mut; g.fillText('SUNLIGHT  ↓  평행한 햇빛', cx, h*0.13); g.fillText('그림의 각도는 3배로 키웠습니다', cx, h*0.93);
+  } else {
+    const va=Math.min(th*3,62)*Math.PI/180, gy=h*0.74, x0=cx+w*0.2, dpx=w*0.2, hpx0=dpx/Math.tan(va); const k=Math.min(1,(gy-h*0.14)/hpx0); const d1=dpx*k, hp=hpx0*k;
+    const sun={x:x0,y:gy-hp};
+    g.strokeStyle=ink; g.lineWidth=1.6; g.beginPath(); g.moveTo(cx-R,gy); g.lineTo(cx+R,gy); g.stroke();
+    g.fillStyle=tok('--panel'); g.fillRect(cx-R,gy,2*R,h-gy);
+    const sticks=[{x:x0,n:'시에네'},{x:x0-d1,n:'알렉산드리아'}]; if(third) sticks.push({x:x0-2*d1,n:'세 번째 도시'});
+    const L=w*0.075;
+    sticks.forEach((s,i)=>{ g.strokeStyle=line; g.lineWidth=1; g.beginPath(); g.moveTo(sun.x,sun.y); g.lineTo(s.x,gy-L); g.stroke();
+      g.strokeStyle=i===2?red:ink; g.lineWidth=2.4; g.beginPath(); g.moveTo(s.x,gy); g.lineTo(s.x,gy-L); g.stroke();
+      const shl=(x0-s.x)/hp*L; if(shl>0){ g.globalAlpha=.55; g.lineWidth=5; g.beginPath(); g.moveTo(s.x,gy); g.lineTo(s.x-shl,gy); g.stroke(); g.globalAlpha=1; }
+      g.font=F(12,700); g.fillStyle=i===2?red:ink; g.textAlign='center'; g.fillText(s.n, s.x, gy+20+(i%2)*16); });
+    g.fillStyle=ink; g.beginPath(); g.arc(sun.x,sun.y,10,0,7); g.fill();
+    g.font=FA(10,600); g.fillStyle=mut; g.textAlign='right'; g.fillText('가까운 태양 · 높이 '+Math.round(dk/Math.tan(ang)).toLocaleString()+' km', sun.x-16, sun.y+4);
+    g.textAlign='center'; g.fillText('FLAT EARTH · 평평한 땅', cx, gy+70); g.fillText('그림의 각도는 3배로 키웠습니다', cx, h*0.93);
+  }
+  g.restore(); }
+$('th').addEventListener('input',e=>{th=+e.target.value;upd();});
+$('dk').addEventListener('input',e=>{dk=+e.target.value;upd();});
+document.querySelectorAll('#models button').forEach(b=>b.onclick=()=>{model=b.dataset.m;press($('models'),b);draw();});
+$('third').addEventListener('change',e=>{third=e.target.checked;draw();});
+window.addEventListener('resize',draw);
+// Drake
+const DR=[['rs','별이 태어나는 속도 R*','개/년',0.5,10,0.1,1.5],['fp','행성을 가진 별의 비율 fp','',0,1,0.01,1],['ne','생명이 살 만한 행성 수 ne','',0.01,3,0.01,0.2],['fl','생명이 생겨날 비율 fl','',0,1,0.01,0.5],['fi','지적 생명으로 진화할 비율 fi','',0,1,0.01,0.1],['fc','교신할 기술을 갖출 비율 fc','',0,1,0.01,0.1]];
+const box=$('drake'); DR.forEach(([id,lab,u,mn,mx,st,v])=>{const d=document.createElement('div');d.className='sl';d.innerHTML=`<label for="${id}">${lab}</label><span class="v" id="${id}v"></span><input type="range" id="${id}" min="${mn}" max="${mx}" step="${st}" value="${v}">`;box.appendChild(d);d.querySelector('input').addEventListener('input',drake);});
+$('L').addEventListener('input',drake);
+const MARK=[[80,'핵무기'],[400,'근대 과학'],[700,'알렉산드리아 도서관'],[5000,'문자'],[300000,'호모 사피엔스']];
+function drake(){ let N=1; DR.forEach(([id])=>{const v=+$(id).value; $(id+'v').textContent=v; N*=v;}); const L=Math.pow(10,+$('L').value); $('Lv').textContent=Math.round(L).toLocaleString()+'년'; N*=L;
+  $('N').textContent=N<1?N.toFixed(2):Math.round(N).toLocaleString(); $('Nnote').textContent=N<1?'우리 은하에 지금 교신 가능한 문명은 우리뿐일지도 모른다.':'우리 은하에서 지금 교신할 수 있는 문명의 수';
+  const {g,w,h}=fit($('Lbar')); g.clearRect(0,0,w,h); const pad=14, x=v=>pad+(Math.log10(v)-1)/8*(w-2*pad), y=h*0.55;
+  g.strokeStyle=tok('--ink'); g.lineWidth=1; g.beginPath(); g.moveTo(pad,y); g.lineTo(w-pad,y); g.stroke();
+  for(let p=1;p<=9;p++){ g.beginPath(); g.moveTo(x(10**p),y-4); g.lineTo(x(10**p),y+4); g.stroke(); g.font=FA(9); g.fillStyle=tok('--muted'); g.textAlign='center'; g.fillText('10^'+p,x(10**p),y+18); }
+  MARK.forEach(([v,n],i)=>{ g.fillStyle=tok('--ink'); g.beginPath(); g.arc(x(v),y,3,0,7); g.fill(); g.font=F(11); g.textAlign='center'; g.fillText(n,x(v),i%2?y+34:y-12-(i%3===2?14:0)); });
+  g.fillStyle=tok('--red'); g.fillRect(pad,y-2,x(L)-pad,4); g.beginPath(); g.arc(x(L),y,6,0,7); g.fill(); }
+upd(); drake();
+</script>
+</body>
+</html>

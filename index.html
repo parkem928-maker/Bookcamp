@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>코스모스 3장 시각화</title>
+<title>유심한 봄</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
 /* Layout: 패션 에디토리얼 문법. 거대한 라틴 워드마크 위에 원형 모형이 겹치고, 검은 띠에 조작부, 회색 면에 읽을거리 */
@@ -120,18 +120,99 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .foot{background:var(--band);color:var(--banddim)}
 .foot .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
+.top nav a{white-space:nowrap}
+.hero.nodisc .giant{margin-bottom:10px}
+.band.four .in{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.band.four .in{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 0}.band.four .col:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:560px){.band.four .in{grid-template-columns:minmax(0,1fr)}.band.four .col{border-left:0;padding-left:0}}
+.band p{margin:0;color:var(--banddim);font-size:14px}
+.band .ctl2{display:grid;gap:6px}
+.band .val{font-family:var(--display);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-weight:900;font-size:clamp(46px,8vw,110px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.stage2 .in{padding-block:64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:start}
+@media (max-width:860px){.stage2 .in{grid-template-columns:minmax(0,1fr)}}
+.stage2 h2{font-family:var(--ko);font-weight:900;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;line-height:1.2;margin:8px 0 14px;text-wrap:balance}
+.stage2 p{margin:0 0 12px;color:#2c2a27;max-width:58ch}
+.panel{background:var(--panel);padding:10px;box-shadow:0 30px 50px -40px rgba(0,0,0,.5);min-width:0}
+.panel canvas{display:block;width:100%;height:auto}
+.sliders{display:grid;gap:12px;margin-top:16px}
+.sl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:end}
+.sl label{font-size:13px}.sl .v{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.sl input{grid-column:1/-1}
+.chipsL{display:flex;flex-wrap:wrap;gap:6px}
+.chipsL button{font-family:var(--ko);font-size:13px;color:var(--ink);background:transparent;border:1px solid var(--ink);padding:5px 12px;cursor:pointer}
+.chipsL button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg);font-weight:700}
+.quote{font-family:var(--ko);font-weight:900;font-size:clamp(26px,4.4vw,52px);letter-spacing:-.03em;line-height:1.25;max-width:22ch;margin:0;text-wrap:balance}
+/* element table */
+.ptable{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.ptable button{background:var(--paper);border:0;padding:10px 8px 8px;text-align:left;cursor:pointer;display:grid;gap:2px;color:var(--ink);min-height:84px}
+.ptable button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg)}
+.ptable .sym{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.02em;line-height:1}
+.ptable .nm{font-size:11px}.ptable .pc{font-family:var(--display);font-size:10px;letter-spacing:.1em;opacity:.7}
+.ptable .ob{display:flex;height:4px;margin-top:4px}
+.detail{background:var(--band);color:var(--bandfg);padding:22px;display:grid;gap:12px}
+.stage2 .detail p{color:var(--bandfg)} .stage2 .detail #dorig{color:var(--banddim)}
+.dark p{color:var(--banddim)!important}
+.detail .sym{font-family:var(--display);font-weight:900;font-size:64px;line-height:.9;letter-spacing:-.04em}
+.stack{display:flex;gap:2px;height:16px;padding:2px;background:var(--bandfg)}
+.legend{display:grid;gap:8px;font-size:13px}
+.legend div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:center}
+.legend i{width:14px;height:14px;display:block;border:1px solid var(--banddim)}
+.legend b{font-family:var(--display);font-variant-numeric:tabular-nums}
+/* tiles */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
 .tile{background:var(--paper);padding:26px 22px;display:grid;gap:10px;text-decoration:none;min-height:220px;align-content:space-between}
 .tile:nth-child(odd){background:var(--band);color:var(--bandfg)} .tile .n{color:var(--muted)}
 .tile .w{font-family:var(--display);font-weight:900;font-size:clamp(34px,4vw,46px);letter-spacing:-.04em;line-height:.95;overflow-wrap:anywhere}
-.tile .k{font-weight:700} .tile:hover .go{color:var(--red)}
-.list .in{padding-block:10px 60px}
+.tile .k{font-weight:700} .tile p{margin:0;font-size:14px;opacity:.8} .tile:hover .go{color:var(--red)}
+.rooms4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:700px){.rooms4{grid-template-columns:minmax(0,1fr)}}
+.rooms4 .tile{min-height:300px;padding:32px 28px}
+.rooms4 .tile .w{font-size:clamp(46px,7vw,92px)}
+.list .in{padding-block:10px 64px}
+/* wall */
+.wall{background:var(--paper)}
+.wall .in{padding-block:70px}
+.wall-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;margin-bottom:30px}
+@media (max-width:860px){.wall-head{grid-template-columns:minmax(0,1fr)}}
+.wall-head h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,9vw,120px);letter-spacing:-.045em;line-height:.86;margin:10px 0 14px}
+.wall-head p{margin:0;color:#3d3b38;max-width:52ch}
+.wform{display:grid;gap:12px;background:var(--band);color:var(--bandfg);padding:22px}
+.wform input,.wform textarea{font:inherit;font-size:15px;color:var(--bandfg);background:transparent;border:0;border-bottom:1px solid #4a4a4a;padding:8px 2px;width:100%;border-radius:0}
+.wform textarea{min-height:96px;resize:vertical}
+.wform ::placeholder{color:var(--banddim)}
+.wform .row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.wform .cta{background:var(--bandfg);color:var(--ink)}
+.wform .cta:disabled{opacity:.4;cursor:not-allowed}
+.wstatus{font-size:13px;color:var(--banddim);min-height:1.4em}
+.wbar{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--ink);padding-top:12px;margin-bottom:18px}
+.cards{columns:3 280px;column-gap:18px}
+.card{break-inside:avoid;margin:0 0 18px;background:var(--bg);padding:18px;display:grid;gap:10px}
+.card.prompt{background:var(--band);color:var(--bandfg)}
+.card.prompt ol{margin:0;padding-left:18px;display:grid;gap:4px}
+.ctop{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.card .who{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.01em}
+.card .when{color:var(--muted)}
+.card .txt{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.card iframe{width:100%;aspect-ratio:16/10;border:0;background:#d6d3ce;display:block}
+.card img{width:100%;display:block}
+.card .lnk{display:flex;justify-content:space-between;gap:10px;border-top:1px solid currentColor;padding-top:8px;text-decoration:none}
+.card .lnk span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .lnk:hover{color:var(--red)}
+.consbox{background:var(--band);margin-bottom:22px}
+.consbox canvas{display:block;width:100%;height:clamp(240px,34vw,380px)}
 </style>
 </head>
 <body>
-<div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><span>5 models</span></div></div>
-<header class="nav gut"><div class="in"><span class="lbl">Index</span><span class="brand">COSMOS</span><span class="r lbl">Ch. 3</span></div></header>
-<section class="hero gut nodisc" style="--len:6"><div class="in"><div class="side-l only-d">From the Earth<br>to the Sun,<br>from circles<br>to ellipses.</div><h1 class="giant">ORBITS</h1><div class="side-r only-d">Ptolemy → Kepler<br>1,400 years</div></div></section>
-<section class="list gut"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">The collection · 다섯 개의 모형</div><div class="grid"><a class="tile" href="ptolemy.html"><span class="lbl n">01 · c. AD 150</span><span class="w">PTOLEMY</span><span class="k">프톨레마이오스</span><span class="lbl go">Explore →</span></a><a class="tile" href="copernicus.html"><span class="lbl n">02 · AD 1543</span><span class="w">COPERNICUS</span><span class="k">코페르니쿠스</span><span class="lbl go">Explore →</span></a><a class="tile" href="kepler-solids.html"><span class="lbl n">03 · AD 1596</span><span class="w">MYSTERIUM</span><span class="k">우주의 신비</span><span class="lbl go">Explore →</span></a><a class="tile" href="kepler-orbits.html"><span class="lbl n">04 · AD 1609</span><span class="w">ELLIPSE</span><span class="k">타원 궤도</span><span class="lbl go">Explore →</span></a><a class="tile" href="kepler-laws.html"><span class="lbl n">05 · AD 1619</span><span class="w">HARMONY</span><span class="k">세 법칙</span><span class="lbl go">Explore →</span></a></div></div></section>
-<footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos · Ch. 3</span></div></footer></body>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="look.html">01 SHADOWS</a> <a href="kosmos.html">02 KOSMOS</a> <a href="stardust.html">03 STARDUST</a> <a href="orbits.html">04 ORBITS</a></nav></div></div>
+<header class="nav gut"><div class="in"><span class="lbl">Reading camp · 2026</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Home</a></span></div></header><section class="hero gut nodisc" style="--len:6.6"><div class="in">
+<div class="side-l">Carl Sagan<br>Cosmos<br>reading camp</div>
+<div class="giant" aria-hidden="true">유심한 봄</div>
+
+<div class="side-r">Four rooms<br>one sky</div>
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 1</div><h1>코스모스를 알고자,<br>더불어 변화시키고자</h1>
+<p>칼 세이건은 인간을 이렇게 불렀습니다. 이곳은 그 두 동사, 알다와 변화시키다를 따라 걷는 네 개의 방입니다. 방마다 움직여 볼 수 있는 모형이 있고, 맨 아래에는 각자의 생각을 붙이는 담벼락이 있습니다.</p></div>
+<div class="ctl"><div class="lbl" style="color:var(--muted)">How to join · 참여하는 법</div>
+<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>방에 들어가 모형을 움직이고 읽을거리를 읽는다.</li><li>맨 아래 담벼락에 이름(별명도 좋다), 내 생각, 내 글이나 작품 링크를 붙인다. 구글 문서·캔바·유튜브·이미지 링크는 담벼락에 그대로 펼쳐진다.</li><li>친구의 카드를 읽고, 칭찬보다 질문을 건넨다.</li></ol></div></div></section><section class="list gut"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">Four rooms · 네 개의 방</div><div class="grid rooms4"><a class="tile" href="look.html"><span class="lbl n">Room 01</span><span class="w">SHADOWS</span><span class="k">유심히 봄</span><p>평범한 것을 다시 보는 눈. 막대기 하나로 지구를 재고, 그 눈을 모두가 갖지 못했을 때 생기는 일을 묻는다.</p><span class="lbl go">Enter →</span></a><a class="tile" href="kosmos.html"><span class="lbl n">Room 02</span><span class="w">KOSMOS</span><span class="k">코스모스를 품다</span><p>무질서와 질서. 질서는 바깥에서 부과되는가, 안에서 자라나는가. 그리고 그것을 바꿀 수 있는 나.</p><span class="lbl go">Enter →</span></a><a class="tile" href="stardust.html"><span class="lbl n">Room 03</span><span class="w">STARDUST</span><span class="k">별의 품</span><p>내 몸의 원자는 별에서 왔다. 별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p><span class="lbl go">Enter →</span></a><a class="tile" href="orbits.html"><span class="lbl n">Room 04</span><span class="w">ORBITS</span><span class="k">물음의 궤도</span><p>점성술에서 천문학으로, 프톨레마이오스에서 케플러로. 끝없이 묻는 태도.</p><span class="lbl go">Enter →</span></a></div></div></section><footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
+</body>
 </html>

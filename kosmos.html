@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>질서는 어디에서 오는가</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: 패션 에디토리얼 문법. 거대한 라틴 워드마크 위에 원형 모형이 겹치고, 검은 띠에 조작부, 회색 면에 읽을거리 */
+:root{
+  --bg:#e8e6e2; --panel:#f3f2ef; --paper:#f7f6f4; --ink:#111111; --fg:#111111; --muted:#77736d; --line:#c8c5bf;
+  --band:#111111; --bandfg:#f3f2ef; --banddim:#8d8a85; --red:#c8261e;
+  --verdigris:#111111; --bronze:#8a857e; --retro:#c8261e; --sun:#111111; --gold:#111111; --sight:#555555;
+  --earth:#111111; --violet:#111111; --rose:#c8261e; --teal:#555555; --blue:#888888; --sand:#8a857e;
+  --display:"Archivo","Noto Sans KR",system-ui,sans-serif;
+  --ko:"Noto Sans KR",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ko);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.in{max-width:1180px;margin:0 auto}
+.lbl{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+/* top bar */
+.top{background:var(--band);color:var(--bandfg)}
+.top .in{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:34px;overflow-x:auto;white-space:nowrap}
+.top a{text-decoration:none;color:var(--banddim)} .top a[aria-current]{color:var(--bandfg);border-bottom:1px solid var(--bandfg)}
+.top nav{display:flex;gap:16px}
+/* nav */
+.nav .in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:18px}
+.brand{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.08em;text-decoration:none}
+.nav .r{justify-self:end}
+.nav .r a{text-decoration:none;border-bottom:1px solid currentColor}
+/* hero */
+.hero{position:relative;overflow:hidden;padding-bottom:28px;--gs:min(17rem,calc(92vw / (var(--len) * .82)))}
+.hero .in{position:relative;display:flow-root}
+.giant{font-family:var(--display);font-weight:900;font-size:var(--gs);line-height:.82;letter-spacing:-.045em;text-align:center;white-space:nowrap;margin:clamp(24px,9vw,130px) 0 0;color:var(--ink)}
+.disc{position:relative;width:min(560px,86vw);aspect-ratio:1;border-radius:50%;background:var(--panel);margin:calc(var(--gs) * -.5) auto 0;box-shadow:0 40px 60px -40px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.04)}
+.disc canvas{display:block;width:100%;height:100%;border-radius:50%}
+.side-l,.side-r{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;line-height:2}
+.side-l::after,.side-r::after{content:"";display:block;width:34px;height:1px;background:var(--ink);margin-top:8px}
+.side-r::after{margin-left:auto}
+@media (min-width:900px){.side-l{position:absolute;left:0;top:0;z-index:2}.side-r{position:absolute;right:0;bottom:24px;text-align:right;z-index:2}.giant{margin-top:150px}.nodisc .side-r{position:static;margin-top:28px}}
+@media (max-width:899px){.sides{display:flex;justify-content:space-between;gap:16px;margin-top:18px}.side-r{text-align:right}}
+.hint{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);color:var(--muted)}
+/* title + time */
+.title .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;padding-block:36px 28px}
+@media (max-width:820px){.title .in{grid-template-columns:minmax(0,1fr)}}
+.title h1{font-family:var(--ko);font-weight:900;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-.03em;margin:8px 0 12px;text-wrap:balance}
+.title p{margin:0;color:#3d3b38;max-width:52ch}
+.ctl{display:grid;gap:14px;min-width:0}
+.daterow{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.date{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.cta{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--bandfg);border:0;padding:14px 26px;cursor:pointer;min-width:120px}
+.ul{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--ink);padding:4px 0;cursor:pointer;color:var(--ink)}
+select{font-family:var(--display);font-size:12px;letter-spacing:.08em;background:transparent;border:0;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--ink);margin-top:-6.5px;border:0}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--ink);border:0;border-radius:0}
+.band input[type=range]::-webkit-slider-runnable-track{background:var(--bandfg)}
+.band input[type=range]::-moz-range-track{background:var(--bandfg)}
+.band input[type=range]::-webkit-slider-thumb{background:var(--bandfg)}
+.band input[type=range]::-moz-range-thumb{background:var(--bandfg)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--display);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+/* band */
+.band{background:var(--band);color:var(--bandfg)}
+.band .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding-block:34px}
+.band .col{padding:0 28px;border-left:1px solid #2a2a2a;display:grid;gap:12px;align-content:start;min-width:0}
+.band .col:first-child{border-left:0;padding-left:0}
+@media (max-width:820px){.band .in{grid-template-columns:minmax(0,1fr);gap:26px}.band .col{border-left:0;padding:0;border-top:1px solid #2a2a2a;padding-top:22px}.band .col:first-child{border-top:0;padding-top:0}}
+.band .n{color:var(--banddim)}
+.band h3{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em;margin:0;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-family:var(--ko);font-size:13px;color:var(--bandfg);background:transparent;border:1px solid #4a4a4a;padding:5px 12px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--bandfg);color:var(--ink);border-color:var(--bandfg);font-weight:700}
+.readout{font-family:var(--display);font-variant-numeric:tabular-nums;display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:13px;margin:0}
+.readout dt{color:var(--banddim);font-family:var(--ko)} .readout dd{margin:0;text-align:right}
+.pill{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.14em;padding:4px 10px;border:1px solid var(--bandfg)}
+.pill.retro{border-color:var(--red);color:#fff;background:var(--red)}
+.toggles{display:grid;gap:8px;font-size:14px}
+.toggles label{display:flex;gap:10px;align-items:center;cursor:pointer}
+.toggles input{accent-color:var(--bandfg);width:15px;height:15px}
+.key{border:1px solid var(--bandfg);padding:10px 12px}
+.key small{display:block;color:var(--banddim);font-size:12px;line-height:1.5;margin-top:4px}
+.band .ul{color:var(--bandfg);border-color:var(--bandfg);justify-self:start}
+/* sky strip */
+.sky .in{padding-block:34px 10px;display:grid;gap:10px}
+.sky .head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+#skystrip{display:block;width:100%;aspect-ratio:6/1;background:var(--paper);max-width:100%}
+@media (max-width:560px){#skystrip{aspect-ratio:3/1}}
+/* editorial */
+.ed{background:#d9d7d3}
+.ed .in{padding-block:64px}
+.ed .kick{margin-bottom:10px}
+.notes,.laws{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.notes,.laws{grid-template-columns:minmax(0,1fr)}}
+.notes section,.laws section{min-width:0;border-top:1px solid var(--ink);padding-top:18px}
+.notes h2,.laws h2{font-family:var(--ko);font-weight:900;font-size:24px;letter-spacing:-.02em;line-height:1.25;margin:0 0 12px}
+.notes p,.laws p{margin:0 0 12px;color:#2c2a27}
+.law-no{font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 6px;border-bottom:1px solid #b9b6b0;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-family:var(--display);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.bad{color:var(--red)} td.ok{font-weight:700}
+.caveat{font-size:13px;color:var(--muted);max-width:80ch;margin:36px 0 0}
+/* next */
+.next{background:var(--paper)}
+.next .in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;padding-block:56px}
+.next a.big{font-family:var(--display);font-weight:900;font-size:clamp(40px,9vw,120px);line-height:.9;letter-spacing:-.04em;text-decoration:none;display:block}
+.next a.big:hover{color:var(--red)}
+.next .meta{text-align:right}
+.foot{background:var(--band);color:var(--banddim)}
+.foot .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.top nav a{white-space:nowrap}
+.hero.nodisc .giant{margin-bottom:10px}
+.band.four .in{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.band.four .in{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 0}.band.four .col:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:560px){.band.four .in{grid-template-columns:minmax(0,1fr)}.band.four .col{border-left:0;padding-left:0}}
+.band p{margin:0;color:var(--banddim);font-size:14px}
+.band .ctl2{display:grid;gap:6px}
+.band .val{font-family:var(--display);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-weight:900;font-size:clamp(46px,8vw,110px);letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.stage2 .in{padding-block:64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:start}
+@media (max-width:860px){.stage2 .in{grid-template-columns:minmax(0,1fr)}}
+.stage2 h2{font-family:var(--ko);font-weight:900;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;line-height:1.2;margin:8px 0 14px;text-wrap:balance}
+.stage2 p{margin:0 0 12px;color:#2c2a27;max-width:58ch}
+.panel{background:var(--panel);padding:10px;box-shadow:0 30px 50px -40px rgba(0,0,0,.5);min-width:0}
+.panel canvas{display:block;width:100%;height:auto}
+.sliders{display:grid;gap:12px;margin-top:16px}
+.sl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:end}
+.sl label{font-size:13px}.sl .v{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.sl input{grid-column:1/-1}
+.chipsL{display:flex;flex-wrap:wrap;gap:6px}
+.chipsL button{font-family:var(--ko);font-size:13px;color:var(--ink);background:transparent;border:1px solid var(--ink);padding:5px 12px;cursor:pointer}
+.chipsL button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg);font-weight:700}
+.quote{font-family:var(--ko);font-weight:900;font-size:clamp(26px,4.4vw,52px);letter-spacing:-.03em;line-height:1.25;max-width:22ch;margin:0;text-wrap:balance}
+/* element table */
+.ptable{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.ptable button{background:var(--paper);border:0;padding:10px 8px 8px;text-align:left;cursor:pointer;display:grid;gap:2px;color:var(--ink);min-height:84px}
+.ptable button[aria-pressed="true"]{background:var(--ink);color:var(--bandfg)}
+.ptable .sym{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.02em;line-height:1}
+.ptable .nm{font-size:11px}.ptable .pc{font-family:var(--display);font-size:10px;letter-spacing:.1em;opacity:.7}
+.ptable .ob{display:flex;height:4px;margin-top:4px}
+.detail{background:var(--band);color:var(--bandfg);padding:22px;display:grid;gap:12px}
+.stage2 .detail p{color:var(--bandfg)} .stage2 .detail #dorig{color:var(--banddim)}
+.dark p{color:var(--banddim)!important}
+.detail .sym{font-family:var(--display);font-weight:900;font-size:64px;line-height:.9;letter-spacing:-.04em}
+.stack{display:flex;gap:2px;height:16px;padding:2px;background:var(--bandfg)}
+.legend{display:grid;gap:8px;font-size:13px}
+.legend div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:center}
+.legend i{width:14px;height:14px;display:block;border:1px solid var(--banddim)}
+.legend b{font-family:var(--display);font-variant-numeric:tabular-nums}
+/* tiles */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.tile{background:var(--paper);padding:26px 22px;display:grid;gap:10px;text-decoration:none;min-height:220px;align-content:space-between}
+.tile:nth-child(odd){background:var(--band);color:var(--bandfg)} .tile .n{color:var(--muted)}
+.tile .w{font-family:var(--display);font-weight:900;font-size:clamp(34px,4vw,46px);letter-spacing:-.04em;line-height:.95;overflow-wrap:anywhere}
+.tile .k{font-weight:700} .tile p{margin:0;font-size:14px;opacity:.8} .tile:hover .go{color:var(--red)}
+.rooms4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:700px){.rooms4{grid-template-columns:minmax(0,1fr)}}
+.rooms4 .tile{min-height:300px;padding:32px 28px}
+.rooms4 .tile .w{font-size:clamp(46px,7vw,92px)}
+.list .in{padding-block:10px 64px}
+/* wall */
+.wall{background:var(--paper)}
+.wall .in{padding-block:70px}
+.wall-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 48px;align-items:end;margin-bottom:30px}
+@media (max-width:860px){.wall-head{grid-template-columns:minmax(0,1fr)}}
+.wall-head h2{font-family:var(--display);font-weight:900;font-size:clamp(48px,9vw,120px);letter-spacing:-.045em;line-height:.86;margin:10px 0 14px}
+.wall-head p{margin:0;color:#3d3b38;max-width:52ch}
+.wform{display:grid;gap:12px;background:var(--band);color:var(--bandfg);padding:22px}
+.wform input,.wform textarea{font:inherit;font-size:15px;color:var(--bandfg);background:transparent;border:0;border-bottom:1px solid #4a4a4a;padding:8px 2px;width:100%;border-radius:0}
+.wform textarea{min-height:96px;resize:vertical}
+.wform ::placeholder{color:var(--banddim)}
+.wform .row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.wform .cta{background:var(--bandfg);color:var(--ink)}
+.wform .cta:disabled{opacity:.4;cursor:not-allowed}
+.wstatus{font-size:13px;color:var(--banddim);min-height:1.4em}
+.wbar{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--ink);padding-top:12px;margin-bottom:18px}
+.cards{columns:3 280px;column-gap:18px}
+.card{break-inside:avoid;margin:0 0 18px;background:var(--bg);padding:18px;display:grid;gap:10px}
+.card.prompt{background:var(--band);color:var(--bandfg)}
+.card.prompt ol{margin:0;padding-left:18px;display:grid;gap:4px}
+.ctop{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.card .who{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.01em}
+.card .when{color:var(--muted)}
+.card .txt{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.card iframe{width:100%;aspect-ratio:16/10;border:0;background:#d6d3ce;display:block}
+.card img{width:100%;display:block}
+.card .lnk{display:flex;justify-content:space-between;gap:10px;border-top:1px solid currentColor;padding-top:8px;text-decoration:none}
+.card .lnk span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .lnk:hover{color:var(--red)}
+.consbox{background:var(--band);margin-bottom:22px}
+.consbox canvas{display:block;width:100%;height:clamp(240px,34vw,380px)}
+</style>
+</head>
+<body>
+<div class="top gut"><div class="in lbl"><span>유심한 봄 · 칼 세이건 『코스모스』 독서 캠프</span><nav aria-label="방"><a href="look.html">01 SHADOWS</a> <a href="kosmos.html" aria-current="page">02 KOSMOS</a> <a href="stardust.html">03 STARDUST</a> <a href="orbits.html">04 ORBITS</a></nav></div></div>
+<header class="nav gut"><div class="in"><span class="lbl">Room 02 / 04</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="index.html">Home</a></span></div></header><section class="hero gut" style="--len:6"><div class="in">
+<div class="side-l">χάος → κόσμος<br>a gap becomes<br>an order.</div>
+<div class="giant" aria-hidden="true">KOSMOS</div>
+<div class="disc"><canvas id="orrery" aria-label="무질서와 질서의 점 시뮬레이션"></canvas></div>
+<div class="side-r">Room 02<br>Cosmos · Ch. 1</div>
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 02 · 코스모스를 품다</div><h1>질서는 어디에서<br>오는가</h1><p>같은 점 360개가 세 가지 방식으로 움직입니다. 아무 규칙 없이, 바깥에서 정해 준 자리로, 그리고 각자 이웃만 보며. 버튼을 눌러 질서가 생기는 방식을 비교해 보세요. 진짜 갈림길은 질서냐 무질서냐가 아니라, 질서가 바깥에서 부과되는가 안에서 자라나는가일지도 모릅니다.</p></div><div></div></div></section><section class="band gut"><div class="in">
+<div class="col"><span class="lbl n">01 — Mode</span><h3>움직이는 방식</h3><div class="chips" id="modes"><button type="button" data-m="chaos" aria-pressed="true">카오스</button><button type="button" data-m="imposed" aria-pressed="false">부과된 질서</button><button type="button" data-m="emergent" aria-pressed="false">자라난 질서</button></div></div>
+<div class="col"><span class="lbl n">02 — Reading</span><h3 id="mt"></h3><p id="mx"></p></div>
+<div class="col"><span class="lbl n">03 — Alignment</span><h3>방향이 맞는 정도</h3><div class="big" id="ord" style="font-size:64px">0%</div><p>모든 점이 같은 방향으로 움직이면 100%. 자라난 질서는 지휘자 없이도 이 값을 올립니다.</p></div>
+</div></section><section class="stage2 gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Chaos theory · 카오스 이론</div><h2>법칙을 그대로 따르는데<br>예측할 수 없다</h2>
+<p>검은 점과 빨간 점은 똑같은 세 개의 방정식(로렌즈 방정식)을 따릅니다. 출발점의 차이는 처음에 백만분의 일. 그런데 조금만 지나면 둘은 전혀 다른 곳에 있습니다. 날씨를 먼 미래까지 예보할 수 없는 이유입니다.</p>
+<p>그러면서도 두 점은 나비 모양을 벗어나지 않습니다. 예측할 수 없는 움직임 안에도 모양이 있습니다. 무질서처럼 보이는 것은 정말 무질서일까요, 아직 읽지 못한 질서일까요?</p>
+<div class="chipsL" id="eps" style="margin-top:6px"><button type="button" data-e="0.01" aria-pressed="false">차이 1/100</button><button type="button" data-e="0.000001" aria-pressed="true">차이 1/1,000,000</button><button type="button" data-e="1e-10" aria-pressed="false">차이 1/10,000,000,000</button></div>
+<div class="btns" style="margin-top:14px"><button class="cta" type="button" id="lreset">다시 출발</button></div></div>
+<div><div class="panel"><canvas id="lorenz" style="aspect-ratio:4/3" aria-label="로렌즈 끌개 위의 두 점"></canvas></div>
+<dl class="readout" style="margin-top:14px"><dt>두 점 사이 거리</dt><dd id="ldist"></dd><dt>흐른 시간</dt><dd id="ltime"></dd></dl></div></div></section><section class="ed gut"><div class="in"><div class="lbl kick" style="color:var(--muted)">Notes · 읽을거리</div><div class="notes"><section><h2>두 낱말의 출생기록</h2><div class="tablewrap"><table><thead><tr><th></th><th>카오스</th><th>코스모스</th></tr></thead><tbody><tr><td>처음 뜻</td><td>벌어진 틈, 빈자리</td><td>정렬, 법도, 꾸밈</td></tr><tr><td>나중 뜻</td><td>뒤엉킨 무질서</td><td>이해할 수 있는 질서</td></tr></tbody></table></div><p style="margin-top:12px">둘을 짝으로 묶은 것은 플라톤의 『티마이오스』입니다. 제작자 신이 무질서한 것을 질서로 이끌어 우주를 만들었다는 이야기입니다. 화장품 cosmetic도 코스모스와 같은 뿌리입니다.</p></section><section><h2>다른 눈으로 보면</h2><p><b>장자의 혼돈</b>: 눈·코·입·귀가 없는 임금 혼돈에게 하루에 구멍 하나씩 뚫어 주었더니 이레째 되는 날 혼돈이 죽었습니다. 질서를 부여하는 일이 생명을 죽입니다.</p><p><b>유가</b>는 다스림(治)과 어지러움(亂)을 나누고 질서를 세우는 일을 중시했고, <b>성리학의 리(理)</b>는 옥의 결처럼 사물 안에 이미 들어 있는 질서를 말합니다.</p></section><section><h2>알고자, 더불어 변화시키고자</h2><p>세이건은 인간을 "코스모스를 알고자, 더불어 코스모스를 변화시키고자 태어난 존재"라 부릅니다. 앎이 먼저, 변화는 더불어 따라옵니다.</p><p>우주는 무언가를 의도하지 않습니다. 그러니 이 문장은 사실이라기보다 세이건이 건네는 제안입니다. 목적은 우주가 주는 것이 아니라 우리가 정하는 것. 그리고 변화에는 늘 의도하지 않은 결과가 따릅니다.</p></section></div></div></section><section class="wall gut" id="wall" data-wall="kosmos"><div class="in">
+<div class="wall-head"><div><div class="lbl" style="color:var(--muted)">Our wall · 우리의 담벼락</div><h2>HOLD<br>A KOSMOS.</h2><p>내가 품을 작은 코스모스 하나를 붙여 주세요. 그 질서는 부과된 것일까요, 자라난 것일까요?</p></div>
+<form class="wform" autocomplete="off">
+<input name="name" maxlength="30" placeholder="이름 (별명도 괜찮아요)" aria-label="이름" id="w-name-kosmos">
+<textarea name="text" maxlength="1200" placeholder="내 생각" aria-label="내 생각" id="w-text-kosmos"></textarea>
+<input name="link" maxlength="600" placeholder="내 글·작품 링크 (구글 문서, 캔바, 유튜브, 이미지 주소…)" aria-label="링크" id="w-link-kosmos" inputmode="url">
+<div class="row"><span class="wstatus" role="status"></span><button class="cta" type="submit">담벼락에 붙이기</button></div>
+</form></div>
+
+<div class="wbar lbl"><span>Posted · 올라온 생각</span><span class="wcount"></span></div>
+<div class="cards"><article class="card prompt"><span class="lbl" style="color:var(--banddim)">Leave here · 남길 것</span><ol><li>바꾸고 싶은 질서 하나 (교실, 학교, 동네, 내 하루)</li><li>바꾸기 전에 먼저 알아야 할 것 — 누가 만들었고 왜 유지되는가</li><li>바꿨을 때 생길 수 있는 의도하지 않은 결과</li></ol></article></div>
+</div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next room</div><a class="big" href="stardust.html" style="text-decoration:none">STARDUST →</a></div><div class="meta lbl">별의 품</div></div></section>
+<footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
+<script src="wall.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const tok=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function fit(cv){const r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;const W=Math.round(r.width*dpr),H=Math.round(r.height*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);return {g,w:r.width,h:r.height};}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const F=(s,w)=>`${w||400} ${s}px "Noto Sans KR",sans-serif`, FA=(s,w)=>`${w||600} ${s}px "Archivo",sans-serif`;
+function press(group,btn){[...group.children].forEach(c=>c.setAttribute('aria-pressed',c===btn));}
+
+const N=360; let mode='chaos'; const P=[];
+for(let i=0;i<N;i++){const a=Math.random()*Math.PI*2, r=Math.sqrt(Math.random())*0.9; P.push({x:Math.cos(a)*r,y:Math.sin(a)*r,vx:(Math.random()-.5)*.01,vy:(Math.random()-.5)*.01,gx:0,gy:0});}
+(function grid(){ const pts=[]; const s=0.085; for(let y=-1;y<=1;y+=s) for(let x=-1;x<=1;x+=s) if(x*x+y*y<0.8) pts.push([x,y]); pts.sort(()=>Math.random()-.5); P.forEach((p,i)=>{const q=pts[i%pts.length]; p.gx=q[0]; p.gy=q[1];}); })();
+const TXT={chaos:['카오스 · χάος','점들은 서로를 보지 않고 제멋대로 움직입니다. 헤시오도스가 말한 처음의 카오스는 원래 무질서가 아니라 텅 빈 틈이었습니다.'],
+ imposed:['부과된 질서 · taxis','바깥에서 정해 준 자리로 모두가 갑니다. 플라톤의 제작자 신, 교칙과 시간표처럼. 깔끔하지만, 자리를 정한 쪽이 사라지면 질서도 사라집니다.'],
+ emergent:['자라난 질서 · kosmos','각자 이웃만 보고 세 가지 규칙만 따릅니다. 너무 가까우면 떨어지고, 방향을 맞추고, 무리 쪽으로 다가갑니다. 아무도 지휘하지 않는데 새 떼가 생깁니다.']};
+function step(){ for(const p of P){
+  if(mode==='chaos'){ p.vx+=(Math.random()-.5)*.004; p.vy+=(Math.random()-.5)*.004; p.vx*=.98; p.vy*=.98; }
+  else if(mode==='imposed'){ p.vx=(p.gx-p.x)*.06; p.vy=(p.gy-p.y)*.06; }
+  else { let sx=0,sy=0,ax=0,ay=0,cx=0,cy=0,n=0; for(const q of P){ if(q===p) continue; const dx=q.x-p.x, dy=q.y-p.y, d2=dx*dx+dy*dy; if(d2<0.03){ n++; ax+=q.vx; ay+=q.vy; cx+=dx; cy+=dy; if(d2<0.0016){ sx-=dx/(d2+1e-4)*0.0008; sy-=dy/(d2+1e-4)*0.0008; } } }
+    if(n){ p.vx+=(ax/n-p.vx)*.05+cx/n*.004; p.vy+=(ay/n-p.vy)*.05+cy/n*.004; } p.vx+=sx; p.vy+=sy;
+    const sp=Math.hypot(p.vx,p.vy)||1e-6, tgt=.011; p.vx=p.vx/sp*(sp*.9+tgt*.1); p.vy=p.vy/sp*(sp*.9+tgt*.1); }
+  const r=Math.hypot(p.x,p.y); if(r>.9){ p.vx-=p.x/r*.0025; p.vy-=p.y/r*.0025; }
+  p.x+=p.vx; p.y+=p.vy; } }
+function draw(){ const {g,w,h}=fit($('orrery')); const R=w/2*0.98, cx=w/2, cy=h/2; g.clearRect(0,0,w,h); g.fillStyle=tok('--ink');
+  for(const p of P){ const x=cx+p.x*R, y=cy+p.y*R; if(mode==='emergent'){ g.strokeStyle=tok('--ink'); g.lineWidth=1.4; g.beginPath(); g.moveTo(x,y); g.lineTo(x-p.vx*R*2.2,y-p.vy*R*2.2); g.stroke(); } g.beginPath(); g.arc(x,y,2.2,0,7); g.fill(); }
+  let ord=0; if(mode!=='imposed'){ let ax=0,ay=0; for(const p of P){const s=Math.hypot(p.vx,p.vy)||1; ax+=p.vx/s; ay+=p.vy/s;} ord=Math.hypot(ax,ay)/N; } else ord=1;
+  $('ord').textContent=(ord*100).toFixed(0)+'%'; }
+document.querySelectorAll('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;press($('modes'),b);$('mt').textContent=TXT[mode][0];$('mx').textContent=TXT[mode][1];});
+$('mt').textContent=TXT.chaos[0]; $('mx').textContent=TXT.chaos[1];
+// Lorenz
+let L1,L2,t=0,eps=1e-6; const trail1=[],trail2=[];
+function resetL(){ L1=[1,1,1]; L2=[1+eps,1,1]; t=0; trail1.length=0; trail2.length=0; }
+function lor(s,dt){ const [x,y,z]=s; const dx=10*(y-x), dy=x*(28-z)-y, dz=x*y-8/3*z; return [x+dx*dt,y+dy*dt,z+dz*dt]; }
+document.querySelectorAll('#eps button').forEach(b=>b.onclick=()=>{eps=+b.dataset.e;press($('eps'),b);resetL();});
+$('lreset').onclick=resetL; resetL();
+function drawL(){ for(let k=0;k<6;k++){ L1=lor(L1,.004); L2=lor(L2,.004); t+=.004; } trail1.push(L1); trail2.push(L2); if(trail1.length>1600){trail1.shift();trail2.shift();}
+  const {g,w,h}=fit($('lorenz')); g.clearRect(0,0,w,h); const X=x=>w/2+x*w/56, Y=z=>h-14-z*(h-28)/50;
+  [[trail1,tok('--ink')],[trail2,tok('--red')]].forEach(([tr,c])=>{ g.strokeStyle=c; g.lineWidth=1; g.globalAlpha=.85; g.beginPath(); tr.forEach((s,i)=>i?g.lineTo(X(s[0]),Y(s[2])):g.moveTo(X(s[0]),Y(s[2]))); g.stroke(); g.globalAlpha=1; g.fillStyle=c; const s=tr[tr.length-1]; g.beginPath(); g.arc(X(s[0]),Y(s[2]),4,0,7); g.fill(); });
+  const d=Math.hypot(L1[0]-L2[0],L1[1]-L2[1],L1[2]-L2[2]); $('ldist').textContent=d<0.001?d.toExponential(1):d.toFixed(2); $('ltime').textContent=t.toFixed(1); }
+function loop(){ step(); draw(); drawL(); if(!reduce) requestAnimationFrame(loop); }
+if(reduce){ for(let i=0;i<200;i++) step(); setInterval(loop,250); } else requestAnimationFrame(loop);
+</script>
+</body>
+</html>
