@@ -187,6 +187,7 @@ body.t-dark::after{opacity:.9;filter:invert(1)}
 /* ===== index hero ===== */
 .ihero{position:relative;min-height:max(560px,calc(100svh - 96px));display:grid;overflow:hidden;background:#050507;color:#f4efe6}
 .ihero #milky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ihero #milkyfront{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:3;pointer-events:none}
 .ivig{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 115%,rgba(5,5,7,.85),transparent 60%),linear-gradient(to bottom,rgba(5,5,7,.55),transparent 22%,transparent 70%,rgba(5,5,7,.7));pointer-events:none}
 .ihero .crop::before,.ihero .crop::after{background:#f4efe6}
 .ihero .in{position:relative;z-index:2;width:100%;display:grid;grid-template-rows:auto auto 1fr auto;padding-block:30px 26px}
@@ -233,11 +234,11 @@ body.embed .poster{padding-bottom:20px}
 <body class="t-dark p-kepler-orbits" style="--acc:#e9c27c" data-bg="orbits">
 <div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><nav aria-label="모형"><a href="ptolemy.html">01 PTOLEMY</a> <a href="copernicus.html">02 COPERNICUS</a> <a href="kepler-solids.html">03 MYSTERIUM</a> <a href="kepler-orbits.html" aria-current="page">04 ELLIPSE</a> <a href="kepler-laws.html">05 HARMONY</a></nav></div></div>
 <header class="nav gut"><div class="in"><span class="lbl">Model 04 / 05</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="orbits.html">Room 04 · 물음의 궤도</a></span></div></header><section class="hero poster scene-limb gut" style="--len:7"><i class="crop tl" aria-hidden="true"></i><i class="crop tr" aria-hidden="true"></i><div class="in">
-<div class="pmeta mono"><span><b>Title —</b><i>케플러의 타원 궤도</i></span><span><b>Room —</b><i>04 · 04</i></span><span><b>Chapter —</b><i>Ch. 3 · AD 1609</i></span><span><b>Reading —</b><i>Cosmos</i></span><span><b>Issue —</b><i>.04—04</i></span></div>
+<div class="pmeta mono"><span><b>Title —</b><i>케플러의 타원 궤도</i></span><span><b>Room —</b><i>04 · 04</i></span><span><b>Chapter —</b><i>Ch. 3 · AD 1609</i></span><span><b>Reading —</b><i>Cosmos</i></span><span><b>Issue —</b><i>.04-4</i></span></div>
 <div class="ptag"><div class="pbox"><span>Eight minutes of arc</span><span class="mono">Cosmos camp</span></div><p class="mono">튀코의 관측과 8분각의 어긋남. 작은 차이를 무시하지 않자 2천 년 동안 믿어 온 원이 무너졌다.</p></div>
 <div class="gwrap"><div class="giant" aria-hidden="true">ELLIPSE</div><div class="sea" aria-hidden="true"><i></i></div></div>
 <div class="disc"><canvas id="orrery" aria-label="행성 운동 모형"></canvas></div>
-<div class="pfoot mono" aria-hidden="true"><span>Station 04 · 튀코의 8분</span><b class="issue">.04—04</b></div>
+<div class="pfoot mono" aria-hidden="true"><span>Station 04 · 튀코의 8분</span><b class="issue">.04-4</b></div>
 </div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>케플러의<br>타원 궤도</h1><p>튀코의 화성 관측은 원 궤도로는 8분각이 어긋났습니다. 케플러는 그 작은 차이를 무시하지 않고 2천 년 묵은 원을 버렸습니다. 이심률을 키워 법칙이 드러나는 순간을 보세요.</p></div><div class="ctl">
 <div class="daterow"><div><div class="lbl" style="color:var(--muted)">Date</div><div class="date" id="dateOut">2026-01-01</div></div>
 <div class="btns"><button class="cta" id="playBtn" type="button">재생</button><button class="ul" type="button" id="resetBtn">오늘로</button>

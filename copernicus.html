@@ -187,6 +187,7 @@ body.t-dark::after{opacity:.9;filter:invert(1)}
 /* ===== index hero ===== */
 .ihero{position:relative;min-height:max(560px,calc(100svh - 96px));display:grid;overflow:hidden;background:#050507;color:#f4efe6}
 .ihero #milky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ihero #milkyfront{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:3;pointer-events:none}
 .ivig{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 115%,rgba(5,5,7,.85),transparent 60%),linear-gradient(to bottom,rgba(5,5,7,.55),transparent 22%,transparent 70%,rgba(5,5,7,.7));pointer-events:none}
 .ihero .crop::before,.ihero .crop::after{background:#f4efe6}
 .ihero .in{position:relative;z-index:2;width:100%;display:grid;grid-template-rows:auto auto 1fr auto;padding-block:30px 26px}
@@ -233,11 +234,11 @@ body.embed .poster{padding-bottom:20px}
 <body class="t-dark p-copernicus" style="--acc:#e9c27c" data-bg="orbits">
 <div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><nav aria-label="모형"><a href="ptolemy.html">01 PTOLEMY</a> <a href="copernicus.html" aria-current="page">02 COPERNICUS</a> <a href="kepler-solids.html">03 MYSTERIUM</a> <a href="kepler-orbits.html">04 ELLIPSE</a> <a href="kepler-laws.html">05 HARMONY</a></nav></div></div>
 <header class="nav gut"><div class="in"><span class="lbl">Model 02 / 05</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="orbits.html">Room 04 · 물음의 궤도</a></span></div></header><section class="hero poster scene-limb gut" style="--len:10"><i class="crop tl" aria-hidden="true"></i><i class="crop tr" aria-hidden="true"></i><div class="in">
-<div class="pmeta mono"><span><b>Title —</b><i>코페르니쿠스의 태양계</i></span><span><b>Room —</b><i>04 · 02</i></span><span><b>Chapter —</b><i>Ch. 3 · AD 1543</i></span><span><b>Reading —</b><i>Cosmos</i></span><span><b>Issue —</b><i>.04—02</i></span></div>
+<div class="pmeta mono"><span><b>Title —</b><i>코페르니쿠스의 태양계</i></span><span><b>Room —</b><i>04 · 02</i></span><span><b>Chapter —</b><i>Ch. 3 · AD 1543</i></span><span><b>Reading —</b><i>Cosmos</i></span><span><b>Issue —</b><i>.04-2</i></span></div>
 <div class="ptag"><div class="pbox"><span>The Sun takes the centre</span><span class="mono">Cosmos camp</span></div><p class="mono">태양을 가운데로 옮기자 역행은 착시가 되었다. 그러나 그는 완전한 원을 끝내 버리지 못했다.</p></div>
 <div class="gwrap"><div class="giant" aria-hidden="true">COPERNICUS</div><div class="sea" aria-hidden="true"><i></i></div></div>
 <div class="disc"><canvas id="orrery" aria-label="행성 운동 모형"></canvas></div>
-<div class="pfoot mono" aria-hidden="true"><span>Station 02 · 태양을 가운데로</span><b class="issue">.04—02</b></div>
+<div class="pfoot mono" aria-hidden="true"><span>Station 02 · 태양을 가운데로</span><b class="issue">.04-2</b></div>
 </div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>코페르니쿠스의<br>태양계</h1><p>태양을 가운데 두면 역행은 장치가 아니라 착시가 됩니다. 안쪽 길을 도는 지구가 바깥 행성을 앞지를 때, 그 행성은 하늘에서 잠시 뒤로 미끄러집니다.</p></div><div class="ctl">
 <div class="daterow"><div><div class="lbl" style="color:var(--muted)">Date</div><div class="date" id="dateOut">2026-01-01</div></div>
 <div class="btns"><button class="cta" id="playBtn" type="button">재생</button><button class="ul" type="button" id="resetBtn">오늘로</button>
