@@ -322,7 +322,7 @@ body.t-dark::after{opacity:.9;filter:invert(1)}
 .pbox{border:1.5px solid var(--acc);color:var(--acc);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 14px}
 .pbox span:first-child{font-family:var(--display);font-weight:900;font-variation-settings:"wdth" 108;font-size:clamp(14px,1.8vw,19px);text-transform:uppercase;letter-spacing:-.005em;line-height:1.15}
 .pbox .mono{font-size:10px;letter-spacing:.06em;white-space:nowrap;opacity:.85}
-.ptag p{margin:0;font-size:11.5px;line-height:1.6;color:var(--acc);max-width:56ch}
+.ptag p{margin:0;font-family:var(--ko);font-weight:500;font-size:11.5px;line-height:1.7;letter-spacing:-.005em;word-break:keep-all;color:var(--acc);max-width:56ch}
 .gwrap{position:relative;z-index:0;margin-top:clamp(18px,4vw,46px)}
 .poster .giant{color:var(--acc);margin-top:0!important;position:relative;z-index:0}
 .sea{position:absolute;left:calc(50% - 50vw);width:100vw;top:calc(var(--gs) * .64);height:2200px;z-index:1;pointer-events:none;overflow:hidden}
@@ -372,14 +372,13 @@ body.t-dark::after{opacity:.9;filter:invert(1)}
 /* map route colours */
 .stop[href="look.html"]{--c:#f0632f}.stop[href="kosmos.html"]{--c:#6d4aa3}.stop[href="stardust.html"]{--c:#3f7ad6}.stop[href="orbits.html"]{--c:#b88a2e}
 .stop .dot{border-color:var(--c,var(--ink))}.stop .vb{color:var(--c,var(--ink))}
-/* ===== dividers ===== */
+/* ===== dividers (no labels, melted into the line) ===== */
 .odiv{color:var(--ink);pointer-events:none}
-.odiv .in{position:relative;height:96px;display:flex;align-items:center;justify-content:space-between}
-.odiv .in::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--divline)}
-.odiv .dl,.odiv .dr{position:relative;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:var(--bg);padding:2px 10px;color:var(--muted)}
-.odiv .dl{padding-left:0}.odiv .dr{padding-right:0}
-.odiv svg{position:absolute;left:50%;top:50%;width:min(560px,74vw);height:auto;transform:translate(-50%,-50%);overflow:visible}
-@media (max-width:560px){.odiv .dr{display:none}}
+.odiv .in{position:relative;height:110px}
+.odiv .in::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:linear-gradient(90deg,transparent,var(--divline) 18%,var(--divline) 82%,transparent)}
+.odiv svg{position:absolute;left:0;top:50%;width:100%;height:110px;transform:translateY(-50%);overflow:hidden;opacity:.62}
+.t-dark .odiv svg{opacity:.72}
+@media (max-width:560px){.odiv .in{height:84px}.odiv svg{height:84px}}
 </style>
 </head>
 <body class="t-dark p-index" style="--acc:#e9c27c">
@@ -394,16 +393,10 @@ body.t-dark::after{opacity:.9;filter:invert(1)}
 </div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 1</div><h1>코스모스를 알고자,<br>더불어 변화시키고자</h1>
 <p>칼 세이건은 인간을 이렇게 불렀습니다. 이곳은 그 두 동사, 알다와 변화시키다를 따라 걷는 네 개의 방입니다. 방마다 움직여 볼 수 있는 모형이 있고, 맨 아래에는 각자의 생각을 붙이는 담벼락이 있습니다.</p></div>
 <div class="ctl"><div class="lbl" style="color:var(--muted)">How to join · 참여하는 법</div>
-<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>방에 들어가 모형을 움직이고 읽을거리를 읽는다.</li><li>맨 아래 담벼락에 이름(별명도 좋다), 내 생각, 내 글이나 작품 링크를 붙인다. 구글 문서·캔바·유튜브·이미지 링크는 담벼락에 그대로 펼쳐진다.</li><li>친구의 카드를 읽고, 내 카드에 그 친구에게 묻고 싶은 것을 한 줄 남긴다.</li></ol><a class="cta" href="map.html" style="justify-self:start;margin-top:10px;text-decoration:none">처음이라면, 안내도 보기 →</a></div></div></section><div class="odiv gut" aria-hidden="true"><div class="in"><span class="dl mono">§ 01</span><svg viewBox="0 0 560 96" aria-hidden="true"><defs><linearGradient id="og01" x1="0" x2="1"><stop offset="0" style="stop-color:currentColor;stop-opacity:0"/><stop offset=".5" style="stop-color:currentColor;stop-opacity:.85"/><stop offset="1" style="stop-color:currentColor;stop-opacity:0"/></linearGradient>
-<linearGradient id="of01" x1="0" x2="1"><stop offset="0" style="stop-color:currentColor;stop-opacity:0"/><stop offset=".5" style="stop-color:currentColor;stop-opacity:.07"/><stop offset="1" style="stop-color:currentColor;stop-opacity:0"/></linearGradient></defs>
-<g transform="rotate(-4 280 48)"><ellipse cx="280" cy="48" rx="250" ry="27" fill="url(#of01)" stroke="url(#og01)" stroke-width="1.1"/>
-<path id="op01" d="M30,48 a250,27 0 1,0 500,0 a250,27 0 1,0 -500,0" fill="none"/>
-<circle r="4.5" style="fill:var(--acc)"><animateMotion dur="48s" repeatCount="indefinite"><mpath href="#op01"/></animateMotion></circle></g>
-<ellipse cx="280" cy="48" rx="214" ry="35" transform="rotate(5 280 48)" fill="none" stroke="url(#og01)" stroke-width="1" opacity=".7"/>
-<ellipse cx="292" cy="48" rx="160" ry="17" transform="rotate(-10 292 48)" fill="url(#of01)" stroke="url(#og01)" stroke-width=".9" opacity=".55"/></svg><span class="dr mono">Orbit · 궤도</span></div></div><section class="list gut" id="rooms"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">Four rooms · 네 개의 방</div><div class="grid rooms4"><a class="tile" href="look.html"><span class="lbl n">Room 01</span><span class="w">SHADOWS</span><span class="k">유심히 봄</span><p>평범한 것을 다시 보는 눈. 막대기 하나로 지구를 재고, 그 눈을 모두가 갖지 못했을 때 생기는 일을 묻는다.</p><span class="lbl go">Enter →</span></a><a class="tile" href="kosmos.html"><span class="lbl n">Room 02</span><span class="w">KOSMOS</span><span class="k">코스모스를 품다</span><p>무질서와 질서. 질서는 바깥에서 부과되는가, 안에서 자라나는가. 그리고 그것을 바꿀 수 있는 나.</p><span class="lbl go">Enter →</span></a><a class="tile" href="stardust.html"><span class="lbl n">Room 03</span><span class="w">STARDUST</span><span class="k">별의 품</span><p>내 몸의 원자는 별에서 왔다. 별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p><span class="lbl go">Enter →</span></a><a class="tile" href="orbits.html"><span class="lbl n">Room 04</span><span class="w">ORBITS</span><span class="k">물음의 궤도</span><p>점성술에서 천문학으로, 프톨레마이오스에서 케플러로. 끝없이 묻는 태도.</p><span class="lbl go">Enter →</span></a></div></div></section><footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
+<ol style="margin:0;padding-left:18px;display:grid;gap:6px"><li>방에 들어가 모형을 움직이고 읽을거리를 읽는다.</li><li>맨 아래 담벼락에 이름(별명도 좋다), 내 생각, 내 글이나 작품 링크를 붙인다. 구글 문서·캔바·유튜브·이미지 링크는 담벼락에 그대로 펼쳐진다.</li><li>친구의 카드를 읽고, 내 카드에 그 친구에게 묻고 싶은 것을 한 줄 남긴다.</li></ol><a class="cta" href="map.html" style="justify-self:start;margin-top:10px;text-decoration:none">처음이라면, 안내도 보기 →</a></div></div></section><div class="odiv gut" aria-hidden="true"><div class="in"><svg viewBox="0 0 1200 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="fd01" x1="0" x2="1"><stop offset="0" style="stop-color:currentColor;stop-opacity:0"/><stop offset=".3" style="stop-color:currentColor;stop-opacity:.9"/><stop offset=".7" style="stop-color:currentColor;stop-opacity:.9"/><stop offset="1" style="stop-color:currentColor;stop-opacity:0"/></linearGradient></defs><g fill="none" stroke="url(#fd01)"><g transform="rotate(-1.6 600 55)"><ellipse cx="600" cy="55" rx="520" ry="30" stroke-width="1" opacity=".55"/><path id="op01" d="M80,55 a520,30 0 1,0 1040,0 a520,30 0 1,0 -1040,0"/><circle r="3.2" style="fill:var(--acc);stroke:none"><animateMotion dur="70s" repeatCount="indefinite"><mpath href="#op01"/></animateMotion></circle></g><ellipse cx="600" cy="55" rx="430" ry="19" transform="rotate(1.2 600 55)" stroke-width=".9" opacity=".4"/><ellipse cx="640" cy="55" rx="300" ry="10" transform="rotate(-2.4 640 55)" stroke-width=".8" opacity=".3"/></g><circle cx="193" cy="45.2" r="1.3" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.19;0.61;0.13" dur="8.3s" begin="1.0s" repeatCount="indefinite"/></circle><circle cx="1031" cy="58.3" r="0.6" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.14;0.79;0.21" dur="8.2s" begin="4.7s" repeatCount="indefinite"/></circle><circle cx="313" cy="56.8" r="0.8" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.22;0.86;0.21" dur="6.0s" begin="3.6s" repeatCount="indefinite"/></circle><circle cx="346" cy="77.7" r="1" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.25;0.63;0.20" dur="6.2s" begin="3.0s" repeatCount="indefinite"/></circle><circle cx="629" cy="63.7" r="1" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.17;0.65;0.18" dur="6.0s" begin="2.5s" repeatCount="indefinite"/></circle><circle cx="918" cy="38.1" r="0.8" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.11;0.78;0.22" dur="3.8s" begin="2.6s" repeatCount="indefinite"/></circle><circle cx="680" cy="63.0" r="1" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.17;0.67;0.22" dur="7.9s" begin="2.7s" repeatCount="indefinite"/></circle><circle cx="156" cy="50.1" r="0.8" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.16;0.72;0.12" dur="3.6s" begin="1.8s" repeatCount="indefinite"/></circle><circle cx="1067" cy="57.9" r="0.6" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.25;0.60;0.20" dur="8.3s" begin="2.4s" repeatCount="indefinite"/></circle><circle cx="943" cy="41.3" r="0.8" fill="currentColor" opacity=".3"><animate attributeName="opacity" values="0.15;0.60;0.20" dur="7.1s" begin="1.8s" repeatCount="indefinite"/></circle></svg></div></div><section class="list gut" id="rooms"><div class="in"><div class="lbl" style="margin:30px 0 14px;color:var(--muted)">Four rooms · 네 개의 방</div><div class="grid rooms4"><a class="tile" href="look.html"><span class="lbl n">Room 01</span><span class="w">SHADOWS</span><span class="k">유심히 봄</span><p>평범한 것을 다시 보는 눈. 막대기 하나로 지구를 재고, 그 눈을 모두가 갖지 못했을 때 생기는 일을 묻는다.</p><span class="lbl go">Enter →</span></a><a class="tile" href="kosmos.html"><span class="lbl n">Room 02</span><span class="w">KOSMOS</span><span class="k">코스모스를 품다</span><p>무질서와 질서. 질서는 바깥에서 부과되는가, 안에서 자라나는가. 그리고 그것을 바꿀 수 있는 나.</p><span class="lbl go">Enter →</span></a><a class="tile" href="stardust.html"><span class="lbl n">Room 03</span><span class="w">STARDUST</span><span class="k">별의 품</span><p>내 몸의 원자는 별에서 왔다. 별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p><span class="lbl go">Enter →</span></a><a class="tile" href="orbits.html"><span class="lbl n">Room 04</span><span class="w">ORBITS</span><span class="k">물음의 궤도</span><p>점성술에서 천문학으로, 프톨레마이오스에서 케플러로. 끝없이 묻는 태도.</p><span class="lbl go">Enter →</span></a></div></div></section><footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos</span></div></footer>
 <script>
 (function(){
-const kind=document.body.dataset.bg; if(!kind) return;
+const kind=document.body.dataset.bg; if(!kind) return; const dark=document.body.classList.contains('t-dark');
 const cv=document.createElement('canvas'); cv.id='bgfx'; cv.setAttribute('aria-hidden','true'); document.body.prepend(cv);
 const g=cv.getContext('2d'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const css=n=>getComputedStyle(document.body).getPropertyValue(n).trim();
@@ -411,7 +404,15 @@ let W=0,H=0,dpr=1; function size(){ dpr=Math.min(1.5,window.devicePixelRatio||1)
 size(); addEventListener('resize',()=>{size(); init();});
 const ink=css('--ink'), acc=css('--acc');
 function rgba(hex,a){ hex=hex.replace('#',''); if(hex.length===3) hex=hex.split('').map(c=>c+c).join(''); const n=parseInt(hex,16); return `rgba(${n>>16},${n>>8&255},${n&255},${a})`; }
-let P=[], met=null, nextMet=8000;
+let P=[], M=[], nextMet=3000+Math.random()*3000;
+function spawn(t){ const a=(28+Math.random()*30)*Math.PI/180, sp=W*(.55+Math.random()*.45)/1000; M.push({x:W*(.25+Math.random()*.85),y:H*(-.05+Math.random()*.35),ux:-Math.cos(a),uy:Math.sin(a),sp,t0:t,life:700+Math.random()*600}); }
+function meteors(t){ if(reduce) return;
+  if(t>nextMet){ spawn(t); if(Math.random()<.22) setTimeout(()=>spawn(performance.now()),350+Math.random()*700); nextMet=t+9000+Math.random()*14000; }
+  M=M.filter(m=>{ const e=(t-m.t0)/m.life; if(e>1) return false; const d=m.sp*(t-m.t0)*(1+e*.6), x=m.x+m.ux*d, y=m.y+m.uy*d, L=Math.min(W*.16,40+d*.5)*(e<.75?1:(1-e)*4), al=Math.sin(Math.PI*Math.min(1,e*1.1));
+    const col=dark?'255,248,236':'21,20,18', a0=dark?.85:.32; const gr=g.createLinearGradient(x,y,x-m.ux*L,y-m.uy*L); gr.addColorStop(0,`rgba(${col},${a0*al})`); gr.addColorStop(1,`rgba(${col},0)`);
+    g.strokeStyle=gr; g.lineWidth=dark?1.4:1.1; g.lineCap='round'; g.beginPath(); g.moveTo(x,y); g.lineTo(x-m.ux*L,y-m.uy*L); g.stroke();
+    if(dark){ const hg=g.createRadialGradient(x,y,0,x,y,5); hg.addColorStop(0,`rgba(255,250,240,${.7*al})`); hg.addColorStop(1,'rgba(255,250,240,0)'); g.fillStyle=hg; g.beginPath(); g.arc(x,y,5,0,7); g.fill(); }
+    return true; }); }
 function init(){ P=[];
   if(kind==='stars'||kind==='orbits'){ const n=Math.round(W*H/9000); for(let i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()<.08?1.4:Math.random()*.8+.3,p:Math.random()*6.28,s:.3+Math.random()*1.2,z:.3+Math.random()*.7}); }
   if(kind==='flock'){ for(let i=0;i<34;i++) P.push({x:Math.random()*W,y:H*(.25+Math.random()*.5),vx:.35+Math.random()*.2,vy:(Math.random()-.5)*.2}); }
@@ -424,8 +425,7 @@ function frame(t){
   if(kind==='stars'||kind==='orbits'){
     for(const s of P){ if(!reduce&&kind==='stars'){ s.x-=.03*s.z; if(s.x<-2) s.x=W+2; }
       const a=(kind==='stars'?.55:.4)*(.55+.45*Math.sin(t*.001*s.s+s.p)); g.fillStyle=rgba(ink.startsWith('#')?ink:'#eeeae2',a*s.z); g.beginPath(); g.arc(s.x,s.y,s.r,0,7); g.fill(); }
-    if(kind==='stars'&&!reduce){ if(!met&&t>nextMet){ met={x:Math.random()*W*.8+W*.2,y:Math.random()*H*.4,t0:t,dx:-(4+Math.random()*3),dy:1.6+Math.random()*1.4}; nextMet=t+18000+Math.random()*22000; }
-      if(met){ const k=(t-met.t0)/16; const x=met.x+met.dx*k, y=met.y+met.dy*k, L=14; const gr=g.createLinearGradient(x,y,x-met.dx*L,y-met.dy*L); gr.addColorStop(0,'rgba(255,255,255,.7)'); gr.addColorStop(1,'rgba(255,255,255,0)'); g.strokeStyle=gr; g.lineWidth=1.2; g.beginPath(); g.moveTo(x,y); g.lineTo(x-met.dx*L,y-met.dy*L); g.stroke(); if(k>70) met=null; } }
+
     if(kind==='orbits'){ const cx=W*.88, cy=H*.78, rot=-.21; g.save(); g.translate(cx,cy); g.rotate(rot);
       for(const o of ORB){ g.strokeStyle=rgba(ink.startsWith('#')?ink:'#eeeae2',.075); g.lineWidth=1; g.beginPath(); g.ellipse(0,0,o.a,o.a*.36,0,0,7); g.stroke();
         const th=o.ph+(reduce?0:t*o.sp); g.fillStyle=rgba(acc,.55); g.beginPath(); g.arc(Math.cos(th)*o.a,Math.sin(th)*o.a*.36,o.r,0,7); g.fill(); }
@@ -437,6 +437,7 @@ function frame(t){
   if(kind==='dust'){ for(const p of P){ if(!reduce){ p.y-=p.v; p.x+=Math.sin(t*.0004+p.p)*.12; if(p.y<-4){ p.y=H+4; p.x=Math.random()*W; } } }
     g.lineWidth=.8; for(let i=0;i<P.length;i++) for(let j=i+1;j<P.length;j++){ const a=P[i], b=P[j], d=Math.hypot(a.x-b.x,a.y-b.y); if(d<110){ g.strokeStyle=rgba(acc,.10*(1-d/110)); g.beginPath(); g.moveTo(a.x,a.y); g.lineTo(b.x,b.y); g.stroke(); } }
     for(const p of P){ g.fillStyle=p.c?rgba(acc,.35):rgba(ink,.18); g.beginPath(); g.arc(p.x,p.y,p.r,0,7); g.fill(); } }
+  meteors(t);
 }
 let last=0, vis=true; document.addEventListener('visibilitychange',()=>{vis=!document.hidden;});
 function loop(t){ if(vis&&t-last>33){ last=t; frame(t); } requestAnimationFrame(loop); }
