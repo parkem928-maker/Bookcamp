@@ -80,7 +80,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var fd = new FormData(form), data = { room: room, name: String(fd.get('name') || '').trim(), text: String(fd.get('text') || '').trim(), link: String(fd.get('link') || '').trim() };
-      if (!data.name) { status.textContent = '이름(또는 별명)을 적어 주세요.'; nameIn.focus(); return; }
+      if (!data.name) { status.textContent = '이름을 적어 주세요.'; nameIn.focus(); return; }
       if (!data.text && !data.link) { status.textContent = '생각이나 링크 중 하나는 적어 주세요.'; return; }
       if (data.link && !safeUrl(data.link)) { status.textContent = '링크는 https:// 로 시작하는 주소를 붙여 주세요.'; return; }
       var btn = form.querySelector('button'); btn.disabled = true; status.textContent = '붙이는 중…';
