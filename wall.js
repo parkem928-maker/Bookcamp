@@ -40,7 +40,7 @@
   function constellation(cv, posts) {
     var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1; cv.width = r.width * dpr; cv.height = r.height * dpr;
     var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, r.width, r.height);
-    var cs = getComputedStyle(document.documentElement), fg = cs.getPropertyValue('--bandfg').trim(), dim = cs.getPropertyValue('--banddim').trim(), red = cs.getPropertyValue('--red').trim();
+    var cs = getComputedStyle(document.body), fg = cs.getPropertyValue('--bandfg').trim(), dim = cs.getPropertyValue('--banddim').trim(), red = cs.getPropertyValue('--red').trim();
     for (var k = 0; k < 140; k++) { g.fillStyle = dim; g.globalAlpha = .35; g.fillRect(hash('bg' + k) * r.width, hash('y' + k) * r.height, 1, 1); }
     g.globalAlpha = 1;
     if (!posts.length) { g.fillStyle = dim; g.font = '13px "Noto Sans KR",sans-serif'; g.textAlign = 'center'; g.fillText('첫 번째 별이 되어 주세요. 별이 둘이 되면 선이 생깁니다.', r.width / 2, r.height / 2); return; }
