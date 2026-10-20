@@ -231,11 +231,35 @@ body.embed .poster .in{padding-top:6px}
 body.embed .poster{padding-bottom:20px}
 
 .iscroll{height:230vh;position:relative}
-.iscroll .ihero{position:sticky;top:0;min-height:0;height:100vh;height:100svh}
+.iscroll .ihero{position:sticky;top:0;min-height:520px;height:calc(100vh - 112px);height:calc(100svh - 112px)}
+.igiant{font-size:clamp(76px,min(19vw,24vh),300px)!important}
 .igiant{will-change:transform,opacity;transform-origin:50% 50%}
 .hero .wordfx{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
 .scene-limb .sea i::before{filter:brightness(calc(1 + var(--sink,0) * .9))}
 @media (prefers-reduced-motion:reduce){.iscroll{height:auto}.iscroll .ihero{position:relative;height:auto;min-height:max(560px,calc(100svh - 96px))}}
+
+/* readability + touch targets */
+.lbl{font-size:12px}
+.pmeta{font-size:12.5px}.pmeta b{font-size:13px}
+.ptag p{font-size:13.5px}
+.pfoot{font-size:12px}
+.pfoot .issue{white-space:nowrap}
+.ticks{font-size:12.5px}
+.readout{font-size:14px}
+.band p,.stage2 p,.notes p{font-size:15px}
+.chips button,.chipsL button{font-size:14px;padding:9px 14px;min-height:40px}
+.cta{min-height:44px}
+.ul{padding:8px 0;font-size:12.5px}
+.ptable .nm{font-size:12.5px}.ptable .pc{font-size:12.5px}
+.ktab th{font-size:12px}
+.pbox .mono{font-size:11px}
+.stop dt{font-size:12px}.stop dd,.stop .q{font-size:14.5px}
+.ihero .igo{font-family:var(--ko);text-transform:none;letter-spacing:0;font-size:14px;line-height:1.6}
+.ihero .igo a{text-decoration:underline;text-underline-offset:3px;pointer-events:auto}
+.ihero .pfoot{pointer-events:auto}
+@media (pointer:coarse){input[type=range]{height:34px}input[type=range]::-webkit-slider-thumb{width:24px;height:24px;margin-top:-11.5px;border-radius:50%}input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%}}
+.glossfab{transition:opacity .25s,transform .25s}
+.glossfab.away{opacity:0;transform:translateY(12px);pointer-events:none}
 </style>
 </head>
 <body data-exit="earth" class="t-dark p-kepler-orbits" style="--acc:#e9c27c" data-bg="orbits">
@@ -538,6 +562,10 @@ addEventListener('scroll',req,{passive:true}); addEventListener('resize',()=>{ i
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(dust){ dust.cv.remove(); dust=null; } lastP=-1; req(); });
 req();
 })();
+</script>
+<script>
+(function(){ const fab=document.querySelector('.glossfab'), wall=document.getElementById('wall'); if(!fab||!wall||!('IntersectionObserver' in window)) return;
+  new IntersectionObserver(es=>{ fab.classList.toggle('away', es[0].isIntersecting); },{rootMargin:'0px 0px -10% 0px'}).observe(wall); })();
 </script>
 </body>
 </html>
