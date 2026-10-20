@@ -355,7 +355,7 @@ function drawCannon(){ const {g,w,h}=fit($('orrery')); g.clearRect(0,0,w,h); con
   g.fillStyle=tok('--bandfg'); g.font=F(12,700); g.textAlign='center'; g.fillText('지구',cx,cy+4);
   // mountain
   g.fillStyle=tok('--ink'); g.beginPath(); g.moveTo(cx-RE*S*0.16,cy-RE*S*0.985); g.lineTo(cx,cy-R0*S); g.lineTo(cx+RE*S*0.16,cy-RE*S*0.985); g.closePath(); g.fill();
-  g.fillStyle=tok('--ink'); g.font=F(11); g.fillText('뉴턴의 산 (높이는 과장)',cx,cy-R0*S-12);
+  g.fillStyle=tok('--ink'); g.font=F(11); g.fillText('뉴턴의 산',cx,cy-R0*S-12);
   shots.forEach(s=>{ const last=s===cur; const n=last?s.n:s.pts.length; g.strokeStyle=last?tok('--red'):'rgba(17,17,17,.35)'; g.lineWidth=last?2:1.2; g.beginPath(); for(let i=0;i<n;i++){ const p=s.pts[i]; i?g.lineTo(X(p),Y(p)):g.moveTo(X(p),Y(p)); } g.stroke();
     if(last&&n>0){ const p=s.pts[Math.min(n,s.pts.length)-1]; g.fillStyle=tok('--red'); g.beginPath(); g.arc(X(p),Y(p),4.5,0,7); g.fill(); } });
   if(cur&&cur.n<cur.pts.length) cur.n=Math.min(cur.pts.length, cur.n+(reduce?cur.pts.length:Math.max(2,cur.pts.length/140|0))); }
