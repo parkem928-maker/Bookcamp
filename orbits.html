@@ -210,6 +210,26 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .tips b{display:block;margin-bottom:2px}
 @media print{.top,.nav .r,.foot,.noprint{display:none!important}body{background:#fff}.hero .giant{font-size:90px!important;margin:10px 0!important}.stop .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow div,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}}
 
+
+/* glossary */
+.glosswrap .in{padding-block:0 8px}
+.gloss{border:2px solid var(--ink);background:var(--paper)}
+.gloss summary{cursor:pointer;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;padding:16px 20px;list-style:none}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary::before{content:"+";font-family:var(--display);font-weight:900;font-size:22px;width:16px;line-height:1}
+.gloss[open] summary::before{content:"−"}
+.gloss[open] summary{border-bottom:1px solid var(--ink)}
+.gloss .se{font-family:var(--ko);font-weight:900;font-size:19px;letter-spacing:-.02em}
+.gloss .gn{font-size:13px;color:var(--muted)}
+.gloss dl{margin:0;padding:6px 20px 22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 32px}
+@media (max-width:760px){.gloss dl{grid-template-columns:minmax(0,1fr)}}
+.gloss dl div{border-top:1px solid #cfccc6;padding-top:10px;margin-top:10px;min-width:0}
+.gloss dt{font-weight:900;font-size:15px}
+.gloss dd{margin:3px 0 0;font-size:14px;line-height:1.7;color:#3d3b38}
+.glossfab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;border:0;background:var(--ink);color:var(--bandfg);font-family:var(--ko);font-weight:700;font-size:13px;letter-spacing:.02em;padding:11px 16px;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
+.glossfab:hover{background:var(--red)}
+@media print{.glossfab{display:none}}
+
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
@@ -253,7 +273,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 <div class="giant" aria-hidden="true">ORBITS</div>
 
 <div class="side-r">Room 04<br>Cosmos · Ch. 3</div>
-</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 04 · 물음의 궤도</div><h1>사람들은 무엇을 의심했고<br>무엇을 의심하지 못했나</h1><p>하늘을 올려다본 같은 눈에서 점성술과 천문학이 갈라져 나왔습니다. 그리고 프톨레마이오스에서 케플러까지 1,400년에 걸쳐 우주의 그림이 바뀌었습니다. 다섯 개의 모형을 차례로 움직여 보며 그 길을 따라 걸어 보세요.</p></div><div></div></div></section><section class="band four gut"><div class="in">
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 04 · 물음의 궤도</div><h1>사람들은 무엇을 의심했고<br>무엇을 의심하지 못했나</h1><p>하늘을 올려다본 같은 눈에서 점성술과 천문학이 갈라져 나왔습니다. 그리고 프톨레마이오스에서 케플러까지 1,400년에 걸쳐 우주의 그림이 바뀌었습니다. 다섯 개의 모형을 차례로 움직여 보며 그 길을 따라 걸어 보세요.</p></div><div></div></div></section><section class="gut glosswrap" id="gloss"><div class="in"><details class="gloss"><summary><span class="se">용어 풀이</span><span class="gn">모르는 말이 나오면 여기를 펼쳐 보세요 · 12개</span></summary><dl><div><dt>점성술</dt><dd>하늘의 별과 행성의 위치로 사람이나 나라의 운명을 읽을 수 있다고 믿는 생각과 그 기술입니다.</dd></div><div><dt>천문학</dt><dd>하늘의 천체를 관측하고, 그 움직임과 성질을 증거와 법칙으로 설명하는 학문입니다.</dd></div><div><dt>천궁도</dt><dd>태어난 순간 하늘의 행성과 별자리 위치를 그린 그림입니다. 점성술에서 운명을 읽는 데 씁니다.</dd></div><div><dt>반례</dt><dd>어떤 주장이 틀렸음을 보여 주는 하나의 예입니다. 같은 하늘 아래 태어난 쌍둥이의 다른 삶은 점성술의 반례입니다.</dd></div><div><dt>역행</dt><dd>행성이 밤하늘에서 잠시 거꾸로 가는 것처럼 보이는 현상입니다. 지구가 바깥 행성을 앞질러 갈 때 생기는 겉보기 움직임입니다.</dd></div><div><dt>지구중심설과 태양중심설</dt><dd>지구가 우주의 가운데에 있다는 생각(프톨레마이오스)과, 태양이 가운데에 있고 지구가 그 둘레를 돈다는 생각(코페르니쿠스)입니다.</dd></div><div><dt>주전원</dt><dd>큰 원 위를 돌면서 그 위에서 다시 작은 원을 그리는 운동입니다. 프톨레마이오스는 이것으로 행성의 역행을 설명했습니다.</dd></div><div><dt>정다면체</dt><dd>모든 면이 똑같은 정다각형이고 꼭짓점의 모양도 모두 같은 입체입니다. 정사면체, 정육면체, 정팔면체, 정십이면체, 정이십면체 다섯 가지뿐입니다.</dd></div><div><dt>튀코 브라헤</dt><dd>16세기 덴마크의 천문학자입니다. 망원경이 나오기 전에 맨눈과 큰 관측 기구로 가장 정밀한 행성 관측 기록을 남겼고, 케플러가 그 자료를 물려받았습니다.</dd></div><div><dt>분각 (′)</dt><dd>각도의 단위로, 1도의 60분의 1입니다. 보름달의 지름이 약 30분각이니, 8분각은 보름달 지름의 4분의 1쯤입니다.</dd></div><div><dt>타원과 이심률</dt><dd>타원은 두 점(초점)까지의 거리의 합이 일정한 점들이 그리는 곡선입니다. 이심률은 타원이 원에서 얼마나 찌그러졌는지를 나타내며, 0이면 원입니다.</dd></div><div><dt>케플러의 세 법칙</dt><dd>① 행성은 태양을 한 초점으로 하는 타원을 그린다. ② 같은 시간 동안 휩쓰는 넓이가 같다. ③ 공전 주기의 제곱은 궤도 크기의 세제곱에 비례한다.</dd></div></dl></details></div></section><button type="button" class="glossfab" aria-label="용어 풀이 열기" onclick="var d=document.querySelector('#gloss details');d.open=true;document.getElementById('gloss').scrollIntoView({behavior:'smooth'});">용어</button><section class="band four gut"><div class="in">
 <div class="col"><span class="lbl n">01 — Test</span><h3>예측을 시험하기</h3><p>점성술의 예언은 확인할 수 있을 만큼 구체적이면 틀리고, 틀릴 수 없을 만큼 모호하면 아무것도 말해 주지 않는다.</p></div>
 <div class="col"><span class="lbl n">02 — Twins</span><h3>쌍둥이의 반례</h3><p>같은 시각, 같은 하늘 아래 태어난 쌍둥이의 삶은 다르다. 기원이 같다고 운명이 같지는 않다.</p></div>
 <div class="col"><span class="lbl n">03 — Mechanism</span><h3>작동 원리</h3><p>갓 태어난 아기에게는 멀리 있는 화성보다 분만실의 의사가 더 큰 중력을 미친다.</p></div>

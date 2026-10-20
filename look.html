@@ -210,6 +210,26 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .tips b{display:block;margin-bottom:2px}
 @media print{.top,.nav .r,.foot,.noprint{display:none!important}body{background:#fff}.hero .giant{font-size:90px!important;margin:10px 0!important}.stop .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow div,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}}
 
+
+/* glossary */
+.glosswrap .in{padding-block:0 8px}
+.gloss{border:2px solid var(--ink);background:var(--paper)}
+.gloss summary{cursor:pointer;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;padding:16px 20px;list-style:none}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary::before{content:"+";font-family:var(--display);font-weight:900;font-size:22px;width:16px;line-height:1}
+.gloss[open] summary::before{content:"−"}
+.gloss[open] summary{border-bottom:1px solid var(--ink)}
+.gloss .se{font-family:var(--ko);font-weight:900;font-size:19px;letter-spacing:-.02em}
+.gloss .gn{font-size:13px;color:var(--muted)}
+.gloss dl{margin:0;padding:6px 20px 22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 32px}
+@media (max-width:760px){.gloss dl{grid-template-columns:minmax(0,1fr)}}
+.gloss dl div{border-top:1px solid #cfccc6;padding-top:10px;margin-top:10px;min-width:0}
+.gloss dt{font-weight:900;font-size:15px}
+.gloss dd{margin:3px 0 0;font-size:14px;line-height:1.7;color:#3d3b38}
+.glossfab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;border:0;background:var(--ink);color:var(--bandfg);font-family:var(--ko);font-weight:700;font-size:13px;letter-spacing:.02em;padding:11px 16px;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
+.glossfab:hover{background:var(--red)}
+@media print{.glossfab{display:none}}
+
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
@@ -253,7 +273,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 <div class="giant" aria-hidden="true">SHADOWS</div>
 <div class="disc"><canvas id="orrery" aria-label="에라토스테네스의 그림자 실험"></canvas></div>
 <div class="side-r">Room 01<br>Cosmos · Ch. 1·7·12·13</div>
-</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 01 · 유심히 봄</div><h1>막대기 하나로<br>지구를 재다</h1><p>에라토스테네스는 도서관의 책에서 한 줄을 유심히 읽었습니다. 하짓날 정오, 시에네의 막대기에는 그림자가 없다. 그런데 알렉산드리아에는 그림자가 생긴다. 막대를 움직여 그가 지구 둘레를 어떻게 계산했는지, 그리고 왜 두 막대기로는 부족했는지 확인해 보세요.</p></div><div class="ctl"><div class="sl"><label for="th">알렉산드리아의 그림자 각도</label><span class="v" id="thv"></span><input type="range" id="th" min="1" max="20" step="0.1" value="7.2"></div><div class="sl"><label for="dk">두 도시 사이 거리</label><span class="v" id="dv"></span><input type="range" id="dk" min="200" max="2000" step="10" value="800"></div><div class="ticks"><span>실제 기록: 약 7.2° · 5,000스타디온(약 800 km)</span></div></div></div></section><section class="band gut"><div class="in">
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 01 · 유심히 봄</div><h1>막대기 하나로<br>지구를 재다</h1><p>에라토스테네스는 도서관의 책에서 한 줄을 유심히 읽었습니다. 하짓날 정오, 시에네의 막대기에는 그림자가 없다. 그런데 알렉산드리아에는 그림자가 생긴다. 막대를 움직여 그가 지구 둘레를 어떻게 계산했는지, 그리고 왜 두 막대기로는 부족했는지 확인해 보세요.</p></div><div class="ctl"><div class="sl"><label for="th">알렉산드리아의 그림자 각도</label><span class="v" id="thv"></span><input type="range" id="th" min="1" max="20" step="0.1" value="7.2"></div><div class="sl"><label for="dk">두 도시 사이 거리</label><span class="v" id="dv"></span><input type="range" id="dk" min="200" max="2000" step="10" value="800"></div><div class="ticks"><span>실제 기록: 약 7.2° · 5,000스타디온(약 800 km)</span></div></div></div></section><section class="gut glosswrap" id="gloss"><div class="in"><details class="gloss"><summary><span class="se">용어 풀이</span><span class="gn">모르는 말이 나오면 여기를 펼쳐 보세요 · 12개</span></summary><dl><div><dt>에라토스테네스</dt><dd>기원전 3세기 그리스의 학자입니다. 알렉산드리아 도서관의 관장이었고, 막대기의 그림자로 지구 둘레를 처음 계산했습니다.</dd></div><div><dt>알렉산드리아 도서관</dt><dd>지금의 이집트 알렉산드리아에 있던 고대 세계 최대의 도서관이자 연구소입니다. 학자들이 모여 책을 모으고 베끼고 연구했습니다.</dd></div><div><dt>시에네</dt><dd>알렉산드리아 남쪽의 도시로, 지금의 아스완입니다. 하짓날 정오에 해가 머리 바로 위에 와서 그림자가 생기지 않았습니다.</dd></div><div><dt>하지</dt><dd>일 년 중 낮이 가장 긴 날로, 6월 21일 무렵입니다. 이날 정오에 해가 가장 높이 뜹니다.</dd></div><div><dt>스타디온</dt><dd>고대 그리스의 거리 단위입니다. 1스타디온이 정확히 몇 m였는지는 지금도 의견이 갈리며, 약 160~185m로 봅니다.</dd></div><div><dt>전제</dt><dd>어떤 생각이나 판단의 밑바탕에 이미 깔고 있는 믿음입니다. 에라토스테네스는 ‘지구는 둥글고 햇빛은 평행하다’는 전제 위에서 계산했습니다.</dd></div><div><dt>햇빛이 평행하다</dt><dd>태양은 아주 멀리 있어서, 지구 어디에 닿는 햇빛이든 거의 같은 방향으로 나란히 들어온다는 뜻입니다.</dd></div><div><dt>이오니아</dt><dd>지금의 튀르키예 서쪽 해안에 있던 고대 그리스 도시들입니다. 기원전 6세기 무렵 탈레스 등이 신화 대신 자연의 원리로 세상을 설명하려 했습니다.</dd></div><div><dt>신비주의</dt><dd>관찰과 실험보다, 감춰진 진리를 직관이나 계시로 깨달을 수 있다고 보는 태도입니다.</dd></div><div><dt>히파티아</dt><dd>4~5세기 알렉산드리아의 수학자이자 철학자입니다. 415년 무렵 폭도에게 살해당했고, 세이건은 그를 도서관의 마지막 학자로 그립니다.</dd></div><div><dt>드레이크 방정식</dt><dd>1961년 천문학자 프랭크 드레이크가 만든 식입니다. 우리 은하에서 신호를 주고받을 수 있는 문명의 수를 여러 값의 곱으로 어림합니다. 정답을 구하기보다 무엇을 모르는지 정리하는 식입니다.</dd></div><div><dt>문명의 수명 L</dt><dd>드레이크 방정식의 마지막 항입니다. 전파를 쓸 수 있게 된 문명이 스스로 무너지지 않고 얼마나 오래 이어지는지를 뜻합니다.</dd></div></dl></details></div></section><button type="button" class="glossfab" aria-label="용어 풀이 열기" onclick="var d=document.querySelector('#gloss details');d.open=true;document.getElementById('gloss').scrollIntoView({behavior:'smooth'});">용어</button><section class="band gut"><div class="in">
 <div class="col"><span class="lbl n">01 — World</span><h3>어떤 세계인가</h3><div class="chips" id="models"><button type="button" data-m="round" aria-pressed="true">둥근 지구 · 먼 태양</button><button type="button" data-m="flat" aria-pressed="false">평평한 땅 · 가까운 태양</button></div><p>두 세계는 시에네와 알렉산드리아의 그림자를 똑같이 설명합니다. 관측은 전제와 함께만 의미를 갖습니다.</p></div>
 <div class="col"><span class="lbl n">02 — Result</span><h3>계산해 보면</h3><dl class="readout" id="ro"></dl></div>
 <div class="col"><span class="lbl n">03 — Third stick</span><h3>세 번째 막대기</h3><label class="key toggles" style="border-color:var(--bandfg)"><span style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="third"> <b>세 번째 막대기 세우기</b></span><small>두 모형이 세 번째 도시의 그림자를 다르게 예측합니다. 관측이 둘 중 하나를 고릅니다.</small></label><dl class="readout" id="ro3"></dl></div>

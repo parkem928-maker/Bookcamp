@@ -210,6 +210,26 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .tips b{display:block;margin-bottom:2px}
 @media print{.top,.nav .r,.foot,.noprint{display:none!important}body{background:#fff}.hero .giant{font-size:90px!important;margin:10px 0!important}.stop .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow div,.flow{-webkit-print-color-adjust:exact;print-color-adjust:exact}section{break-inside:avoid}}
 
+
+/* glossary */
+.glosswrap .in{padding-block:0 8px}
+.gloss{border:2px solid var(--ink);background:var(--paper)}
+.gloss summary{cursor:pointer;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;padding:16px 20px;list-style:none}
+.gloss summary::-webkit-details-marker{display:none}
+.gloss summary::before{content:"+";font-family:var(--display);font-weight:900;font-size:22px;width:16px;line-height:1}
+.gloss[open] summary::before{content:"−"}
+.gloss[open] summary{border-bottom:1px solid var(--ink)}
+.gloss .se{font-family:var(--ko);font-weight:900;font-size:19px;letter-spacing:-.02em}
+.gloss .gn{font-size:13px;color:var(--muted)}
+.gloss dl{margin:0;padding:6px 20px 22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 32px}
+@media (max-width:760px){.gloss dl{grid-template-columns:minmax(0,1fr)}}
+.gloss dl div{border-top:1px solid #cfccc6;padding-top:10px;margin-top:10px;min-width:0}
+.gloss dt{font-weight:900;font-size:15px}
+.gloss dd{margin:3px 0 0;font-size:14px;line-height:1.7;color:#3d3b38}
+.glossfab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;border:0;background:var(--ink);color:var(--bandfg);font-family:var(--ko);font-weight:700;font-size:13px;letter-spacing:.02em;padding:11px 16px;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);cursor:pointer}
+.glossfab:hover{background:var(--red)}
+@media print{.glossfab{display:none}}
+
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
@@ -253,7 +273,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 <div class="giant" aria-hidden="true">KOSMOS</div>
 <div class="disc"><canvas id="orrery" aria-label="무질서와 질서의 점 시뮬레이션"></canvas></div>
 <div class="side-r">Room 02<br>Cosmos · Ch. 1</div>
-</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 02 · 코스모스를 품다</div><h1>질서는 어디에서<br>오는가</h1><p>같은 점 360개가 세 가지 방식으로 움직입니다. 아무 규칙 없이, 바깥에서 정해 준 자리로, 그리고 각자 이웃만 보며. 버튼을 눌러 질서가 생기는 방식을 비교해 보세요. 진짜 갈림길은 질서냐 무질서냐가 아니라, 질서가 바깥에서 부과되는가 안에서 자라나는가일지도 모릅니다.</p></div><div></div></div></section><section class="band gut"><div class="in">
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Room 02 · 코스모스를 품다</div><h1>질서는 어디에서<br>오는가</h1><p>같은 점 360개가 세 가지 방식으로 움직입니다. 아무 규칙 없이, 바깥에서 정해 준 자리로, 그리고 각자 이웃만 보며. 버튼을 눌러 질서가 생기는 방식을 비교해 보세요. 진짜 갈림길은 질서냐 무질서냐가 아니라, 질서가 바깥에서 부과되는가 안에서 자라나는가일지도 모릅니다.</p></div><div></div></div></section><section class="gut glosswrap" id="gloss"><div class="in"><details class="gloss"><summary><span class="se">용어 풀이</span><span class="gn">모르는 말이 나오면 여기를 펼쳐 보세요 · 12개</span></summary><dl><div><dt>코스모스 (κόσμος)</dt><dd>그리스어로 ‘가지런한 질서, 꾸밈’이라는 뜻입니다. 피타고라스 전통에서 ‘아름답게 질서 잡힌 우주’를 가리키게 되었습니다.</dd></div><div><dt>카오스 (χάος)</dt><dd>그리스어로 처음에는 ‘크게 벌어진 틈, 텅 빈 자리’라는 뜻이었고, 나중에 ‘뒤엉킨 무질서’라는 뜻이 되었습니다.</dd></div><div><dt>헤시오도스</dt><dd>기원전 8~7세기 무렵 그리스의 시인입니다. 『신들의 계보』에서 세상의 처음에 카오스가 있었다고 노래했습니다.</dd></div><div><dt>『티마이오스』</dt><dd>플라톤이 우주가 어떻게 만들어졌는지를 이야기한 대화편입니다. 제작자 신(데미우르고스)이 무질서를 질서로 이끈다고 봅니다.</dd></div><div><dt>부과된 질서와 자라난 질서</dt><dd>바깥에서 누군가 정해 준 질서와, 구성원들이 각자 움직이는 가운데 저절로 생겨난 질서입니다. 경제학자 하이에크는 앞의 것을 탁시스(taxis), 뒤의 것을 코스모스(kosmos)라 불렀습니다.</dd></div><div><dt>자기조직화</dt><dd>지휘자나 설계도 없이, 구성원들이 단순한 규칙을 따르는 것만으로 전체에 질서가 생기는 현상입니다. 새 떼, 개미의 길, 냄비 속 대류 무늬가 예입니다.</dd></div><div><dt>카오스 이론</dt><dd>법칙을 그대로 따르는데도 처음의 아주 작은 차이가 시간이 지나며 크게 벌어져, 먼 미래를 예측할 수 없게 되는 현상을 다루는 이론입니다.</dd></div><div><dt>로렌즈 방정식</dt><dd>1963년 기상학자 에드워드 로렌즈가 공기의 흐름을 단순하게 나타낸 세 개의 식입니다. 그 해가 그리는 나비 모양의 궤적을 ‘로렌즈 끌개’라고 부릅니다.</dd></div><div><dt>나비 효과</dt><dd>브라질에서 나비 한 마리가 날갯짓을 하면 텍사스에 토네이도가 일 수도 있다는 비유입니다. 작은 차이가 큰 결과를 낳는다는 카오스 이론의 핵심을 나타냅니다.</dd></div><div><dt>장자의 혼돈</dt><dd>『장자』에 나오는 우화입니다. 구멍이 없는 임금 혼돈에게 친구들이 고마움의 표시로 구멍을 뚫어 주자 혼돈이 죽었습니다.</dd></div><div><dt>치(治)와 난(亂)</dt><dd>유가에서 쓰는 말로, 나라와 사회가 잘 다스려진 상태(치)와 어지러운 상태(난)를 뜻합니다.</dd></div><div><dt>리(理)</dt><dd>성리학에서 모든 사물 안에 들어 있는 이치를 뜻합니다. 본래 옥을 다듬을 때 따라가는 옥의 결을 가리키던 글자입니다.</dd></div></dl></details></div></section><button type="button" class="glossfab" aria-label="용어 풀이 열기" onclick="var d=document.querySelector('#gloss details');d.open=true;document.getElementById('gloss').scrollIntoView({behavior:'smooth'});">용어</button><section class="band gut"><div class="in">
 <div class="col"><span class="lbl n">01 — Mode</span><h3>움직이는 방식</h3><div class="chips" id="modes"><button type="button" data-m="chaos" aria-pressed="true">카오스</button><button type="button" data-m="imposed" aria-pressed="false">부과된 질서</button><button type="button" data-m="emergent" aria-pressed="false">자라난 질서</button></div></div>
 <div class="col"><span class="lbl n">02 — Reading</span><h3 id="mt"></h3><p id="mx"></p></div>
 <div class="col"><span class="lbl n">03 — Alignment</span><h3>방향이 맞는 정도</h3><div class="big" id="ord" style="font-size:64px">0%</div><p>모든 점이 같은 방향으로 움직이면 100%. 자라난 질서는 지휘자 없이도 이 값을 올립니다.</p></div>
