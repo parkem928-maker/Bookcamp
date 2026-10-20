@@ -229,9 +229,16 @@ body.embed .top,body.embed .nav,body.embed .glosswrap,body.embed .glossfab,body.
 body.embed .poster .in{padding-top:6px}
 .embed-off{position:absolute!important;left:-99999px!important;top:0!important;width:1180px!important;height:0!important;overflow:hidden!important;visibility:hidden!important;pointer-events:none!important}
 body.embed .poster{padding-bottom:20px}
+
+.iscroll{height:230vh;position:relative}
+.iscroll .ihero{position:sticky;top:0;min-height:0;height:100vh;height:100svh}
+.igiant{will-change:transform,opacity;transform-origin:50% 50%}
+.hero .wordfx{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.scene-limb .sea i::before{filter:brightness(calc(1 + var(--sink,0) * .9))}
+@media (prefers-reduced-motion:reduce){.iscroll{height:auto}.iscroll .ihero{position:relative;height:auto;min-height:max(560px,calc(100svh - 96px))}}
 </style>
 </head>
-<body class="t-dark p-kepler-orbits" style="--acc:#e9c27c" data-bg="orbits">
+<body data-exit="earth" class="t-dark p-kepler-orbits" style="--acc:#e9c27c" data-bg="orbits">
 <div class="top gut"><div class="in lbl"><span>유심한 봄 · 『코스모스』 3장</span><nav aria-label="모형"><a href="ptolemy.html">01 PTOLEMY</a> <a href="copernicus.html">02 COPERNICUS</a> <a href="kepler-solids.html">03 MYSTERIUM</a> <a href="kepler-orbits.html" aria-current="page">04 ELLIPSE</a> <a href="kepler-laws.html">05 HARMONY</a></nav></div></div>
 <header class="nav gut"><div class="in"><span class="lbl">Model 04 / 05</span><a class="brand" href="index.html">COSMOS</a><span class="r lbl"><a href="orbits.html">Room 04 · 물음의 궤도</a></span></div></header><section class="hero poster scene-limb gut" style="--len:7"><i class="crop tl" aria-hidden="true"></i><i class="crop tr" aria-hidden="true"></i><div class="in">
 <div class="pmeta mono"><span><b>Title —</b><i>케플러의 타원 궤도</i></span><span><b>Room —</b><i>04 · 04</i></span><span><b>Chapter —</b><i>Ch. 3 · AD 1609</i></span><span><b>Reading —</b><i>Cosmos</i></span><span><b>Issue —</b><i>.04-4</i></span></div>
@@ -479,6 +486,58 @@ if(reduce) document.querySelectorAll('svg').forEach(s=>s.pauseAnimations&&s.paus
 (function(){ const q=new URLSearchParams(location.search).get('only'); if(!q) return; document.body.classList.add('embed');
   document.querySelectorAll('body > *').forEach(el=>{ if(el.tagName==='SCRIPT'||el.id==='bgfx') return; if(!(el.dataset.part||'').split(' ').includes(q)) el.classList.add('embed-off'); });
   const first=document.querySelector('[data-part~="'+q+'"]'); if(first) first.scrollIntoView(); })();
+</script>
+<script>(function(){
+/* Scroll-linked exit of the big poster word. Every value is a pure function of scroll position, so scrolling back up restores it. */
+if(document.body.classList.contains('embed')) return;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+const hero=document.querySelector('.hero.poster'), gi=hero&&hero.querySelector('.giant'), mode=document.body.dataset.exit; if(!gi||!mode) return;
+gi.style.willChange='transform,opacity';
+const clamp=v=>Math.min(1,Math.max(0,v)), ease=v=>v*v*(3-2*v);
+function prog(){ return clamp(scrollY/Math.max(240,hero.offsetHeight*.55)); }
+/* ---- stardust: the word breaks into many element particles ---- */
+let dust=null;
+function buildDust(){
+  const cv=document.createElement('canvas'); cv.className='wordfx'; cv.setAttribute('aria-hidden','true'); hero.appendChild(cv);
+  const g=cv.getContext('2d'); const st=getComputedStyle(gi); const dpr=Math.min(2,devicePixelRatio||1);
+  const hr=hero.getBoundingClientRect(), gr=gi.getBoundingClientRect();
+  const W=hr.width, H=hr.height; cv.width=W*dpr; cv.height=H*dpr; g.setTransform(dpr,0,0,dpr,0,0);
+  /* paint the word off-screen and sample it */
+  const off=document.createElement('canvas'), o=off.getContext('2d'); const fs=parseFloat(st.fontSize);
+  off.width=Math.ceil(gr.width); off.height=Math.ceil(fs*1.05);
+  o.font=`900 ${fs}px Archivo, "Noto Sans KR", sans-serif`; try{ o.fontStretch='expanded'; }catch(e){} try{ o.letterSpacing=st.letterSpacing; }catch(e){}
+  const text=gi.textContent.trim(), mw=o.measureText(text).width||1; o.setTransform(off.width/mw,0,0,1,0,0); o.fillStyle='#000'; o.textBaseline='alphabetic'; o.fillText(text,0,fs*.80);
+  const data=o.getImageData(0,0,off.width,off.height).data, step=Math.max(4,Math.round(fs/38));
+  const ox=gr.left-hr.left, oy=gr.top-hr.top+(gr.height-fs*.82)/2-fs*.03;
+  const EL=['H','O','C','N','Ca','P','K','S','Na','Cl','Mg','Fe','I'];
+  const COLS=['#3f7ad6','#151412','#8a857e','#c9c5be','#c8261e'];
+  const pts=[]; let seed=7; const R=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+  for(let y=0;y<off.height;y+=step) for(let x=0;x<off.width;x+=step){ if(data[(y*off.width+x)*4+3]>128){
+    const a=R()*Math.PI*2, d=(.25+R()*.9)*Math.max(W,H)*.55;
+    pts.push({x:ox+x,y:oy+y,tx:ox+x+Math.cos(a)*d,ty:oy+y+Math.sin(a)*d*.7-R()*H*.35,r:1.2+R()*1.8,c:COLS[(R()*COLS.length)|0],el:R()<.05?EL[(R()*EL.length)|0]:null,dl:R()*.25}); } }
+  dust={cv,g,W,H,pts,acc:st.color};
+}
+function drawDust(p){
+  if(!dust) buildDust(); const {g,W,H,pts,acc}=dust; g.clearRect(0,0,W,H); if(p<=0) return;
+  for(const q of pts){ const k=ease(clamp((p-q.dl*.6)/(1-q.dl*.6))); const x=q.x+(q.tx-q.x)*k, y=q.y+(q.ty-q.y)*k; const fade=1-clamp((p-.65)/.35);
+    if(k<.12){ g.globalAlpha=fade; g.fillStyle=acc; } else { g.globalAlpha=fade*.9; g.fillStyle=q.c; }
+    if(q.el&&k>.25){ g.font=`600 ${10+q.r*2}px "IBM Plex Mono",monospace`; g.fillText(q.el,x,y); }
+    else { g.beginPath(); g.arc(x,y,q.r*(1-k*.35),0,7); g.fill(); } }
+  g.globalAlpha=1;
+}
+let ticking=false, lastP=-1;
+function upd(){ ticking=false; const p=prog(); if(Math.abs(p-lastP)<.0005) return; lastP=p; const e=ease(p);
+  if(mode==='right'){ gi.style.transform=e?`translateX(${e*112}vw) skewX(${-e*10}deg)`:''; gi.style.opacity=String(1-clamp((p-.75)/.25)); }
+  else if(mode==='down'){ gi.style.transform=e?`translateY(calc(var(--gs) * ${(e*1.25).toFixed(4)}))`:''; }
+  else if(mode==='earth'){ gi.style.transform=e?`translateY(calc(var(--gs) * ${(e*.95).toFixed(4)})) scale(${(1-e*.45).toFixed(4)})`:''; gi.style.transformOrigin='50% 100%'; hero.style.setProperty('--sink',e.toFixed(3)); }
+  else if(mode==='fall'){ const f=p*p; gi.style.transform=f?`translateY(calc(var(--gs) * ${(f*1.6).toFixed(4)})) rotate(${(f*4).toFixed(2)}deg)`:''; }
+  else if(mode==='dust'){ gi.style.opacity=String(p>0?Math.max(0,1-p*14):1); drawDust(p); }
+}
+function req(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } }
+addEventListener('scroll',req,{passive:true}); addEventListener('resize',()=>{ if(dust){ dust.cv.remove(); dust=null; } lastP=-1; req(); });
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(dust){ dust.cv.remove(); dust=null; } lastP=-1; req(); });
+req();
+})();
 </script>
 </body>
 </html>
