@@ -230,6 +230,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .glossfab:hover{background:var(--red)}
 @media print{.glossfab{display:none}}
 
+/*NEWTONCSS*/
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
@@ -264,6 +265,23 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .card .lnk:hover{color:var(--red)}
 .consbox{background:var(--band);margin-bottom:22px}
 .consbox canvas{display:block;width:100%;height:clamp(240px,34vw,380px)}
+
+.ktab{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums;margin-top:12px}
+.ktab th,.ktab td{text-align:right;padding:7px 8px;border-bottom:1px solid #cfccc6;white-space:nowrap}
+.ktab th:first-child,.ktab td:first-child{text-align:left}
+.ktab th{font-family:var(--display);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.ktab td:nth-last-child(-n+2){font-weight:800}
+.kwrap{overflow-x:auto}
+.eq{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.6vw,28px);letter-spacing:-.01em;margin:6px 0 10px}
+.steps{margin:6px 0 0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.seaquote{background:var(--band);color:var(--bandfg)}
+.seaquote .in{padding-block:84px;display:grid;gap:22px}
+.seaquote blockquote{margin:0;font-family:var(--ko);font-weight:900;font-size:clamp(22px,3.2vw,38px);letter-spacing:-.03em;line-height:1.5;max-width:30ch;text-wrap:pretty}
+.seaquote cite{font-style:normal;color:var(--banddim)}
+.seaquote .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:20px;border-top:1px solid #3a3a3a;padding-top:24px}
+@media (max-width:860px){.seaquote .cols{grid-template-columns:minmax(0,1fr)}}
+.seaquote .cols h3{font-family:var(--ko);font-weight:900;font-size:19px;margin:6px 0 8px;letter-spacing:-.02em}
+.seaquote .cols p{margin:0;color:var(--banddim);font-size:14.5px;line-height:1.75}
 </style>
 </head>
 <body>
@@ -277,7 +295,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 <dl><dt>움직여 볼 것</dt><dd>그림자 각도를 움직이고, 세 번째 막대기를 세워 본다. 읽을거리를 읽은 뒤, 마지막으로 문명의 수명 L을 움직여 본다.</dd><dt>담벼락에 남길 것</dt><dd>내가 유심히 본 것 하나와, 그것을 이상하게 느끼게 한 내 전제</dd></dl></a><a class="stop" href="kosmos.html"><span class="dot">02</span><span class="vb">품다</span><span class="rn">코스모스를 품다 · 1장</span><p class="q">질서는 바깥에서 부과되는가, 안에서 자라나는가.</p>
 <dl><dt>움직여 볼 것</dt><dd>점 360개를 세 방식으로 움직여 본다. 두 점이 갈라지는 로렌즈 그림을 본다.</dd><dt>담벼락에 남길 것</dt><dd>내가 바꾸고 싶은 질서 하나, 그리고 바꾸기 전에 알아야 할 것</dd></dl></a><a class="stop" href="stardust.html"><span class="dot">03</span><span class="vb">긋다</span><span class="rn">별의 품 · 2·9장</span><p class="q">별의 물질로 된 내가, 별은 하지 못하는 일은 무엇일까.</p>
 <dl><dt>움직여 볼 것</dt><dd>무게로 세기와 원자 개수로 세기를 바꿔 본다. 원소를 눌러 출생지를 찾는다.</dd><dt>담벼락에 남길 것</dt><dd>별은 ○○ 하지 못한다, 그래서 나는 ○○ 하겠다</dd></dl></a><a class="stop" href="orbits.html"><span class="dot">04</span><span class="vb">묻다</span><span class="rn">물음의 궤도 · 3장</span><p class="q">사람들은 무엇을 의심했고, 무엇을 끝내 의심하지 못했나.</p>
-<dl><dt>움직여 볼 것</dt><dd>다섯 모형을 차례로 열어 움직여 본다. 행성이 거꾸로 가는 이유를 찾는다.</dd><dt>담벼락에 남길 것</dt><dd>내가 가장 확신하는 믿음과, 그것을 바꿀 수 있는 증거</dd></dl></a><span class="end" aria-hidden="true"></span></div></div></section><section class="list gut"><div class="in"><div class="lbl" style="margin:54px 0 14px;color:var(--muted)">In each room · 한 방에서의 순서 (위에서 아래로)</div>
+<dl><dt>움직여 볼 것</dt><dd>여섯 모형을 차례로 열어 움직여 본다. 행성이 거꾸로 가는 이유와, 달이 떨어지지 않는 이유를 찾는다.</dd><dt>담벼락에 남길 것</dt><dd>내가 가장 확신하는 믿음과, 그것을 바꿀 수 있는 증거</dd></dl></a><span class="end" aria-hidden="true"></span></div></div></section><section class="list gut"><div class="in"><div class="lbl" style="margin:54px 0 14px;color:var(--muted)">In each room · 한 방에서의 순서 (위에서 아래로)</div>
 <div class="flow"><div><span class="lbl">Step 1</span><b>묻는다</b><p>큰 제목이 그 방의 질문입니다. 먼저 내 답을 짐작해 봅니다.</p></div>
 <div><span class="lbl">Step 2</span><b>움직인다</b><p>둥근 그림과 검은 띠의 버튼·막대를 움직여 봅니다. 무엇이 바뀌고 무엇이 그대로인지 봅니다.</p></div>
 <div><span class="lbl">Step 3</span><b>읽는다</b><p>Notes(읽을거리)에서 책의 장면과 다른 관점을 읽습니다. 책의 해당 장을 펼쳐 두면 좋습니다.</p></div>

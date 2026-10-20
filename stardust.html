@@ -230,6 +230,7 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .glossfab:hover{background:var(--red)}
 @media print{.glossfab{display:none}}
 
+/*NEWTONCSS*/
 /* wall */
 .wall{background:var(--paper)}
 .wall .in{padding-block:70px}
@@ -264,6 +265,23 @@ td.bad{color:var(--red)} td.ok{font-weight:700}
 .card .lnk:hover{color:var(--red)}
 .consbox{background:var(--band);margin-bottom:22px}
 .consbox canvas{display:block;width:100%;height:clamp(240px,34vw,380px)}
+
+.ktab{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums;margin-top:12px}
+.ktab th,.ktab td{text-align:right;padding:7px 8px;border-bottom:1px solid #cfccc6;white-space:nowrap}
+.ktab th:first-child,.ktab td:first-child{text-align:left}
+.ktab th{font-family:var(--display);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.ktab td:nth-last-child(-n+2){font-weight:800}
+.kwrap{overflow-x:auto}
+.eq{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.6vw,28px);letter-spacing:-.01em;margin:6px 0 10px}
+.steps{margin:6px 0 0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.seaquote{background:var(--band);color:var(--bandfg)}
+.seaquote .in{padding-block:84px;display:grid;gap:22px}
+.seaquote blockquote{margin:0;font-family:var(--ko);font-weight:900;font-size:clamp(22px,3.2vw,38px);letter-spacing:-.03em;line-height:1.5;max-width:30ch;text-wrap:pretty}
+.seaquote cite{font-style:normal;color:var(--banddim)}
+.seaquote .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:20px;border-top:1px solid #3a3a3a;padding-top:24px}
+@media (max-width:860px){.seaquote .cols{grid-template-columns:minmax(0,1fr)}}
+.seaquote .cols h3{font-family:var(--ko);font-weight:900;font-size:19px;margin:6px 0 8px;letter-spacing:-.02em}
+.seaquote .cols p{margin:0;color:var(--banddim);font-size:14.5px;line-height:1.75}
 </style>
 </head>
 <body>
