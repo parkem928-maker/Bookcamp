@@ -239,6 +239,7 @@ body.embed .poster{padding-bottom:20px}
 @media (prefers-reduced-motion:reduce){.iscroll{height:auto}.iscroll .ihero{position:relative;height:auto;min-height:max(560px,calc(100svh - 96px))}}
 
 /* readability + touch targets */
+p,li,dd,dt,h1,h2,h3,blockquote,figcaption,.k,.q{word-break:keep-all;overflow-wrap:break-word}
 .lbl{font-size:12px}
 .pmeta{font-size:12.5px}.pmeta b{font-size:13px}
 .ptag p{font-size:13.5px}
@@ -270,7 +271,7 @@ body.embed .poster{padding-bottom:20px}
 <div class="gwrap"><div class="giant" aria-hidden="true">ELLIPSE</div><div class="sea" aria-hidden="true"><i></i></div></div>
 <div class="disc"><canvas id="orrery" aria-label="행성 운동 모형"></canvas></div>
 <div class="pfoot mono" aria-hidden="true"><span>Station 04 · 튀코의 8분</span><b class="issue">.04-4</b></div>
-</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>케플러의<br>타원 궤도</h1><p>튀코의 화성 관측은 원 궤도로는 8분각이 어긋났습니다. 케플러는 그 작은 차이를 무시하지 않고 2천 년 묵은 원을 버렸습니다. 이심률을 키워 법칙이 드러나는 순간을 보세요.</p></div><div class="ctl">
+</div></section><section class="title gut"><div class="in"><div><div class="lbl" style="color:var(--muted)">Cosmos · Chapter 3</div><h1>케플러의<br>타원 궤도</h1><p>튀코의 화성 관측은 원 궤도로는 8분각이 어긋났다. 케플러는 그 작은 차이를 넘기지 않고 2천 년 묵은 원을 버렸다. 이심률을 키워 법칙이 드러나는 순간을 보자.</p></div><div class="ctl">
 <div class="daterow"><div><div class="lbl" style="color:var(--muted)">Date</div><div class="date" id="dateOut">2026-01-01</div></div>
 <div class="btns"><button class="cta" id="playBtn" type="button">재생</button><button class="ul" type="button" id="resetBtn">오늘로</button>
 <label class="lbl" for="speed" style="color:var(--muted)">Speed</label><select id="speed"><option value="1">하루/틱</option><option value="4" selected>4일/틱</option><option value="15">보름/틱</option><option value="60">두 달/틱</option></select></div></div>
@@ -287,22 +288,22 @@ body.embed .poster{padding-bottom:20px}
     <section>
       <div class="law-no">제1법칙 · 타원 궤도</div>
       <h2>원을 버리다</h2>
-      <p>행성은 태양을 한 초점으로 하는 타원을 그립니다. '두 초점과 원 궤도 비교'를 켜면 점선 원과 실제 타원이 얼마나 다른지 보입니다. 화성은 이심률이 0.093이라 그 차이가 아주 작습니다. 튀코의 정밀한 눈이 아니었다면 아무도 알아채지 못했을 차이입니다.</p>
+      <p>행성은 태양을 한 초점으로 하는 타원을 그린다. '두 초점과 원 궤도 비교'를 켜면 점선 원과 실제 타원이 얼마나 다른지 보인다. 화성은 이심률이 0.093이라 그 차이가 아주 작다. 튀코의 정밀한 눈이 아니었다면 아무도 알아채지 못했을 것 같다.</p>
     </section>
     <section>
       <div class="law-no">제2법칙 · 면적 속도 일정</div>
       <h2>가까우면 빨라진다</h2>
-      <p>태양과 행성을 잇는 선은 같은 시간 동안 같은 넓이를 쓸고 지나갑니다. 색칠된 부채꼴은 모두 같은 기간이고 넓이도 같습니다. 근일점 근처의 부채꼴은 짧고 넓으며, 원일점 근처의 부채꼴은 길고 좁습니다. 이심률을 0.5쯤으로 키우면 뚜렷해집니다.</p>
+      <p>태양과 행성을 잇는 선은 같은 시간 동안 같은 넓이를 쓸고 지나간다. 색칠된 부채꼴은 모두 같은 기간이고 넓이도 같다. 근일점 근처의 부채꼴은 짧고 넓고, 원일점 근처의 부채꼴은 길고 좁다. 이심률을 0.5쯤으로 키우면 뚜렷해진다.</p>
     </section>
     <section>
       <div class="law-no">제3법칙 · 조화의 법칙</div>
       <h2>주기의 제곱은 거리의 세제곱</h2>
-      <p>공전 주기(년)를 제곱한 값은 궤도 긴반지름(AU)을 세제곱한 값과 같습니다. 케플러는 이것을 『세계의 조화』에 실었습니다. 정다면체는 틀렸지만, 행성 사이의 수학적 조화를 찾으려던 집념이 결국 맞는 법칙에 닿은 셈입니다.</p>
+      <p>공전 주기(년)를 제곱한 값은 궤도 긴반지름(AU)을 세제곱한 값과 같다. 케플러는 이것을 『세계의 조화』에 실었다. 정다면체는 틀렸지만, 행성 사이의 수학적 조화를 찾으려던 고집이 결국 맞는 법칙에 닿은 셈이다.</p>
       <div class="tablewrap">
         <table id="law3"><thead><tr><th>행성</th><th>a (AU)</th><th>T (년)</th><th>T² ÷ a³</th></tr></thead><tbody></tbody></table>
       </div>
     </section>
-  </div><p class="caveat">궤도면의 기울기와 행성끼리 당기는 효과는 뺐습니다. 그래도 하늘 띠의 위치는 원 궤도 페이지들보다 실제 하늘에 훨씬 가깝습니다. 이심률 막대는 선택한 행성의 그림만 바꾸며, '지구에서 본 위치' 계산에는 언제나 실제 이심률을 씁니다. 함께 보기: <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a></p></div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next model</div><a class="big" href="kepler-laws.html">HARMONY →</a></div><div class="meta lbl">05 · 세 법칙</div></div></section>
+  </div><p class="caveat">궤도면의 기울기와 행성끼리 당기는 효과는 뺐다. 그래도 하늘 띠의 위치는 원 궤도 페이지들보다 실제 하늘에 훨씬 가깝다. 이심률 막대는 선택한 행성의 그림만 바꾸고, '지구에서 본 위치' 계산에는 언제나 실제 이심률을 쓴다. 함께 보기: <a href="ptolemy.html">프톨레마이오스의 하늘 기계</a> · <a href="copernicus.html">코페르니쿠스의 태양계</a></p></div></section><section class="next gut"><div class="in"><div><div class="lbl" style="color:var(--muted);margin-bottom:12px">Next model</div><a class="big" href="kepler-laws.html">HARMONY →</a></div><div class="meta lbl">05 · 세 법칙</div></div></section>
 <footer class="foot gut"><div class="in lbl"><span>유심한 봄 독서 캠프</span><span>Carl Sagan, Cosmos · Ch. 3</span></div></footer>
 <script>
 (function(){
